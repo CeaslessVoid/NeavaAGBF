@@ -1,0 +1,3 @@
+displayName = Neava&#39;s A GranBlue Fantasy
+author = Neava
+version = 0.1
