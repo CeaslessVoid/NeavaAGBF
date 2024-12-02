@@ -27,7 +27,7 @@ namespace NeavaAGBF
         private void On_Main_DrawEmoteBubblesButton(On_Main.orig_DrawEmoteBubblesButton orig, int pivotTopLeftX, int pivotTopLeftY)
         {
             NeavaAGBFPlayer.DrawWeaponGrid();
-            NeavaAGBFPlayer.IsCLickingCheck();
+            NeavaAGBFPlayer.UpdateIsClicking();
             orig.Invoke(pivotTopLeftX, pivotTopLeftY);
         }
 

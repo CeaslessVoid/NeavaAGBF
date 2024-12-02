@@ -24,158 +24,183 @@ namespace NeavaAGBF.Common.Players
     {
         public static Item[] WeaponGrid = new Item[9];
 
-        public static Chest Chest = new Chest(true);
+        private static bool _isMouseOverSlot = false;
+        private static bool _isWeaponGridInitialized = false;
 
-        public static int ChestId = -114514;
-
-        // Delete when not needed
-        private bool JC_SB;
-
-        private static bool CSH = false;
-
-        private bool ResetGrid;
-
-        public static bool DKUI = false;
-
+        public static bool IsWeaponGridOpen = false;
         public static bool IsClicking = false;
 
-
-        public static float ITDX(Texture2D texture2D)
+        public static float ScaleToFit(Texture2D texture)
         {
-            float maxSize = 42.5f; // Adjust maximum size
-            return Math.Min(maxSize / texture2D.Width, maxSize / texture2D.Height);
+            const float maxSize = 42.5f; // Maximum size for scaling
+            return Math.Min(maxSize / texture.Width, maxSize / texture.Height);
         }
 
         public override void ResetEffects()
         {
-            if (!this.ResetGrid)
+            if (!_isWeaponGridInitialized)
             {
-                ResetGrid = true;
+                _isWeaponGridInitialized = true;
                 for (int i = 0; i < WeaponGrid.Length; i++)
                 {
-                    WeaponGrid[i] = new Item(0,1,0);
+                    if (WeaponGrid[i] == null)
+                        WeaponGrid[i] = new Item(0,1,0);
                 }
             }
 
-            if (CSH)
+            if (_isMouseOverSlot)
             {
                 if (!PlayerInput.Triggers.Current.MouseLeft)
                 {
-                    CSH = false;
+                    _isMouseOverSlot = false;
                 }
-                base.Player.delayUseItem = true;
-                base.Player.controlUseItem = false;
+                Player.delayUseItem = true;
+                Player.controlUseItem = false;
             }
         }
 
+        public override void SaveData(TagCompound tag)
+        {
+            // Create a list to store serialized item data
+            var gridData = new List<TagCompound>();
+
+            foreach (var item in WeaponGrid)
+            {
+                if (item != null && !item.IsAir) // Ensure the item is valid
+                {
+                    gridData.Add(new TagCompound
+                    {
+                        ["type"] = item.type,
+                        ["stack"] = item.stack
+                    });
+                }
+                else
+                {
+                    gridData.Add(new TagCompound
+                    {
+                        ["type"] = 0, // Represents an empty item slot
+                        ["stack"] = 0
+                    });
+                }
+            }
+
+            tag["WeaponGrid"] = gridData;
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            if (tag.ContainsKey("WeaponGrid"))
+            {
+                var gridData = tag.Get<List<TagCompound>>("WeaponGrid");
+                for (int i = 0; i < WeaponGrid.Length; i++)
+                {
+                    if (gridData[i] != null && gridData[i].Get<int>("type") > 0)
+                    {
+                        // Reconstruct valid items
+                        WeaponGrid[i] = new Item();
+                        WeaponGrid[i].SetDefaults(gridData[i].Get<int>("type"));
+                        WeaponGrid[i].stack = gridData[i].Get<int>("stack");
+                    }
+                    else
+                    {
+                        // Handle empty slots
+                        WeaponGrid[i] = new Item();
+                    }
+                }
+            }
+        }
 
 
         public static void DrawWeaponGrid()
         {
-            Vector2 UI;
-            UI = new Vector2(0, 0);
+            Vector2 uiOffset = Vector2.Zero;
 
-            Texture2D GridOpenTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/UI_1", AssetRequestMode.AsyncLoad).Value;
-            Texture2D GridOpenTexture2 = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/UI_2", AssetRequestMode.AsyncLoad).Value;
+            Texture2D gridClosedTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/UI_1", AssetRequestMode.AsyncLoad).Value;
+            Texture2D gridOpenTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/UI_2", AssetRequestMode.AsyncLoad).Value;
+            Player player = Main.LocalPlayer;
 
-            Player Player = Main.LocalPlayer;
-            Vector2 vector2 = new Vector2(586f, 295f) + UI;
-            bool flag = Vector2.Distance(vector2, Main.MouseScreen) <= 19f;
+            Vector2 toggleButtonPosition = new Vector2(586f, 295f) + uiOffset;
+            bool isMouseOverButton = Vector2.Distance(toggleButtonPosition, Main.MouseScreen) <= 19f;
 
-            if (flag)
+            Main.spriteBatch.Draw(
+                IsWeaponGridOpen ? gridOpenTexture : gridClosedTexture,
+                toggleButtonPosition,
+                null,
+                IsWeaponGridOpen ? new Color(255, 255, 155) : new Color(255, 255, 255),
+                0f,
+                Utils.Size(gridClosedTexture) / 2f,
+                0.9f,
+                SpriteEffects.None,
+                0f
+            );
+
+            if (isMouseOverButton)
             {
-                NeavaAGBFPlayer.CSH = true;
-                Main.spriteBatch.Draw(GridOpenTexture2, vector2, null, new Color(255, 255, 155), 0f, Utils.Size(GridOpenTexture2) / 2f, 0.9f, 0, 0f);
-                Main.instance.MouseText(Language.GetText("Mods.NeavaAGBF.OpenGrid").Value, 0, 0, -1, -1, -1, -1, 0);
+                Main.instance.MouseText(Language.GetText("Mods.NeavaAGBF.OpenGrid").Value);
+                _isMouseOverSlot = true;
 
-            }
-            Main.spriteBatch.Draw(GridOpenTexture, vector2, null, new Color(255, 255, 255), 0f, Utils.Size(GridOpenTexture) / 2f, 0.9f, 0, 0f);
-
-            if (flag && !IsClicking && PlayerInput.Triggers.Current.MouseLeft) // Ensures one click per toggle
-            {
-                NeavaAGBFPlayer.CSH = true;
-                if (!NeavaAGBFPlayer.DKUI)
+                if (!IsClicking && PlayerInput.Triggers.Current.MouseLeft)
                 {
-                    SoundEngine.PlaySound(SoundID.MenuOpen);
+                    IsWeaponGridOpen = !IsWeaponGridOpen;
+                    SoundEngine.PlaySound(IsWeaponGridOpen ? SoundID.MenuOpen : SoundID.MenuClose);
+                    Main.mouseLeftRelease = false;
                 }
-                else
-                {
-                    SoundEngine.PlaySound(SoundID.MenuClose);
-                }
-                NeavaAGBFPlayer.DKUI = !NeavaAGBFPlayer.DKUI;
-                Main.mouseLeftRelease = false; // Prevent further toggles in the same click
-            }
-
-            if (NeavaAGBFPlayer.DKUI)
-            {
-                Texture2D UID = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/WeaponSlot", AssetRequestMode.AsyncLoad).Value;
-
-                Color color;
-                color = new Color(255, 255, 255, 222);
-
-                Vector2 item_0 = new Vector2(580f, 345f) + UI;
-
-                const int SlotCount = 9; // Number of slots
-                const int SlotsPerRow = 3; // Slots per row in the grid
-                const float SlotSize = 52f; // Size of each slot
-                const float SlotSpacing = 60f; // Spacing between slots
-                Vector2 StartingPosition = new Vector2(580f, 345f); // Top-left corner of the grid
-                Vector2 uiOffset = UI; // Offset for UI positioning
-
-
-                // Loop through all slots
-                for (int i = 0; i < SlotCount; i++)
-                {
-                    // Calculate row and column
-                    int row = i / SlotsPerRow;
-                    int column = i % SlotsPerRow;
-
-                    // Calculate position
-                    Vector2 slotPosition = StartingPosition + uiOffset + new Vector2(column * SlotSpacing, row * SlotSpacing);
-
-                    // Draw the slot background
-                    Main.spriteBatch.Draw(UID, slotPosition, null, color, 0f, Utils.Size(UID) / 2f, 0.85f, 0, 0f);
-
-                    Texture2D itemTexture = TextureAssets.Item[NeavaAGBFPlayer.WeaponGrid[i].type].Value;
-                    Main.spriteBatch.Draw(itemTexture, slotPosition, null, Color.White, 0f, Utils.Size(itemTexture) / 2f, ITDX(itemTexture), SpriteEffects.None, 0f);
-
-                    // Check mouse interaction
-                    if (Vector2.Distance(slotPosition, Main.MouseScreen) <= SlotSize / 2f)
-                    {
-                        NeavaAGBFPlayer.CSH = true;
-                        if (!IsClicking && PlayerInput.Triggers.Current.MouseLeft && (Main.mouseItem.type != ItemID.None || NeavaAGBFPlayer.WeaponGrid[i].type != ItemID.None))
-                        {
-                            SoundEngine.PlaySound(SoundID.Grab, null, null);
-
-                            Item temp = Main.mouseItem;
-                            Item mouseItem = NeavaAGBFPlayer.WeaponGrid[i];
-                            Main.mouseItem = NeavaAGBFPlayer.WeaponGrid[i];
-
-                            NeavaAGBFPlayer.WeaponGrid[i] = temp;
-                            Main.mouseItem = mouseItem;
-
-                            Main.NewText($"WeaponGrid[{i}] = {NeavaAGBFPlayer.WeaponGrid[i]?.Name ?? "None"}, Main.mouseItem = {Main.mouseItem?.Name ?? "None"}");
-                        }
-
-                        if (NeavaAGBFPlayer.WeaponGrid[i].type != ItemID.None)
-                        {
-                            Main.HoverItem = NeavaAGBFPlayer.WeaponGrid[i];
-                            Main.instance.MouseText(NeavaAGBFPlayer.WeaponGrid[i].Name, NeavaAGBFPlayer.WeaponGrid[i].rare, 0, -1, -1, -1, -1, 0);
-                        }
-
-                        //Main.NewText($"WeaponGrid[{i}] = {NeavaAGBFPlayer.WeaponGrid[i]?.Name ?? "None"}");
-
-                    }
-
-                    
-                }
-
-
             }
 
+            if (IsWeaponGridOpen)
+            {
+                DrawWeaponSlots(uiOffset);
+            }
         }
 
-        public static void IsCLickingCheck()
+        private static void DrawWeaponSlots(Vector2 uiOffset)
+        {
+            Texture2D slotBackgroundTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/WeaponSlot", AssetRequestMode.AsyncLoad).Value;
+
+            const int slotCount = 9;
+            const int slotsPerRow = 3;
+            const float slotSize = 52f;
+            const float slotSpacing = 60f;
+            Vector2 startingPosition = new Vector2(580f, 345f);
+
+            Color slotColor = new Color(255, 255, 255, 222);
+
+            for (int i = 0; i < slotCount; i++)
+            {
+                int row = i / slotsPerRow;
+                int column = i % slotsPerRow;
+                Vector2 slotPosition = startingPosition + uiOffset + new Vector2(column * slotSpacing, row * slotSpacing);
+
+                Main.spriteBatch.Draw(slotBackgroundTexture, slotPosition, null, slotColor, 0f, Utils.Size(slotBackgroundTexture) / 2f, 0.85f, SpriteEffects.None, 0f);
+
+                Texture2D itemTexture = TextureAssets.Item[WeaponGrid[i].type].Value;
+                Main.spriteBatch.Draw(itemTexture, slotPosition, null, Color.White, 0f, Utils.Size(itemTexture) / 2f, ScaleToFit(itemTexture), SpriteEffects.None, 0f);
+
+                if (Vector2.Distance(slotPosition, Main.MouseScreen) <= slotSize / 2f)
+                {
+                    _isMouseOverSlot = true;
+
+                    if (!IsClicking && PlayerInput.Triggers.Current.MouseLeft && (Main.mouseItem.type != ItemID.None || WeaponGrid[i].type != ItemID.None))
+                    {
+                        SoundEngine.PlaySound(SoundID.Grab);
+
+                        Item temp = WeaponGrid[i];
+                        WeaponGrid[i] = Main.mouseItem;
+                        Main.mouseItem = temp;
+
+                        Main.NewText($"WeaponGrid[{i}] = {WeaponGrid[i]?.Name ?? "None"}, Main.mouseItem = {Main.mouseItem?.Name ?? "None"}");
+                    }
+
+                    if (WeaponGrid[i].type != ItemID.None)
+                    {
+                        Main.HoverItem = WeaponGrid[i];
+                        Main.instance.MouseText(WeaponGrid[i].Name, WeaponGrid[i].rare);
+                    }
+                }
+            }
+        }
+
+        public static void UpdateIsClicking()
         {
             IsClicking = PlayerInput.Triggers.Current.MouseLeft;
         }
