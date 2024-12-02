@@ -23,7 +23,6 @@ namespace NeavaAGBF.WeaponSkills
             return Name;
         }
 
-        // Predefined elements with colors
         public static readonly Element Wind = new Element("Wind", Color.LightGreen);
         public static readonly Element Fire = new Element("Fire", Color.Red);
         public static readonly Element Water = new Element("Water", Color.Blue);

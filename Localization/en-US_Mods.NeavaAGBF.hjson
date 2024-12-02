@@ -12,4 +12,4 @@ Items: {
 	}
 }
 
-"Keybinds.Open Weapon Grid.DisplayName": Open  Weapon  Grid
+SimpleText.OpenGrid: Toggle Weapon Grid

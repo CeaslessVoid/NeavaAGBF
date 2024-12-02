@@ -17,6 +17,7 @@ using Terraria.ID;
 using System.Security.Policy;
 using Terraria.ModLoader.IO;
 using System;
+using NeavaAGBF.WeaponSkills;
 
 namespace NeavaAGBF.Common.Players
 {
@@ -136,7 +137,7 @@ namespace NeavaAGBF.Common.Players
 
             if (isMouseOverButton)
             {
-                Main.instance.MouseText(Language.GetText("Mods.NeavaAGBF.OpenGrid").Value);
+                Main.instance.MouseText(Language.GetText("Mods.NeavaAGBF.SimpleText.OpenGrid").Value);
                 _isMouseOverSlot = true;
 
                 if (!IsClicking && PlayerInput.Triggers.Current.MouseLeft)
@@ -205,6 +206,13 @@ namespace NeavaAGBF.Common.Players
             IsClicking = PlayerInput.Triggers.Current.MouseLeft;
         }
 
+        public override void PostUpdateEquips()
+        {
+            base.PostUpdate();
+
+            WeaponGridHandler weaponGridHandler = new WeaponGridHandler();
+            weaponGridHandler.ApplyWeaponGridEffects(Player);
+        }
     }
 
 }
