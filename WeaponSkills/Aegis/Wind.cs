@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace NeavaAGBF.WeaponSkills.Aegis
 {
@@ -14,6 +15,7 @@ namespace NeavaAGBF.WeaponSkills.Aegis
             HPPerLevel = 0.6f;
         }
 
+        public override Color TooltipColor => Color.Cyan;
     }
 
 

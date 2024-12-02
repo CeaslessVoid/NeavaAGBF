@@ -188,7 +188,7 @@ namespace NeavaAGBF.Common.Players
                         WeaponGrid[i] = Main.mouseItem;
                         Main.mouseItem = temp;
 
-                        Main.NewText($"WeaponGrid[{i}] = {WeaponGrid[i]?.Name ?? "None"}, Main.mouseItem = {Main.mouseItem?.Name ?? "None"}");
+                        //Main.NewText($"WeaponGrid[{i}] = {WeaponGrid[i]?.Name ?? "None"}, Main.mouseItem = {Main.mouseItem?.Name ?? "None"}");
                     }
 
                     if (WeaponGrid[i].type != ItemID.None)

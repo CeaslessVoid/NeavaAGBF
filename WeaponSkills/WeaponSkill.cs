@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace NeavaAGBF.WeaponSkills
 {
@@ -28,18 +29,13 @@ namespace NeavaAGBF.WeaponSkills
         public float AttackSpeedPerLevel { get; protected set; }
         public float MovementSpeedPerLevel { get; protected set; }
 
+        public virtual Color TooltipColor { get; protected set; } = Color.Green;
+
         protected WeaponSkill(string owner, string name, Element element)
         {
             SkillOwner = owner;
             SkillName = name;
             SkillElement = element;
-        }
-
-        public virtual void GetStatsAtLevel(int level, out float hp, out float atk, out float def)
-        {
-            hp = HP + HPPerLevel * level;
-            atk = (ATK + ATKPerLevel * level) / 100f;
-            def = DEF + DEFPerLevel * level;
         }
 
         public override string ToString()
