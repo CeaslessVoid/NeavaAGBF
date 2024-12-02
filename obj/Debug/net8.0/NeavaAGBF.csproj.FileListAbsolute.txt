@@ -228,3 +228,4 @@ C:\Users\Neava\Documents\My Games\Terraria\tModLoader\ModSources\NeavaAGBF\obj\D
 C:\Users\Neava\Documents\My Games\Terraria\tModLoader\ModSources\NeavaAGBF\obj\Debug\net8.0\refint\NeavaAGBF.dll
 C:\Users\Neava\Documents\My Games\Terraria\tModLoader\ModSources\NeavaAGBF\obj\Debug\net8.0\NeavaAGBF.pdb
 C:\Users\Neava\Documents\My Games\Terraria\tModLoader\ModSources\NeavaAGBF\obj\Debug\net8.0\ref\NeavaAGBF.dll
+C:\Users\Neava\Documents\My Games\Terraria\tModLoader\ModSources\NeavaAGBF\obj\Debug\net8.0\NeavaAGBF.sourcelink.json

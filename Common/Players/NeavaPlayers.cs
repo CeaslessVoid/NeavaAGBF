@@ -16,6 +16,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using System.Security.Policy;
 using Terraria.ModLoader.IO;
+using System;
 
 namespace NeavaAGBF.Common.Players
 {
@@ -30,32 +31,43 @@ namespace NeavaAGBF.Common.Players
         // Delete when not needed
         private bool JC_SB;
 
-        private bool CSH;
+        private static bool CSH = false;
 
-        public static bool DSJJH = false;
+        private bool ResetGrid;
 
         public static bool DKUI = false;
 
-        public static bool ZZSY = false;
-
-        static NeavaAGBFPlayer()
-        {
-            for (int i = 0; i < WeaponGrid.Length; i++)
-            {
-                WeaponGrid[i] = new Item();
-            }
-        }
+        public static bool IsClicking = false;
 
 
         public static float ITDX(Texture2D texture2D)
         {
-            float num = 0.85f;
-            if ((float)texture2D.Height > 42.5f || (float)texture2D.Width > 42.5f)
-            {
-                num = ((texture2D.Width <= texture2D.Height) ? (38.25f / (float)texture2D.Height) : (38.25f / (float)texture2D.Width));
-            }
-            return num;
+            float maxSize = 42.5f; // Adjust maximum size
+            return Math.Min(maxSize / texture2D.Width, maxSize / texture2D.Height);
         }
+
+        public override void ResetEffects()
+        {
+            if (!this.ResetGrid)
+            {
+                ResetGrid = true;
+                for (int i = 0; i < WeaponGrid.Length; i++)
+                {
+                    WeaponGrid[i] = new Item(0,1,0);
+                }
+            }
+
+            if (CSH)
+            {
+                if (!PlayerInput.Triggers.Current.MouseLeft)
+                {
+                    CSH = false;
+                }
+                base.Player.delayUseItem = true;
+                base.Player.controlUseItem = false;
+            }
+        }
+
 
 
         public static void DrawWeaponGrid()
@@ -72,42 +84,40 @@ namespace NeavaAGBF.Common.Players
 
             if (flag)
             {
-                NeavaAGBFPlayer.ZZSY = true;
+                NeavaAGBFPlayer.CSH = true;
                 Main.spriteBatch.Draw(GridOpenTexture2, vector2, null, new Color(255, 255, 155), 0f, Utils.Size(GridOpenTexture2) / 2f, 0.9f, 0, 0f);
                 Main.instance.MouseText(Language.GetText("Mods.NeavaAGBF.OpenGrid").Value, 0, 0, -1, -1, -1, -1, 0);
 
             }
             Main.spriteBatch.Draw(GridOpenTexture, vector2, null, new Color(255, 255, 255), 0f, Utils.Size(GridOpenTexture) / 2f, 0.9f, 0, 0f);
 
-            if (flag && !NeavaAGBFPlayer.DSJJH && PlayerInput.Triggers.Current.MouseLeft)
+            if (flag && !IsClicking && PlayerInput.Triggers.Current.MouseLeft) // Ensures one click per toggle
             {
-                NeavaAGBFPlayer.ZZSY = true;
+                NeavaAGBFPlayer.CSH = true;
                 if (!NeavaAGBFPlayer.DKUI)
                 {
-                    SoundEngine.PlaySound(SoundID.MenuOpen, null, null);
+                    SoundEngine.PlaySound(SoundID.MenuOpen);
                 }
                 else
                 {
-                    SoundEngine.PlaySound(SoundID.MenuClose, null, null);
+                    SoundEngine.PlaySound(SoundID.MenuClose);
                 }
                 NeavaAGBFPlayer.DKUI = !NeavaAGBFPlayer.DKUI;
+                Main.mouseLeftRelease = false; // Prevent further toggles in the same click
             }
+
             if (NeavaAGBFPlayer.DKUI)
             {
                 Texture2D UID = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/WeaponSlot", AssetRequestMode.AsyncLoad).Value;
 
                 Color color;
                 color = new Color(255, 255, 255, 222);
-                Color color2;
-                color2 = new Color(0, 0, 0);
-                Color color3;
-                color3 = new Color(255, 255, 255);
 
                 Vector2 item_0 = new Vector2(580f, 345f) + UI;
 
                 const int SlotCount = 9; // Number of slots
                 const int SlotsPerRow = 3; // Slots per row in the grid
-                const float SlotSize = 50f; // Size of each slot
+                const float SlotSize = 52f; // Size of each slot
                 const float SlotSpacing = 60f; // Spacing between slots
                 Vector2 StartingPosition = new Vector2(580f, 345f); // Top-left corner of the grid
                 Vector2 uiOffset = UI; // Offset for UI positioning
@@ -123,42 +133,51 @@ namespace NeavaAGBF.Common.Players
                     // Calculate position
                     Vector2 slotPosition = StartingPosition + uiOffset + new Vector2(column * SlotSpacing, row * SlotSpacing);
 
-                    // Check mouse interaction
-                    if (Vector2.Distance(slotPosition, Main.MouseScreen) <= SlotSize / 2f)
-                    {
-                        NeavaAGBFPlayer.ZZSY = true;
-                        if (!NeavaAGBFPlayer.DSJJH && PlayerInput.Triggers.Current.MouseLeft && (Main.mouseItem.type != 0 || NeavaAGBFPlayer.WeaponGrid[i].type != 0))
-                        {
-                            SoundEngine.PlaySound(SoundID.Grab, null, null);
-                            Item temp = Main.mouseItem;
-                            Main.mouseItem = NeavaAGBFPlayer.WeaponGrid[i];
-                            NeavaAGBFPlayer.WeaponGrid[i] = temp;
-                        }
-
-                        // Display hover text
-                        Main.HoverItem = NeavaAGBFPlayer.WeaponGrid[i];
-                        Main.instance.MouseText(NeavaAGBFPlayer.WeaponGrid[i].Name, NeavaAGBFPlayer.WeaponGrid[i].rare, 0, -1, -1, -1, -1, 0);
-                    }
-
                     // Draw the slot background
                     Main.spriteBatch.Draw(UID, slotPosition, null, color, 0f, Utils.Size(UID) / 2f, 0.85f, 0, 0f);
 
-                    // Draw the item in the slot
-                    //if (NeavaAGBFPlayer.WeaponGrid[i].type != 0)
-                    //{
-                    //    Texture2D itemTexture = TextureAssets.Item[NeavaAGBFPlayer.WeaponGrid[i].type].Value;
-                    //    Main.spriteBatch.Draw(itemTexture, slotPosition, null, color3, 0f, Utils.Size(itemTexture) / 2f, NeavaAGBFPlayer.ITDX(itemTexture), 0, 0f);
-                    //}
-                    if (NeavaAGBFPlayer.WeaponGrid[i].type != 0)
+                    Texture2D itemTexture = TextureAssets.Item[NeavaAGBFPlayer.WeaponGrid[i].type].Value;
+                    Main.spriteBatch.Draw(itemTexture, slotPosition, null, Color.White, 0f, Utils.Size(itemTexture) / 2f, ITDX(itemTexture), SpriteEffects.None, 0f);
+
+                    // Check mouse interaction
+                    if (Vector2.Distance(slotPosition, Main.MouseScreen) <= SlotSize / 2f)
                     {
-                        Main.HoverItem = NeavaAGBFPlayer.WeaponGrid[i];
-                        Main.instance.MouseText(NeavaAGBFPlayer.WeaponGrid[i].Name, NeavaAGBFPlayer.WeaponGrid[i].rare, 0, -1, -1, -1, -1, 0);
+                        NeavaAGBFPlayer.CSH = true;
+                        if (!IsClicking && PlayerInput.Triggers.Current.MouseLeft && (Main.mouseItem.type != ItemID.None || NeavaAGBFPlayer.WeaponGrid[i].type != ItemID.None))
+                        {
+                            SoundEngine.PlaySound(SoundID.Grab, null, null);
+
+                            Item temp = Main.mouseItem;
+                            Item mouseItem = NeavaAGBFPlayer.WeaponGrid[i];
+                            Main.mouseItem = NeavaAGBFPlayer.WeaponGrid[i];
+
+                            NeavaAGBFPlayer.WeaponGrid[i] = temp;
+                            Main.mouseItem = mouseItem;
+
+                            Main.NewText($"WeaponGrid[{i}] = {NeavaAGBFPlayer.WeaponGrid[i]?.Name ?? "None"}, Main.mouseItem = {Main.mouseItem?.Name ?? "None"}");
+                        }
+
+                        if (NeavaAGBFPlayer.WeaponGrid[i].type != ItemID.None)
+                        {
+                            Main.HoverItem = NeavaAGBFPlayer.WeaponGrid[i];
+                            Main.instance.MouseText(NeavaAGBFPlayer.WeaponGrid[i].Name, NeavaAGBFPlayer.WeaponGrid[i].rare, 0, -1, -1, -1, -1, 0);
+                        }
+
+                        //Main.NewText($"WeaponGrid[{i}] = {NeavaAGBFPlayer.WeaponGrid[i]?.Name ?? "None"}");
+
                     }
+
+                    
                 }
 
 
             }
 
+        }
+
+        public static void IsCLickingCheck()
+        {
+            IsClicking = PlayerInput.Triggers.Current.MouseLeft;
         }
 
     }
