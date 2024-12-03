@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using NeavaAGBF.WeaponSkills.Might;
 using NeavaAGBF.Common.Items;
+using NeavaAGBF.Common.Projectiles;
 
 namespace NeavaAGBF.Content.Items
 { 
@@ -43,9 +44,38 @@ namespace NeavaAGBF.Content.Items
 
 				globalItem.chargeGain = 100;
 
+                globalItem.chargeName = "Tester's Strike";
+                globalItem.chargeAttackString = "Launches a projectile that doesn 100% damage to a foe. Gain 'Well Fed' buff ";
+
                 globalItem.chargeAttack = (Player player) =>
                 {
                     Main.NewText($"{player.name} used the Basic Sword Charge Attack!", Color.Yellow);
+
+                    StatHandler playerMod = Main.LocalPlayer.GetModPlayer<StatHandler>();
+
+                    Vector2 playerCenter = player.Center;
+                    Vector2 cursorPosition = Main.MouseWorld;
+
+                    Vector2 velocity = Vector2.Normalize(cursorPosition - playerCenter) * 10f;
+
+                    int projectileType = ModContent.ProjectileType<ProjectilNoCharge>();
+                    int proj = Projectile.NewProjectile(
+                        spawnSource: player.GetSource_ItemUse(Item),
+                        position: playerCenter,
+                        velocity: velocity,
+                        Type: projectileType,
+                        Damage: (int)(Item.damage * playerMod.chargeAttackDamageMultiplier),
+                        KnockBack: 0,
+                        Owner: player.whoAmI
+                    );
+
+                    if (Main.projectile[proj].TryGetGlobalProjectile(out ChargeControlGlobalProjectile globalProj))
+                    {
+                        globalProj.CanGainCharge = false;
+                    }
+
+
+                    player.AddBuff(BuffID.WellFed, 600);
                 };
             }
         }

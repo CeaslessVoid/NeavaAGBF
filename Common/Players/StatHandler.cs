@@ -26,13 +26,12 @@ namespace NeavaAGBF.Common.Players
     {
         public float BonusCritDamage = 0f;
 
-        public int currentCharge = 0;
-        public const int MaxCharge = 100;
+        public float currentCharge = 0;
+        public int MaxCharge = 100;
         public bool readyToChargeAttack => currentCharge >= MaxCharge;
 
         public float chargeGainMultiplier = 1f;
         public float chargeAttackDamageMultiplier = 1f;
-
 
 
         public override void ResetEffects()
@@ -58,24 +57,43 @@ namespace NeavaAGBF.Common.Players
                     globalItem.chargeAttack.Invoke(Player);
 
                     currentCharge = 0;
-                    Main.NewText("Charge attack executed! Charge bar reset.", Color.Cyan);
                 }
             }
         }
 
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Player.HeldItem.TryGetGlobalItem(out WeaponSkillsGlobalItem globalItem))
             {
                 float chargeGain = globalItem.chargeGain;
                 float totalChargeGain = chargeGain * this.chargeGainMultiplier;
 
-                currentCharge = Math.Min(currentCharge + (int)totalChargeGain, MaxCharge);
+                currentCharge = Math.Min(currentCharge + totalChargeGain, MaxCharge);
 
-                Main.NewText($"Charge Gained! Current Charge: {currentCharge}/{MaxCharge}", Color.Cyan);
+                //Main.NewText($"Charge Gained! Current Charge: {currentCharge}/{MaxCharge}", Color.Cyan);
             }
         }
 
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (proj.TryGetGlobalProjectile(out ChargeControlGlobalProjectile globalProj) && !globalProj.CanGainCharge)
+                return;
+
+            if (Player.HeldItem.TryGetGlobalItem(out WeaponSkillsGlobalItem globalItem))
+            {
+                float chargeGain = globalItem.chargeGain;
+                float totalChargeGain = chargeGain * this.chargeGainMultiplier;
+
+                if (proj.DamageType == DamageClass.Summon)
+                    totalChargeGain = 0.1f;
+
+                currentCharge = Math.Min(currentCharge + totalChargeGain, MaxCharge);
+
+                //Main.NewText($"Charge Gained! Current Charge: {(int)currentCharge}/{MaxCharge}", Color.Cyan);
+            }
+        }
+
+        
 
     }
 

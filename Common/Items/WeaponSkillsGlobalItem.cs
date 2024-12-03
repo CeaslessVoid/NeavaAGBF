@@ -21,6 +21,9 @@ namespace NeavaAGBF.Common.Items
         public float chargeGain = 1f;
         public float chargeAttackDamage = 1f;
 
+        public string chargeName = null;
+        public string chargeAttackString = null;
+
         public Action<Player> chargeAttack = (Player player) =>
         {
             Main.NewText("Default Charge Attack activated!", Color.LightGreen);
@@ -36,6 +39,14 @@ namespace NeavaAGBF.Common.Items
                 {
                     OverrideColor = weaponElement.TooltipColor
                 });
+
+                tooltips.Add(new TooltipLine(Mod, "Spacer", "-------------------------------"));
+            }
+
+            if (chargeAttackString != null)
+            {
+                tooltips.Add(new TooltipLine(Mod, "Charge", $"{chargeName}"));
+                tooltips.Add(new TooltipLine(Mod, "Charge", $"{chargeAttackString}"));
 
                 tooltips.Add(new TooltipLine(Mod, "Spacer", "-------------------------------"));
             }
@@ -61,6 +72,9 @@ namespace NeavaAGBF.Common.Items
             float attackSpeedBonus = skill.AttackSpeed + (skill.AttackSpeedPerLevel * level);
             float movementSpeedBonus = skill.MovementSpeed + (skill.MovementSpeedPerLevel * level);
 
+            float chargeBarBonus = skill.ChargeBarGain + (skill.ChargeBarGainPerLevel * level);
+            float chargeAtackBonus = skill.ChargAttack + (skill.ChargAttackPerLevel * level);
+
             TooltipLine skillNameLine = new TooltipLine(Mod, "SkillName", $"{skill.SkillOwner}'s {skill.SkillName}")
             {
                 OverrideColor = skill.TooltipColor
@@ -74,6 +88,9 @@ namespace NeavaAGBF.Common.Items
             AddStatTooltip(tooltips, $"{element.Name} Crit Damage", critDamageBonus, true, element.TooltipColor);
             AddStatTooltip(tooltips, $"{element.Name} Attack Speed", attackSpeedBonus, true, element.TooltipColor);
             AddStatTooltip(tooltips, "Movement Speed", movementSpeedBonus, true, null);
+
+            AddStatTooltip(tooltips, $"Charge Bar Gain", chargeBarBonus, true, element.TooltipColor);
+            AddStatTooltip(tooltips, $"{element.Name} Charge Attack", chargeAtackBonus, true, element.TooltipColor);
         }
 
         private void AddStatTooltip(List<TooltipLine> tooltips, string statName, float value, bool isPercentage, Color? color)

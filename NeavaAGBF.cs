@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.UI.Elements;
 using NeavaAGBF.Common.Players;
 using Microsoft.Xna.Framework.Input;
+using NeavaAGBF.Common.UI;
 
 namespace NeavaAGBF
 {
@@ -21,10 +22,17 @@ namespace NeavaAGBF
             On_Main.DrawEmoteBubblesButton += new On_Main.hook_DrawEmoteBubblesButton(this.On_Main_DrawEmoteBubblesButton);
 
             ChargeAttackKey = KeybindLoader.RegisterKeybind(this, "Charge Attack", Keys.O);
+
+            if (!Main.dedServ) // Only load UI on the client
+            {
+                ChargeBar.Instance = new ChargeBar();
+                ChargeBar.Visible = true;
+            }
         }
 
         public override void Unload()
         {
+            ChargeBar.Instance = null;
             ChargeAttackKey = null;
         }
 

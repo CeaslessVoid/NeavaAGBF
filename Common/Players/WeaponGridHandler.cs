@@ -59,9 +59,11 @@ namespace NeavaAGBF.Common.Players
                         totalCritDamagePercent += (skill.CritDamage + (skill.CritDamagePerLevel * currentLevel)) / 100f;
                         totalAttackSpeedPercent += (skill.AttackSpeed + (skill.AttackSpeedPerLevel * currentLevel)) / 100f;
                         
-                        totalChargeBarGain += (skill.ChargeBarGain + (skill.ChargeBarGainPerLevel * currentLevel)) / 100f;
                         totalChargeDamageGain += (skill.ChargAttack + (skill.ChargAttackPerLevel * currentLevel)) / 100f;
                     }
+
+                    totalChargeBarGain += (skill.ChargeBarGain + (skill.ChargeBarGainPerLevel * currentLevel)) / 100f;
+
                 }
             }
 
