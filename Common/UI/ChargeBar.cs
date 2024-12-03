@@ -25,11 +25,12 @@ namespace NeavaAGBF.Common.UI
             Player player = Main.LocalPlayer;
             if (player.TryGetModPlayer<StatHandler>(out var modPlayer))
             {
+
                 float chargePercent = modPlayer.currentCharge / modPlayer.MaxCharge;
                 chargePercent = MathHelper.Clamp(chargePercent, 0f, 1f); // Ensure it's between 0% and 100%
                 string chargeText = $"{(int)(chargePercent * 100)}%";
 
-                Vector2 position = new Vector2(500, 80);
+                Vector2 position = new Vector2(1470, 100);
                 int width = 200;
                 int height = 20;
 
@@ -38,6 +39,12 @@ namespace NeavaAGBF.Common.UI
 
                 Color fillColor = modPlayer.currentCharge >= modPlayer.MaxCharge ? GetRainbowColor() : Color.Yellow;
                 spriteBatch.Draw(backgroundTexture, new Rectangle((int)position.X, (int)position.Y, (int)(width * chargePercent), height), fillColor);
+
+
+                Texture2D ChargeBarSprite = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/ChargeBar").Value;
+
+                Vector2 spritePosition = position - new Vector2(20,15);
+                spriteBatch.Draw(ChargeBarSprite, spritePosition, Color.White);
 
                 Vector2 textPosition = position + new Vector2(width / 2, height / 2);
                 Utils.DrawBorderString(spriteBatch, chargeText, textPosition, Color.White, 1f, 0.5f, 0.5f);
