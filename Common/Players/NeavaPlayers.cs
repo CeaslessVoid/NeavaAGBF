@@ -23,7 +23,7 @@ namespace NeavaAGBF.Common.Players
 {
     public class NeavaAGBFPlayer : ModPlayer
     {
-        public static Item[] WeaponGrid = new Item[9];
+        public Item[] WeaponGrid = new Item[9];
 
         private static bool _isMouseOverSlot = false;
         private static bool _isWeaponGridInitialized = false;
@@ -62,12 +62,11 @@ namespace NeavaAGBF.Common.Players
 
         public override void SaveData(TagCompound tag)
         {
-            // Create a list to store serialized item data
             var gridData = new List<TagCompound>();
 
             foreach (var item in WeaponGrid)
             {
-                if (item != null && !item.IsAir) // Ensure the item is valid
+                if (item != null && !item.IsAir)
                 {
                     gridData.Add(new TagCompound
                     {
@@ -79,7 +78,7 @@ namespace NeavaAGBF.Common.Players
                 {
                     gridData.Add(new TagCompound
                     {
-                        ["type"] = 0, // Represents an empty item slot
+                        ["type"] = 0,
                         ["stack"] = 0
                     });
                 }
@@ -97,14 +96,12 @@ namespace NeavaAGBF.Common.Players
                 {
                     if (gridData[i] != null && gridData[i].Get<int>("type") > 0)
                     {
-                        // Reconstruct valid items
                         WeaponGrid[i] = new Item();
                         WeaponGrid[i].SetDefaults(gridData[i].Get<int>("type"));
                         WeaponGrid[i].stack = gridData[i].Get<int>("stack");
                     }
                     else
                     {
-                        // Handle empty slots
                         WeaponGrid[i] = new Item();
                     }
                 }
@@ -158,6 +155,8 @@ namespace NeavaAGBF.Common.Players
         {
             Texture2D slotBackgroundTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/WeaponSlot", AssetRequestMode.AsyncLoad).Value;
 
+            NeavaAGBFPlayer playerMod = Main.LocalPlayer.GetModPlayer<NeavaAGBFPlayer>();
+
             const int slotCount = 9;
             const int slotsPerRow = 3;
             const float slotSize = 52f;
@@ -174,28 +173,30 @@ namespace NeavaAGBF.Common.Players
 
                 Main.spriteBatch.Draw(slotBackgroundTexture, slotPosition, null, slotColor, 0f, Utils.Size(slotBackgroundTexture) / 2f, 0.85f, SpriteEffects.None, 0f);
 
-                Texture2D itemTexture = TextureAssets.Item[WeaponGrid[i].type].Value;
+                Texture2D itemTexture = TextureAssets.Item[playerMod.WeaponGrid[i].type].Value;
                 Main.spriteBatch.Draw(itemTexture, slotPosition, null, Color.White, 0f, Utils.Size(itemTexture) / 2f, ScaleToFit(itemTexture), SpriteEffects.None, 0f);
 
                 if (Vector2.Distance(slotPosition, Main.MouseScreen) <= slotSize / 2f)
                 {
                     _isMouseOverSlot = true;
 
-                    if (!IsClicking && PlayerInput.Triggers.Current.MouseLeft && (Main.mouseItem.type != ItemID.None || WeaponGrid[i].type != ItemID.None))
+                    if (!IsClicking && PlayerInput.Triggers.Current.MouseLeft && (Main.mouseItem.type != ItemID.None || playerMod.WeaponGrid[i].type != ItemID.None))
                     {
                         SoundEngine.PlaySound(SoundID.Grab);
 
-                        Item temp = WeaponGrid[i];
-                        WeaponGrid[i] = Main.mouseItem;
+                        Item temp = playerMod.WeaponGrid[i];
+
+
+                        playerMod.WeaponGrid[i] = Main.mouseItem;
                         Main.mouseItem = temp;
 
                         //Main.NewText($"WeaponGrid[{i}] = {WeaponGrid[i]?.Name ?? "None"}, Main.mouseItem = {Main.mouseItem?.Name ?? "None"}");
                     }
 
-                    if (WeaponGrid[i].type != ItemID.None)
+                    if (playerMod.WeaponGrid[i].type != ItemID.None)
                     {
-                        Main.HoverItem = WeaponGrid[i];
-                        Main.instance.MouseText(WeaponGrid[i].Name, WeaponGrid[i].rare);
+                        Main.HoverItem = playerMod.WeaponGrid[i];
+                        Main.instance.MouseText(playerMod.WeaponGrid[i].Name, playerMod.WeaponGrid[i].rare);
                     }
                 }
             }

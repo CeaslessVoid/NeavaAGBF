@@ -18,6 +18,14 @@ namespace NeavaAGBF.Common.Items
         public int maxLevel = 0;
         public Element weaponElement = null;
 
+        public float chargeGain = 1f;
+        public float chargeAttackDamage = 1f;
+
+        public Action<Player> chargeAttack = (Player player) =>
+        {
+            Main.NewText("Default Charge Attack activated!", Color.LightGreen);
+        };
+
         public override bool InstancePerEntity => true;
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)

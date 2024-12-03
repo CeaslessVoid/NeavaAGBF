@@ -40,6 +40,13 @@ namespace NeavaAGBF.Content.Items
                 globalItem.currentLevel = 0;
                 globalItem.maxLevel = 3;
                 globalItem.weaponElement = Element.Wind;
+
+				globalItem.chargeGain = 100;
+
+                globalItem.chargeAttack = (Player player) =>
+                {
+                    Main.NewText($"{player.name} used the Basic Sword Charge Attack!", Color.Yellow);
+                };
             }
         }
 

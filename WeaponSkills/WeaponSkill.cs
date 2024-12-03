@@ -29,6 +29,12 @@ namespace NeavaAGBF.WeaponSkills
         public float AttackSpeedPerLevel { get; protected set; }
         public float MovementSpeedPerLevel { get; protected set; }
 
+        public float ChargeBarGain { get; protected set; }
+        public float ChargAttack { get; protected set; }
+
+        public float ChargeBarGainPerLevel { get; protected set; }
+        public float ChargAttackPerLevel { get; protected set; }
+
         public virtual Color TooltipColor { get; protected set; } = Color.Green;
 
         protected WeaponSkill(string owner, string name, Element element)

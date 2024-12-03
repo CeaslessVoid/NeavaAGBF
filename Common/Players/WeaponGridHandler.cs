@@ -17,6 +17,8 @@ namespace NeavaAGBF.Common.Players
 
         public void ApplyWeaponGridEffects(Player player)
         {
+            NeavaAGBFPlayer playerMod = Main.LocalPlayer.GetModPlayer<NeavaAGBFPlayer>();
+
             float totalHpBonusPercent = 0f;
             float totalDefBonus = 0f;
 
@@ -25,15 +27,19 @@ namespace NeavaAGBF.Common.Players
             float totalCritDamagePercent = 0f;
             float totalAttackSpeedPercent = 0f;
 
+            float totalChargeBarGain = 0f;
+            float totalChargeDamageGain = 0f;
+
             Item heldItem = player.HeldItem;
             Element heldElement = null;
+
 
             if (heldItem.TryGetGlobalItem(out WeaponSkillsGlobalItem heldWeapon))
             {
                 heldElement = heldWeapon.weaponElement;
             }
 
-            foreach (var weaponItem in NeavaAGBFPlayer.WeaponGrid)
+            foreach (var weaponItem in playerMod.WeaponGrid)
             {
                 if (weaponItem == null || !weaponItem.active || !weaponItem.TryGetGlobalItem(out WeaponSkillsGlobalItem weaponData))
                 {
@@ -52,16 +58,19 @@ namespace NeavaAGBF.Common.Players
                         totalCritRatePercent += (skill.CritRate + (skill.CritRatePerLevel * currentLevel));
                         totalCritDamagePercent += (skill.CritDamage + (skill.CritDamagePerLevel * currentLevel)) / 100f;
                         totalAttackSpeedPercent += (skill.AttackSpeed + (skill.AttackSpeedPerLevel * currentLevel)) / 100f;
+                        
+                        totalChargeBarGain += (skill.ChargeBarGain + (skill.ChargeBarGainPerLevel * currentLevel)) / 100f;
+                        totalChargeDamageGain += (skill.ChargAttack + (skill.ChargAttackPerLevel * currentLevel)) / 100f;
                     }
                 }
             }
 
-            ApplyBonusesToPlayer(player, totalHpBonusPercent, totalDefBonus, totalAtkPercent, totalCritRatePercent, totalCritDamagePercent, totalAttackSpeedPercent);
+            ApplyBonusesToPlayer(player, totalHpBonusPercent, totalDefBonus, totalAtkPercent, totalCritRatePercent, totalCritDamagePercent, totalAttackSpeedPercent, totalChargeBarGain, totalChargeDamageGain);
 
         }
 
 
-        private static void ApplyBonusesToPlayer(Player player, float hpBonusPercent, float defBonus, float atkPercent, float critRatePercent, float critDamagePercent, float attackSpeedPercent)
+        private static void ApplyBonusesToPlayer(Player player, float hpBonusPercent, float defBonus, float atkPercent, float critRatePercent, float critDamagePercent, float attackSpeedPercent, float totalChargeBarGain, float totalChargeDamageGain)
         {
             player.statLifeMax2 += (int)(player.statLifeMax * (hpBonusPercent / 100f));
             player.statDefense += (int)defBonus;
@@ -76,6 +85,9 @@ namespace NeavaAGBF.Common.Players
 
                 // Custom Stats go here
                 modPlayer.BonusCritDamage += critDamagePercent;
+
+                modPlayer.chargeGainMultiplier += totalChargeBarGain;
+                modPlayer.chargeAttackDamageMultiplier += totalChargeDamageGain;
             }
         }
     }
