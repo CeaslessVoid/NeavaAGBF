@@ -29,6 +29,12 @@ namespace NeavaAGBF.Common.Items
             Main.NewText("Default Charge Attack activated!", Color.LightGreen);
         };
 
+        public int baseUncap = 0;
+        public int maxUncap = 0;
+        public int currentUncap = 0;
+
+        public int skillLevelPerCap = 1;
+
         public override bool InstancePerEntity => true;
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
