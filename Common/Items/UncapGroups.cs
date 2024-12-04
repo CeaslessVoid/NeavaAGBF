@@ -65,12 +65,14 @@ namespace NeavaAGBF.Common.Items
             UncapGroup uncapGroupTest = new UncapGroup("uncapGroupTest");
             uncapGroupTest.AddRequirement(1, new List<UncapRequirement>
             {
-                new UncapRequirement(ItemID.Wood, 2)
-            });
+                new UncapRequirement(ItemID.Wood, 5),
+                new UncapRequirement(ItemID.StoneBlock, 10)
+            }); ;
                 uncapGroupTest.AddRequirement(2, new List<UncapRequirement>
             {
                 new UncapRequirement(ItemID.Wood, 5),
-                new UncapRequirement(ItemID.StoneBlock, 10)
+                new UncapRequirement(ItemID.StoneBlock, 10),
+                new UncapRequirement(ItemID.Torch, 5)
             });
 
 

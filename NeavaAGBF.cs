@@ -21,6 +21,7 @@ namespace NeavaAGBF
         {
             base.Load();
             On_Main.DrawEmoteBubblesButton += new On_Main.hook_DrawEmoteBubblesButton(this.On_Main_DrawEmoteBubblesButton);
+
             LoadUncapGroups.Initialize();
 
             ChargeAttackKey = KeybindLoader.RegisterKeybind(this, "Charge Attack", Keys.O);

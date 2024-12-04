@@ -15,6 +15,11 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using NeavaAGBF.Common.Players;
+using Microsoft.CodeAnalysis.FlowAnalysis;
+using Terraria.GameContent;
+using Terraria.GameInput;
+using NeavaAGBF.Common.Items;
 
 namespace NeavaAGBF.Common.UI
 {
@@ -32,7 +37,6 @@ namespace NeavaAGBF.Common.UI
             Height.Set(60f, 0f);
             Left.Set(Main.screenWidth / 2 - Width.Pixels / 2, 0f);
             Top.Set(Main.screenHeight / 2 - Height.Pixels / 2, 0f);
-            //BackgroundColor = new Color(73, 94, 171);
 
             backgroundTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Items/Tiles/UncapUi");
 
@@ -80,6 +84,8 @@ namespace NeavaAGBF.Common.UI
         {
             base.Update(gameTime);
 
+            NeavaAGBFPlayer.UpdateIsClicking2();
+
             if (ContainsPoint(Main.MouseScreen))
             {
                 Main.LocalPlayer.mouseInterface = true;
@@ -108,7 +114,122 @@ namespace NeavaAGBF.Common.UI
 
             CalculatedStyle dimensions = GetDimensions();
             spriteBatch.Draw(backgroundTexture.Value, dimensions.ToRectangle(), Color.White);
+
+            Texture2D weaponSlotTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/Empty").Value;
+
+            Texture2D materialTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/WeaponSlot").Value;
+
+            Color slotColor = new Color(255, 255, 255, 222);
+
+            Vector2 mainPosition = new Vector2(
+                dimensions.X + (dimensions.Width / 2) - (weaponSlotTexture.Width / 2),
+                dimensions.Y + (dimensions.Height / 2) - (weaponSlotTexture.Height / 2)
+            );
+
+            Vector2 realPostion = new Vector2(
+                dimensions.X + (dimensions.Width / 2),
+                dimensions.Y + (dimensions.Height / 2)
+            );
+
+            spriteBatch.Draw(
+                weaponSlotTexture,
+                mainPosition,
+                null,
+                slotColor,
+                0f,
+                Vector2.Zero,
+                1f,
+                SpriteEffects.None,
+                0f
+            );
+
+            // Bullshit
+            // Everything here is horrible code
+            NeavaAGBFPlayer playerMod = Main.LocalPlayer.GetModPlayer<NeavaAGBFPlayer>();
+
+            //Texture2D weaponSlotTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/Empty").Value;
+
+
+            if (CloseToGui(realPostion))
+            {
+                NeavaAGBFPlayer._isMouseOverSlot = true;
+                Main.instance.MouseText(Language.GetText("Mods.NeavaAGBF.SimpleText.UncapItem").Value);
+
+
+
+                if (PlayerInput.Triggers.Current.MouseLeft && (Main.mouseItem.type != ItemID.None || playerMod.UncapTarget.type != ItemID.None))
+                {
+                    if (!boolShit)
+                    {
+                        boolShit = true;
+
+                        SoundEngine.PlaySound(SoundID.Grab);
+
+                        Item temp = playerMod.UncapTarget;
+
+                        playerMod.UncapTarget = Main.mouseItem;
+                        Main.mouseItem = temp;
+                    }
+                }
+
+
+                if (!NeavaAGBFPlayer.IsClicking)
+                {
+                    boolShit = false;
+                }
+
+                if (playerMod.UncapTarget.type != ItemID.None)
+                {
+                    Main.HoverItem = playerMod.UncapTarget;
+                    Main.instance.MouseText(playerMod.UncapTarget.Name, playerMod.UncapTarget.rare);
+                }
+
+            }
+
+            if (playerMod.UncapTarget.type != ItemID.None)
+            {
+                WeaponSkillsGlobalItem globalItem = playerMod.UncapTarget.GetGlobalItem<WeaponSkillsGlobalItem>();
+
+                if (globalItem != null)
+                {
+                    if (globalItem.currentUncap >= globalItem.maxUncap)
+                    {
+                        Utils.DrawBorderString(spriteBatch,
+                            "Cannot be uncapped further",
+                            new Vector2(realPostion.X, realPostion.Y + 60),
+                            Color.Red,
+                            1f,
+                            0.5f,
+                            0.5f
+                        );
+                    }
+                    else if (globalItem.currentUncap <= 3)
+                    {
+                        requirements.Add(new UncapRequirement(playerMod.UncapTarget.type, 1));
+                    }
+                    else
+                    {
+                        requirements = globalItem.UncapGroup.GetRequirements(globalItem.currentUncap - 3);
+                        Main.NewText("Requirements: " + string.Join(", ", requirements.Select(r => $"{Lang.GetItemNameValue(r.ItemID)} x{r.Quantity}")));
+                    }
+                }
+
+            }
+
+            Texture2D itemTexture = TextureAssets.Item[playerMod.UncapTarget.type].Value;
+            Main.spriteBatch.Draw(itemTexture, realPostion, null, Color.White, 0f, Utils.Size(itemTexture) / 2f, NeavaAGBFPlayer.ScaleToFit(itemTexture), SpriteEffects.None, 0f);
+
         }
+
+        public bool CloseToGui(Vector2 position)
+        {
+            return Vector2.Distance(position, Main.MouseScreen) <= 26f;
+        }
+
+        private bool boolShit = false;
+
+        public List<UncapRequirement> requirements;
+
     }
     internal class ExampleUIHoverImageButton : UIImageButton
     {
@@ -151,7 +272,9 @@ namespace NeavaAGBF.Common.UI
             uncapMenu.Append(closeButton);
 
             Append(uncapMenu);
+
         }
+
 
         private void SetRectangle(UIElement uiElement, float left, float top, float width, float height)
         {
@@ -220,5 +343,6 @@ namespace NeavaAGBF.Common.UI
             }
         }
     }
+
 
 }

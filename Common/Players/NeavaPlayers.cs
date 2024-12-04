@@ -26,15 +26,20 @@ namespace NeavaAGBF.Common.Players
     {
         public Item[] WeaponGrid = new Item[9];
 
-        private static bool _isMouseOverSlot = false;
+        public static bool _isMouseOverSlot = false;
         private static bool _isWeaponGridInitialized = false;
 
         public static bool IsWeaponGridOpen = false;
         public static bool IsClicking = false;
 
+        //-------------------------------------------------------------
+
+        public Item UncapTarget = new Item();
+        private static bool _uncapTargetInit = false;
+
         public static float ScaleToFit(Texture2D texture)
         {
-            const float maxSize = 42.5f; // Maximum size for scaling
+            const float maxSize = 42.5f;
             return Math.Min(maxSize / texture.Width, maxSize / texture.Height);
         }
 
@@ -48,6 +53,12 @@ namespace NeavaAGBF.Common.Players
                     if (WeaponGrid[i] == null)
                         WeaponGrid[i] = new Item(0,1,0);
                 }
+            }
+
+            if (!_uncapTargetInit)
+            {
+                _uncapTargetInit = true;
+                UncapTarget = new Item(0, 1, 0);
             }
 
             if (_isMouseOverSlot)
@@ -210,6 +221,12 @@ namespace NeavaAGBF.Common.Players
         }
 
         public static void UpdateIsClicking()
+        {
+            IsClicking = PlayerInput.Triggers.Current.MouseLeft;
+        }
+
+        // So no overlap
+        public static void UpdateIsClicking2()
         {
             IsClicking = PlayerInput.Triggers.Current.MouseLeft;
         }

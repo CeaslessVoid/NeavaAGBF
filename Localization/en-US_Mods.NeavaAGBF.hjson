@@ -17,6 +17,10 @@ Items: {
 	}
 }
 
-SimpleText.OpenGrid: Toggle Weapon Grid
+SimpleText: {
+	OpenGrid: Toggle Weapon Grid
+	UncapItem: Plance an item here
+}
+
 "Keybinds.Charge Attack.DisplayName": Charge  Attack
 Projectiles.ProjectilNoCharge.DisplayName: Projectile No Charge

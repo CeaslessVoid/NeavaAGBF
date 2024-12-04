@@ -78,17 +78,9 @@ namespace NeavaAGBF.Content.Items
                     player.AddBuff(BuffID.WellFed, 600);
                 };
 
-                globalItem.maxUncap = 4;
+                globalItem.maxUncap = 5;
             }
         }
-
-        public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.DirtBlock, 10);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
-		}
 
 	}
 }
