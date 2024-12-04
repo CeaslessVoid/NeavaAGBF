@@ -77,6 +77,8 @@ namespace NeavaAGBF.Content.Items
 
                     player.AddBuff(BuffID.WellFed, 600);
                 };
+
+                globalItem.maxUncap = 4;
             }
         }
 

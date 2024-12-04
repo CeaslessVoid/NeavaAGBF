@@ -18,6 +18,7 @@ using System.Security.Policy;
 using Terraria.ModLoader.IO;
 using System;
 using NeavaAGBF.WeaponSkills;
+using NeavaAGBF.Common.UI;
 
 namespace NeavaAGBF.Common.Players
 {
@@ -142,6 +143,9 @@ namespace NeavaAGBF.Common.Players
                     IsWeaponGridOpen = !IsWeaponGridOpen;
                     SoundEngine.PlaySound(IsWeaponGridOpen ? SoundID.MenuOpen : SoundID.MenuClose);
                     Main.mouseLeftRelease = false;
+
+                    ModContent.GetInstance<WeaponGridUISystem>().ToggleGrid();
+
                 }
             }
 
@@ -157,11 +161,14 @@ namespace NeavaAGBF.Common.Players
 
             NeavaAGBFPlayer playerMod = Main.LocalPlayer.GetModPlayer<NeavaAGBFPlayer>();
 
+            WeaponGridUIState uiState = ModContent.GetInstance<WeaponGridUISystem>().gridUIState;
+            Vector2 panelPosition = new Vector2(uiState.weaponGridPanel.Left.Pixels, uiState.weaponGridPanel.Top.Pixels);   
+
             const int slotCount = 9;
             const int slotsPerRow = 3;
             const float slotSize = 52f;
             const float slotSpacing = 60f;
-            Vector2 startingPosition = new Vector2(580f, 345f);
+            Vector2 startingPosition = panelPosition + new Vector2(40f, 40f);
 
             Color slotColor = new Color(255, 255, 255, 222);
 

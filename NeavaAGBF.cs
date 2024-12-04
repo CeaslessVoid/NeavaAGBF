@@ -9,6 +9,7 @@ using Terraria.GameContent.UI.Elements;
 using NeavaAGBF.Common.Players;
 using Microsoft.Xna.Framework.Input;
 using NeavaAGBF.Common.UI;
+using NeavaAGBF.Common.Items;
 
 namespace NeavaAGBF
 {
@@ -20,6 +21,7 @@ namespace NeavaAGBF
         {
             base.Load();
             On_Main.DrawEmoteBubblesButton += new On_Main.hook_DrawEmoteBubblesButton(this.On_Main_DrawEmoteBubblesButton);
+            LoadUncapGroups.Initialize();
 
             ChargeAttackKey = KeybindLoader.RegisterKeybind(this, "Charge Attack", Keys.O);
 
@@ -34,12 +36,14 @@ namespace NeavaAGBF
         {
             ChargeBar.Instance = null;
             ChargeAttackKey = null;
+            LoadUncapGroups.Clear();
         }
 
         private void On_Main_DrawEmoteBubblesButton(On_Main.orig_DrawEmoteBubblesButton orig, int pivotTopLeftX, int pivotTopLeftY)
         {
             NeavaAGBFPlayer.DrawWeaponGrid();
             NeavaAGBFPlayer.UpdateIsClicking();
+
             orig.Invoke(pivotTopLeftX, pivotTopLeftY);
         }
 

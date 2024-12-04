@@ -18,7 +18,7 @@ namespace NeavaAGBF.Common.Items
         public int maxLevel = 0;
         public Element weaponElement = null;
 
-        public float chargeGain = 1f;
+        public float chargeGain = 0.1f;
         public float chargeAttackDamage = 1f;
 
         public string chargeName = null;
@@ -32,8 +32,9 @@ namespace NeavaAGBF.Common.Items
         public int baseUncap = 0;
         public int maxUncap = 0;
         public int currentUncap = 0;
-
         public int skillLevelPerCap = 1;
+
+        public UncapGroup UncapGroup = LoadUncapGroups.GetUncapGroup("uncapGroupTest");
 
         public override bool InstancePerEntity => true;
 
@@ -48,6 +49,20 @@ namespace NeavaAGBF.Common.Items
 
                 tooltips.Add(new TooltipLine(Mod, "Spacer", "-------------------------------"));
             }
+
+            string goldStars = new string('★', Math.Min(3, currentUncap));
+            string blueStars = new string('★', Math.Max(0, currentUncap - 3));
+            string emptyStars = new string('☆', maxUncap - currentUncap);
+
+            //string stars = new string('★', currentUncap) + new string('☆', maxUncap - currentUncap);
+            //tooltips.Insert(1, new TooltipLine(Mod, "UncapStatus", $"{stars}") { OverrideColor = Color.Gold });
+            
+            tooltips.Insert(1, new TooltipLine(Mod, "GoldStars", $"{goldStars}") { OverrideColor = Color.Gold });
+            if (!string.IsNullOrEmpty(blueStars))
+            {
+                tooltips.Insert(2, new TooltipLine(Mod, "BlueStars", $"{blueStars}") { OverrideColor = Color.Blue });
+            }
+            tooltips.Insert(3, new TooltipLine(Mod, "EmptyStars", $"{emptyStars}") { OverrideColor = Color.Gray });
 
             if (chargeAttackString != null)
             {
@@ -66,6 +81,17 @@ namespace NeavaAGBF.Common.Items
             {
                 tooltips.Add(new TooltipLine(Mod, "Level", $"Level: {currentLevel}/{maxLevel}"));
             }
+
+
+            // Debug
+            //if (UncapGroup != null)
+            //{
+            //    List<UncapRequirement> requirements = UncapGroup.GetRequirements(1);
+            //    if (requirements.Count > 0)
+            //    {
+            //        tooltips.Add(new TooltipLine(Mod, "Req", $"Required: {requirements[0].Quantity}x {requirements[0].ItemID}"));
+            //    }
+            //}
         }
 
         private void AddSkillTooltips(List<TooltipLine> tooltips, WeaponSkill skill, int level, Element element)
@@ -81,11 +107,13 @@ namespace NeavaAGBF.Common.Items
             float chargeBarBonus = skill.ChargeBarGain + (skill.ChargeBarGainPerLevel * level);
             float chargeAtackBonus = skill.ChargAttack + (skill.ChargAttackPerLevel * level);
 
-            TooltipLine skillNameLine = new TooltipLine(Mod, "SkillName", $"{skill.SkillOwner}'s {skill.SkillName}")
+            string skillOwnerDisplay = string.IsNullOrEmpty(skill.SkillOwner) ? "" : $"{skill.SkillOwner}'s";
+            TooltipLine skillNameLine = new TooltipLine(Mod, "SkillName", $"{skillOwnerDisplay} {skill.SkillName}")
             {
                 OverrideColor = skill.TooltipColor
             };
             tooltips.Add(skillNameLine);
+
 
             AddStatTooltip(tooltips, "Health", hpBonus, true, null);
             AddStatTooltip(tooltips, $"{element.Name} Attack", atkBonus, true, element.TooltipColor);

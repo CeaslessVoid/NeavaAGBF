@@ -30,7 +30,7 @@ namespace NeavaAGBF.Common.UI
                 chargePercent = MathHelper.Clamp(chargePercent, 0f, 1f); // Ensure it's between 0% and 100%
                 string chargeText = $"{(int)(chargePercent * 100)}%";
 
-                Vector2 position = new Vector2(1470, 100);
+                Vector2 position = new Vector2(500, 40);
                 int width = 200;
                 int height = 20;
 

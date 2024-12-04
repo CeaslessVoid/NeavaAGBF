@@ -17,7 +17,7 @@ namespace NeavaAGBF.Common.UI
             if (resourceBarIndex != -1)
             {
                 layers.Insert(resourceBarIndex + 1, new LegacyGameInterfaceLayer(
-                    "YourMod: Charge Bar",
+                    "NeavaAGBF: Charge Bar",
                     delegate
                     {
                         if (ChargeBar.Visible)

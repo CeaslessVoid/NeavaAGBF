@@ -10,8 +10,13 @@ Items: {
 			It's snowing on Mt.Fuji
 			'''
 	}
+
+	UncapAnvil: {
+		DisplayName: Uncap Anvil
+		Tooltip: Not usable as a normal anvil. Right click to open uncap menu
+	}
 }
 
 SimpleText.OpenGrid: Toggle Weapon Grid
 "Keybinds.Charge Attack.DisplayName": Charge  Attack
-Projectiles.ProjectilNoCharge.DisplayName: Projectil No Charge
+Projectiles.ProjectilNoCharge.DisplayName: Projectile No Charge
