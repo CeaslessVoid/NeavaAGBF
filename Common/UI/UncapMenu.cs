@@ -20,6 +20,8 @@ using Microsoft.CodeAnalysis.FlowAnalysis;
 using Terraria.GameContent;
 using Terraria.GameInput;
 using NeavaAGBF.Common.Items;
+using Terraria.ModLoader.IO;
+using Microsoft.Build.Utilities;
 
 namespace NeavaAGBF.Common.UI
 {
@@ -84,7 +86,7 @@ namespace NeavaAGBF.Common.UI
         {
             base.Update(gameTime);
 
-            NeavaAGBFPlayer.UpdateIsClicking2();
+            NeavaAGBFPlayer.UpdateIsClicking();
 
             if (ContainsPoint(Main.MouseScreen))
             {
@@ -105,6 +107,11 @@ namespace NeavaAGBF.Common.UI
                 Top.Pixels = Utils.Clamp(Top.Pixels, 0, parentSpace.Bottom - Height.Pixels);
 
                 Recalculate();
+            }
+
+            if (clickCooldownTimer > 0)
+            {
+                clickCooldownTimer--;
             }
         }
 
@@ -145,9 +152,6 @@ namespace NeavaAGBF.Common.UI
 
             // Bullshit
             // Everything here is horrible code
-            NeavaAGBFPlayer playerMod = Main.LocalPlayer.GetModPlayer<NeavaAGBFPlayer>();
-
-            //Texture2D weaponSlotTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/Empty").Value;
 
 
             if (CloseToGui(realPostion))
@@ -162,6 +166,23 @@ namespace NeavaAGBF.Common.UI
                     if (!boolShit)
                     {
                         boolShit = true;
+                        playerMod.boolHasChecked = false;
+
+                        foreach (Item inputMaterial in playerMod.inputMaterials)
+                        {
+                            if (inputMaterial != null && inputMaterial.type != ItemID.None)
+                            {
+                                Item leftover = Main.LocalPlayer.GetItem(Main.myPlayer, inputMaterial, GetItemSettings.InventoryEntityToPlayerInventorySettings);
+
+                                if (leftover != null && leftover.type != ItemID.None && leftover.stack > 0)
+                                {
+                                    Item.NewItem(Main.LocalPlayer.GetSource_Misc("UncapEject"), Main.LocalPlayer.Center, leftover.type, leftover.stack);
+                                }
+                            }
+                        }
+
+                        playerMod.requirementItems.Clear();
+                        playerMod.inputMaterials.Clear();
 
                         SoundEngine.PlaySound(SoundID.Grab);
 
@@ -186,16 +207,16 @@ namespace NeavaAGBF.Common.UI
 
             }
 
-            if (playerMod.UncapTarget.type != ItemID.None)
+            if (playerMod.UncapTarget.type != ItemID.None )
             {
                 WeaponSkillsGlobalItem globalItem = playerMod.UncapTarget.GetGlobalItem<WeaponSkillsGlobalItem>();
 
-                if (globalItem != null)
+                if (globalItem != null && !playerMod.boolHasChecked)
                 {
                     if (globalItem.currentUncap >= globalItem.maxUncap)
                     {
                         Utils.DrawBorderString(spriteBatch,
-                            "Cannot be uncapped further",
+                            Language.GetText("Mods.NeavaAGBF.SimpleText.NoMoreUncapItem").Value,
                             new Vector2(realPostion.X, realPostion.Y + 60),
                             Color.Red,
                             1f,
@@ -203,21 +224,46 @@ namespace NeavaAGBF.Common.UI
                             0.5f
                         );
                     }
-                    else if (globalItem.currentUncap <= 3)
+                    else if (globalItem.currentUncap < 3)
                     {
-                        requirements.Add(new UncapRequirement(playerMod.UncapTarget.type, 1));
+                        Item reqItem = new Item();
+
+                        playerMod.inputMaterials.Add(reqItem.Clone());
+
+                        reqItem.SetDefaults(playerMod.UncapTarget.type);
+                        playerMod.requirementItems.Add(reqItem);
+                        playerMod.boolHasChecked = true;
+
+
                     }
                     else
                     {
-                        requirements = globalItem.UncapGroup.GetRequirements(globalItem.currentUncap - 3);
-                        Main.NewText("Requirements: " + string.Join(", ", requirements.Select(r => $"{Lang.GetItemNameValue(r.ItemID)} x{r.Quantity}")));
+                        List<UncapRequirement> requirements = globalItem.UncapGroup.GetRequirements(globalItem.currentUncap - 2);
+                        foreach (var requirement in requirements)
+                        {
+                            Item reqItem = new Item();
+
+                            playerMod.inputMaterials.Add(reqItem.Clone());
+
+                            reqItem.SetDefaults(requirement.ItemID);
+                            reqItem.stack = requirement.Quantity;
+                            playerMod.requirementItems.Add(reqItem);
+                            
+                        }
+
+                        playerMod.boolHasChecked = true;
                     }
+
                 }
 
+                Vector2 slotPosition = mainPosition + new Vector2(0, 70);
+                DrawRequirementSlots(spriteBatch, slotPosition);
             }
 
             Texture2D itemTexture = TextureAssets.Item[playerMod.UncapTarget.type].Value;
             Main.spriteBatch.Draw(itemTexture, realPostion, null, Color.White, 0f, Utils.Size(itemTexture) / 2f, NeavaAGBFPlayer.ScaleToFit(itemTexture), SpriteEffects.None, 0f);
+
+            
 
         }
 
@@ -226,9 +272,205 @@ namespace NeavaAGBF.Common.UI
             return Vector2.Distance(position, Main.MouseScreen) <= 26f;
         }
 
+        private void DrawRequirementSlots(SpriteBatch spriteBatch, Vector2 basePosition)
+        {
+            const int boxSpacing = 60;
+            const float boxScale = 1.0f;
+            Color boxColor = new Color(255, 255, 255, 50);
+            Color boxColor2 = new Color(255, 255, 255, 255);
+
+            Color Color1 = new Color(0, 0, 0, 0);
+            Color Color2 = new Color(255, 255, 255, 255);
+
+            int totalSlots = playerMod.requirementItems.Count;
+            float totalWidth = (totalSlots - 1) * boxSpacing;
+            Vector2 startPosition = basePosition - new Vector2(totalWidth / 2, 0) + new Vector2(25,20);
+
+            if (playerMod.requirementItems == null || playerMod.inputMaterials == null)
+                return;
+
+            for (int i = 0; i < totalSlots; i++)
+            {
+                Vector2 slotPosition = startPosition + new Vector2(i * boxSpacing, 0);
+                Item reqItem = playerMod.requirementItems[i];
+                Item inputItem = playerMod.inputMaterials[i];
+
+                Texture2D slotTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/WeaponSlot").Value;
+                spriteBatch.Draw(slotTexture, slotPosition, null, boxColor2, 0f, Utils.Size(slotTexture) / 2f, boxScale, SpriteEffects.None, 0f);
+
+                if (reqItem.type != ItemID.None)
+                {
+
+                    Texture2D itemTexture = TextureAssets.Item[reqItem.type].Value;
+
+                    if (inputItem != null && inputItem.type != ItemID.None) spriteBatch.Draw(itemTexture, slotPosition, null, boxColor2, 0f, Utils.Size(itemTexture) / 2f, boxScale, SpriteEffects.None, 0f);
+
+                    else spriteBatch.Draw(itemTexture, slotPosition, null, boxColor, 0f, Utils.Size(itemTexture) / 2f, boxScale, SpriteEffects.None, 0f);
+
+
+
+                    if (Main.mouseX >= slotPosition.X - (slotTexture.Width / 2 * boxScale) &&
+                        Main.mouseX <= slotPosition.X + (slotTexture.Width / 2 * boxScale) &&
+                        Main.mouseY >= slotPosition.Y - (slotTexture.Height / 2 * boxScale) &&
+                        Main.mouseY <= slotPosition.Y + (slotTexture.Height / 2 * boxScale))
+                    {
+                        Main.HoverItem = reqItem.Clone();
+                        Main.instance.MouseText(reqItem.Name, reqItem.rare);
+                    }
+
+                    if (reqItem.stack > 1)
+                    {
+                        string stack = (inputItem != null && inputItem.type != ItemID.None) ? inputItem.stack.ToString() : reqItem.stack.ToString();
+                        Utils.DrawBorderStringFourWay(Main.spriteBatch, FontAssets.MouseText.Value, stack, slotPosition.X - 18f, slotPosition.Y, Color2, Color1, new Vector2(0f), 0.85f);
+                    }
+
+                    if (CloseToGui(slotPosition)) // + new Vector2(10, 10)
+                    {
+                        HandleRequirementSlotClick(reqItem, i);
+                    }
+                }
+                
+            }
+
+            if (AreRequirementsMet())
+            {
+                Texture2D confirmTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/UncapWeapon").Value;
+                Vector2 iconPosition = basePosition - new Vector2(60, 60);
+
+
+                if (CloseToGui(iconPosition + new Vector2(15,15)))
+                {
+                    confirmTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/UncapWeapon_2").Value;
+
+                    if (PlayerInput.Triggers.Current.MouseLeft && !boolShit)
+                    {
+                        boolShit = true;
+                        PerformUncap();
+                    }
+
+                    if (!NeavaAGBFPlayer.IsClicking)
+                    {
+                        boolShit = false;
+                    }
+
+                }
+                spriteBatch.Draw(confirmTexture, iconPosition, null, Color.White, 0f, Vector2.Zero, 0.65f, SpriteEffects.None, 0f);
+
+            }
+        }
+
+        private void PerformUncap()
+        {
+            if (playerMod.UncapTarget.type == ItemID.None)
+                return;
+
+            WeaponSkillsGlobalItem globalItem = playerMod.UncapTarget.GetGlobalItem<WeaponSkillsGlobalItem>();
+
+            if (globalItem == null)
+                return;
+
+            playerMod.inputMaterials.Clear();
+            playerMod.requirementItems.Clear();
+
+            globalItem.currentUncap++;
+            globalItem.maxLevel += globalItem.skillLevelPerCap;
+        }
+
+        private void HandleRequirementSlotClick(Item requiredItem, int index)
+        {
+            if (clickCooldownTimer > 0) return;
+
+            if (PlayerInput.Triggers.Current.MouseLeft && !boolShit )
+            {
+                boolShit = true;
+                clickCooldownTimer = 10;
+
+                if (Main.mouseItem.type == requiredItem.type)
+                {
+                    
+
+                    if (playerMod.inputMaterials[index].type == ItemID.None)
+                    {
+                        SoundEngine.PlaySound(SoundID.Grab);
+                        playerMod.inputMaterials[index] = Main.mouseItem.Clone();
+                        playerMod.inputMaterials[index].stack = Math.Min(Main.mouseItem.stack, requiredItem.stack);
+
+
+                        Player player = Main.LocalPlayer?.GetModPlayer<NeavaAGBFPlayer>().Player;
+                        ref Item item = ref player.inventory[58];
+                        item.stack -= playerMod.inputMaterials[index].stack;
+
+                        if (item.stack <= 0)
+                            item.SetDefaults();
+
+                        item = ref Main.mouseItem;
+                        item.stack -= playerMod.inputMaterials[index].stack;
+
+                        if (item.stack <= 0)
+                            item.SetDefaults();
+
+                    }
+
+                    else if (playerMod.inputMaterials[index].type == requiredItem.type)
+                    {
+                        SoundEngine.PlaySound(SoundID.Grab);
+                        int materialsNeeded = playerMod.requirementItems[index].stack - playerMod.inputMaterials[index].stack;
+                        playerMod.inputMaterials[index].stack += Math.Min(Main.mouseItem.stack, materialsNeeded);
+
+
+                        Player player = Main.LocalPlayer?.GetModPlayer<NeavaAGBFPlayer>().Player;
+                        ref Item item = ref player.inventory[58];
+                        item.stack -= materialsNeeded;
+
+                        if (item.stack <= 0)
+                            item.SetDefaults();
+
+                        item = ref Main.mouseItem;
+                        item.stack -= materialsNeeded;
+
+                        if (item.stack <= 0)
+                            item.SetDefaults();
+                    }
+                }
+
+                else if ((Main.mouseItem == null || Main.mouseItem.IsAir) & playerMod.inputMaterials[index].type != ItemID.None)
+                {
+                    SoundEngine.PlaySound(SoundID.Grab);
+
+                    Main.mouseItem = playerMod.inputMaterials[index];
+                    playerMod.inputMaterials[index] = new Item();
+                }
+            }
+
+            if (!NeavaAGBFPlayer.IsClicking)
+            {
+                boolShit = false;
+            }
+        }
+
+        private bool AreRequirementsMet()
+        {
+            for (int i = 0; i < playerMod.requirementItems.Count; i++)
+            {
+                if (playerMod.inputMaterials[i].type != playerMod.requirementItems[i].type || playerMod.inputMaterials[i].stack < playerMod.requirementItems[i].stack)
+                {
+                    return false; 
+                }
+            }
+            return true;
+        }
+
+
         private bool boolShit = false;
 
-        public List<UncapRequirement> requirements;
+        //private List<Item> requirementItems = new();
+        private NeavaAGBFPlayer playerMod => Main.LocalPlayer?.GetModPlayer<NeavaAGBFPlayer>();
+
+        //private List<Item> inputMaterials = new List<Item>();
+
+        //private bool boolHasChecked = false;
+
+        private int clickCooldownTimer = 0;
 
     }
     internal class ExampleUIHoverImageButton : UIImageButton
@@ -306,6 +548,8 @@ namespace NeavaAGBF.Common.UI
         public void HideMyUI()
         {
             anivlUserInterface?.SetState(null);
+
+            Player player = Main.LocalPlayer?.GetModPlayer<NeavaAGBFPlayer>().Player;
         }
 
         public override void Load()

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Terraria.Localization;
 
 namespace NeavaAGBF.WeaponSkills
 {
@@ -23,9 +24,13 @@ namespace NeavaAGBF.WeaponSkills
             return Name;
         }
 
-        public static readonly Element Wind = new Element("Wind", Color.LightGreen);
-        public static readonly Element Fire = new Element("Fire", Color.Red);
-        public static readonly Element Water = new Element("Water", Color.Blue);
-        public static readonly Element Earth = new Element("Earth", Color.Brown);
+        public static readonly Element Wind = new Element(Language.GetText("Mods.NeavaAGBF.Element.Wind").Value, Color.LightGreen);
+        public static readonly Element Fire = new Element(Language.GetText("Mods.NeavaAGBF.Element.Fire").Value, Color.Red);
+        public static readonly Element Water = new Element(Language.GetText("Mods.NeavaAGBF.Element.Water").Value, Color.Blue);
+        public static readonly Element Earth = new Element(Language.GetText("Mods.NeavaAGBF.Element.Earth").Value, Color.Brown);
+
+        public static readonly Element Light = new Element(Language.GetText("Mods.NeavaAGBF.Element.Light").Value, Color.LightYellow);
+        public static readonly Element Dark = new Element(Language.GetText("Mods.NeavaAGBF.Element.Dark").Value, Color.MediumPurple);
+
     }
 }

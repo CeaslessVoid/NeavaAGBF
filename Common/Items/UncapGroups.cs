@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -30,10 +31,7 @@ namespace NeavaAGBF.Common.Items
             if (requirements.ContainsKey(level))
                 return requirements[level];
 
-            if (requirements.Count > 0)
-                return requirements[requirements.Keys.Max()];
-
-            return new List<UncapRequirement>();
+            return requirements[requirements.Keys.Max()];
         }
     }
 

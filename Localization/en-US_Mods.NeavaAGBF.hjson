@@ -20,6 +20,32 @@ Items: {
 SimpleText: {
 	OpenGrid: Toggle Weapon Grid
 	UncapItem: Plance an item here
+	NoMoreUncapItem: This item cannot be uncapped further
+}
+
+WeaponSkill: {
+	SkillLevel: Skill Level
+	Health: Health
+	Attack: Attack
+	Def: Defense
+	CR: Crit Rate
+	CD: Crit Damage
+	AS: Attack Speed
+	MS: Movement Speed
+	CBGain: Charge Bar Gain
+	CBDamage: Charge Attack Damage
+}
+
+Element: {
+	Wind: Wind
+	Fire: Fire
+	Water: Water
+}
+
+Elemnt: {
+	Earth: Earth
+	Light: Light
+	Dark: Dark
 }
 
 "Keybinds.Charge Attack.DisplayName": Charge  Attack

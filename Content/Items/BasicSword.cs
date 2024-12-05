@@ -44,6 +44,9 @@ namespace NeavaAGBF.Content.Items
 
 				globalItem.chargeGain = 100;
 
+                // Language.GetText("Mods.NeavaAGBF.Charge.-----").Value
+                // Move these here for real weapons
+
                 globalItem.chargeName = "Tester's Strike";
                 globalItem.chargeAttackString = "Launches a projectile that doesn 100% damage to a foe. Gain 'Well Fed' buff ";
 
@@ -79,6 +82,7 @@ namespace NeavaAGBF.Content.Items
                 };
 
                 globalItem.maxUncap = 5;
+                globalItem.currentUncap = 0;
             }
         }
 

@@ -19,6 +19,7 @@ using Terraria.ModLoader.IO;
 using System;
 using NeavaAGBF.WeaponSkills;
 using NeavaAGBF.Common.UI;
+using System.Linq;
 
 namespace NeavaAGBF.Common.Players
 {
@@ -37,6 +38,10 @@ namespace NeavaAGBF.Common.Players
         public Item UncapTarget = new Item();
         private static bool _uncapTargetInit = false;
 
+        public List<Item> requirementItems = new();
+        public List<Item> inputMaterials = new List<Item>();
+        public bool boolHasChecked = false;
+
         public static float ScaleToFit(Texture2D texture)
         {
             const float maxSize = 42.5f;
@@ -51,7 +56,7 @@ namespace NeavaAGBF.Common.Players
                 for (int i = 0; i < WeaponGrid.Length; i++)
                 {
                     if (WeaponGrid[i] == null)
-                        WeaponGrid[i] = new Item(0,1,0);
+                        WeaponGrid[i] = new Item(0, 1, 0);
                 }
             }
 
@@ -83,7 +88,8 @@ namespace NeavaAGBF.Common.Players
                     gridData.Add(new TagCompound
                     {
                         ["type"] = item.type,
-                        ["stack"] = item.stack
+                        ["stack"] = item.stack,
+                        ["item"] = item
                     });
                 }
                 else
@@ -91,12 +97,60 @@ namespace NeavaAGBF.Common.Players
                     gridData.Add(new TagCompound
                     {
                         ["type"] = 0,
-                        ["stack"] = 0
+                        ["stack"] = 0,
+                        ["item"] = null
                     });
                 }
             }
 
             tag["WeaponGrid"] = gridData;
+
+            //------------------------------
+
+            // Save UncapTarget
+            if (UncapTarget != null && !UncapTarget.IsAir)
+            {
+                tag["UncapTarget"] = new TagCompound
+                {
+                    ["type"] = UncapTarget.type,
+                    ["stack"] = UncapTarget.stack,
+                    ["item"] = UncapTarget
+                };
+            }
+            else
+            {
+                tag["UncapTarget"] = null;
+            }
+
+            // Save requirementItems
+            var requirementItemsData = new List<TagCompound>();
+            foreach (var item in requirementItems)
+            {
+                requirementItemsData.Add(new TagCompound
+                {
+                    ["type"] = item.type,
+                    ["stack"] = item.stack,
+                    ["item"] = item
+                });
+            }
+            tag["RequirementItems"] = requirementItemsData;
+
+            // Save inputMaterials
+            var inputMaterialsData = new List<TagCompound>();
+            foreach (var item in inputMaterials)
+            {
+                inputMaterialsData.Add(new TagCompound
+                {
+                    ["type"] = item.type,
+                    ["stack"] = item.stack,
+                    ["item"] = item
+                });
+            }
+            tag["InputMaterials"] = inputMaterialsData;
+
+            // Save boolHasChecked
+            tag["BoolHasChecked"] = boolHasChecked;
+
         }
 
         public override void LoadData(TagCompound tag)
@@ -106,17 +160,60 @@ namespace NeavaAGBF.Common.Players
                 var gridData = tag.Get<List<TagCompound>>("WeaponGrid");
                 for (int i = 0; i < WeaponGrid.Length; i++)
                 {
-                    if (gridData[i] != null && gridData[i].Get<int>("type") > 0)
+                    if (gridData[i] != null && gridData[i].Get<Item>("item") != null)
                     {
-                        WeaponGrid[i] = new Item();
-                        WeaponGrid[i].SetDefaults(gridData[i].Get<int>("type"));
-                        WeaponGrid[i].stack = gridData[i].Get<int>("stack");
+                        WeaponGrid[i] = gridData[i].Get<Item>("item");
+
                     }
                     else
                     {
                         WeaponGrid[i] = new Item();
                     }
                 }
+            }
+
+            // Load UncapTarget
+            if (tag.ContainsKey("UncapTarget") && tag.Get<TagCompound>("UncapTarget") != null)
+            {
+                var uncapData = tag.Get<TagCompound>("UncapTarget");
+                UncapTarget = uncapData.Get<Item>("item") ?? new Item();
+            }
+            else
+            {
+                UncapTarget = new Item();
+            }
+
+            // Load requirementItems
+            requirementItems.Clear();
+            if (tag.ContainsKey("RequirementItems"))
+            {
+                var requirementItemsData = tag.Get<List<TagCompound>>("RequirementItems");
+                foreach (var itemTag in requirementItemsData)
+                {
+                    var item = itemTag.Get<Item>("item");
+                    if (item != null && !item.IsAir)
+                    {
+                        requirementItems.Add(item);
+                    }
+                }
+            }
+
+            // Load inputMaterials
+            inputMaterials.Clear();
+            if (tag.ContainsKey("InputMaterials"))
+            {
+                var inputMaterialsData = tag.Get<List<TagCompound>>("InputMaterials");
+                foreach (var itemTag in inputMaterialsData)
+                {
+                    var item = itemTag.Get<Item>("item");
+                    inputMaterials.Add(item);
+                }
+            }
+
+            // Load boolHasChecked
+            if (tag.ContainsKey("BoolHasChecked"))
+            {
+                boolHasChecked = tag.GetBool("BoolHasChecked");
             }
         }
 
@@ -221,12 +318,6 @@ namespace NeavaAGBF.Common.Players
         }
 
         public static void UpdateIsClicking()
-        {
-            IsClicking = PlayerInput.Triggers.Current.MouseLeft;
-        }
-
-        // So no overlap
-        public static void UpdateIsClicking2()
         {
             IsClicking = PlayerInput.Triggers.Current.MouseLeft;
         }
