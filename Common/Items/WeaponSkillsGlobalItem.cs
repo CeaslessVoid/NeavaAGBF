@@ -83,12 +83,13 @@ namespace NeavaAGBF.Common.Items
 
         public override bool CanRightClick(Item item)
         {
-            return CanUpgrade(item) && (Main.mouseItem.stack >= CalculateRequiredSkillGems() && item.type != ModContent.ItemType<SkillGem>());
+
+            return CanUpgrade(item) && Main.mouseItem.stack >= CalculateRequiredSkillGems() && Main.mouseItem.type == ModContent.ItemType<SkillGem>();
 
         }
         private bool CanUpgrade(Item item)
         {
-            return currentLevel < maxLevel && WeaponType != null;
+            return currentLevel < maxLevel && WeaponType != null && maxLevel > 0;
         }
 
         private int CalculateRequiredSkillGems()
@@ -98,25 +99,38 @@ namespace NeavaAGBF.Common.Items
 
         public override void RightClick(Item item, Player player)
         {
+
+            WeaponSkillsGlobalItem weaponItem = item.GetGlobalItem<WeaponSkillsGlobalItem>();
+
+            if (weaponItem.maxLevel < 1)
+            {
+                base.RightClick(item, player);
+
+                Main.NewText(item.stack.ToString());
+
+                return;
+            }
+
             int requiredGems = CalculateRequiredSkillGems();
-            Item temp = item.Clone();
+
+            if (!CanUpgrade(item))return;
 
             if (player == null || item == null)
                 return;
 
-            WeaponSkillsGlobalItem clonedItem = temp.GetGlobalItem<WeaponSkillsGlobalItem>();
-
-            clonedItem.currentLevel++;
-
-            player.GetItem(Main.myPlayer, temp, GetItemSettings.InventoryEntityToPlayerInventorySettings);
-
             Main.mouseItem.stack -= requiredGems;
-            if (Main.mouseItem.stack <= 0)
+
+            if (Main.mouseItem.stack <0)
             {
                 Main.mouseItem.TurnToAir();
             }
-        }
 
+            item.stack++;
+
+            
+            weaponItem.currentLevel++;
+        }
+        
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             if (weaponElement != null)
@@ -158,14 +172,14 @@ namespace NeavaAGBF.Common.Items
 
             if (maxLevel > 0)
             {
-                tooltips.Add(new TooltipLine(Mod, "Level", $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.SkillLevel").Value}: {currentLevel}/{maxLevel}"));
+                tooltips.Add(new TooltipLine(Mod, "Level", $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.SkillLevel").Value}: {currentLevel}/{maxLevel} [{Language.GetText("Mods.NeavaAGBF.SimpleText.HoldShift").Value}] "));
             }
 
             if (currentLevel < maxLevel)
             {
                 int requiredGems = CalculateRequiredSkillGems();
                 string gemText = $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Requires").Value} {requiredGems} ";
-                gemText += $"[i:{ModContent.ItemType<SkillGem>()}] {Language.GetText("Mods.NeavaAGBF.WeaponSkill.SkillGems").Value}";
+                gemText += $"[i:{ModContent.ItemType<SkillGem>()}] {Language.GetText("Mods.NeavaAGBF.SimpleText.SkillGems").Value}";
 
                 tooltips.Add(new TooltipLine(Mod, "UpgradeRequirement", gemText)
                 {
@@ -253,6 +267,8 @@ namespace NeavaAGBF.Common.Items
             float chargeBarBonus = skill.ChargeBarGain + (skill.ChargeBarGainPerLevel * level);
             float chargeAtackBonus = skill.ChargAttack + (skill.ChargAttackPerLevel * level);
 
+            string customEffect = skill.CustomText;
+
             string skillOwnerDisplay = string.IsNullOrEmpty(skill.SkillOwner) ? "" : $"{skill.SkillOwner}'s";
             TooltipLine skillNameLine = new TooltipLine(Mod, "SkillName", $"{skillOwnerDisplay} {skill.SkillName}")
             {
@@ -260,6 +276,11 @@ namespace NeavaAGBF.Common.Items
             };
             tooltips.Add(skillNameLine);
 
+            if (customEffect != null)
+            {
+                tooltips.Add(new TooltipLine(Mod, "Custom" ,$"{customEffect}"));
+                return;
+            }
 
             AddStatTooltip(tooltips, Language.GetText("Mods.NeavaAGBF.WeaponSkill.Health").Value, (float)Math.Round(hpBonus, 1), true, null);
             AddStatTooltip(tooltips, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}", (float)Math.Round(atkBonus, 1), true, element.TooltipColor);
@@ -271,6 +292,7 @@ namespace NeavaAGBF.Common.Items
 
             AddStatTooltip(tooltips, Language.GetText("Mods.NeavaAGBF.WeaponSkill.CBGain").Value, (float)Math.Round(chargeBarBonus, 1), true, element.TooltipColor);
             AddStatTooltip(tooltips, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CBDamage").Value}", (float)Math.Round(chargeAtackBonus, 1), true, element.TooltipColor);
+
         }
 
         private void AddStatTooltip(List<TooltipLine> tooltips, string statName, float value, bool isPercentage, Color? color)

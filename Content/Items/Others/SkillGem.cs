@@ -27,8 +27,6 @@ namespace NeavaAGBF.Content.Items.Others
             Item.maxStack = 9999;
         }
 
-        public override bool CanRightClick() => true;
-
         public override void ModifyTooltips(System.Collections.Generic.List<TooltipLine> tooltips)
         {
             base.ModifyTooltips(tooltips);

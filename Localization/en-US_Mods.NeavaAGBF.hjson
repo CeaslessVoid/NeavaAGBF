@@ -18,7 +18,11 @@ Items: {
 
 	SkillGem: {
 		DisplayName: Skill Gem
-		Tooltip: Used to upgrade Weapon Skill Level
+		Tooltip:
+			'''
+			Used to upgrade Weapon Skill Level
+			To Use: Hold Skill Gem over desired weapon and right click
+			'''
 	}
 }
 
@@ -26,6 +30,7 @@ SimpleText: {
 	OpenGrid: Toggle Weapon Grid
 	UncapItem: Plance an item here
 	NoMoreUncapItem: This item cannot be uncapped further
+	HoldShift: Hold SHIFT for more information
 }
 
 WeaponSkill: {
@@ -47,9 +52,6 @@ Element: {
 	Wind: Wind
 	Fire: Fire
 	Water: Water
-}
-
-Elemnt: {
 	Earth: Earth
 	Light: Light
 	Dark: Dark
