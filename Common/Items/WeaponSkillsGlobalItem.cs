@@ -15,6 +15,9 @@ using ReLogic.Graphics;
 using Terraria.GameContent;
 using Terraria.ModLoader.IO;
 using Terraria.Localization;
+using NeavaAGBF.Content.Items.Others;
+using Terraria.Audio;
+using Terraria.ID;
 
 namespace NeavaAGBF.Common.Items
 {
@@ -33,7 +36,7 @@ namespace NeavaAGBF.Common.Items
 
         public Action<Player> chargeAttack = (Player player) =>
         {
-            Main.NewText("Default Charge Attack activated!", Color.LightGreen);
+
         };
 
         //public int baseUncap = 0;
@@ -46,6 +49,7 @@ namespace NeavaAGBF.Common.Items
 
         public UncapGroup UncapGroup = LoadUncapGroups.GetUncapGroup("uncapGroupTest");
 
+        public WeaponType WeaponType { get; set; } = null;
         public override bool InstancePerEntity => true;
 
         public WeaponSkillsGlobalItem()
@@ -77,11 +81,47 @@ namespace NeavaAGBF.Common.Items
                 currentUncap = tag.GetInt("currentUncap");
         }
 
+        public override bool CanRightClick(Item item)
+        {
+            return CanUpgrade(item) && (Main.mouseItem.stack >= CalculateRequiredSkillGems() && item.type != ModContent.ItemType<SkillGem>());
+
+        }
+        private bool CanUpgrade(Item item)
+        {
+            return currentLevel < maxLevel && WeaponType != null;
+        }
+
+        private int CalculateRequiredSkillGems()
+        {
+            return (int)Math.Round(Math.PI * Math.Exp(currentLevel / Math.PI) - 2);
+        }
+
+        public override void RightClick(Item item, Player player)
+        {
+            int requiredGems = CalculateRequiredSkillGems();
+            Item temp = item.Clone();
+
+            if (player == null || item == null)
+                return;
+
+            WeaponSkillsGlobalItem clonedItem = temp.GetGlobalItem<WeaponSkillsGlobalItem>();
+
+            clonedItem.currentLevel++;
+
+            player.GetItem(Main.myPlayer, temp, GetItemSettings.InventoryEntityToPlayerInventorySettings);
+
+            Main.mouseItem.stack -= requiredGems;
+            if (Main.mouseItem.stack <= 0)
+            {
+                Main.mouseItem.TurnToAir();
+            }
+        }
+
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             if (weaponElement != null)
             {
-                tooltips.Insert(1, new TooltipLine(Mod, "Element", weaponElement.ToString())
+                tooltips.Insert(1, new TooltipLine(Mod, "Element", $"{weaponElement.ToString()} /")
                 {
                     OverrideColor = weaponElement.TooltipColor
                 });
@@ -92,11 +132,6 @@ namespace NeavaAGBF.Common.Items
             int goldStars = Math.Min(3, currentUncap);
             int blueStars = Math.Max(0, currentUncap - 3);
             int emptyStars = maxUncap - currentUncap;
-
-            //string stars = new string('★', currentUncap) + new string('☆', maxUncap - currentUncap);
-            //tooltips.Insert(1, new TooltipLine(Mod, "UncapStatus", $"{stars}") { OverrideColor = Color.Gold });
-
-            //tooltips.Insert(1, new TooltipLine(Mod, "Stars", $"{goldStars}{(string.IsNullOrEmpty(blueStars) ? "" : blueStars)}{emptyStars}") { OverrideColor = Color.Gold });
 
             if (maxUncap > 0)
             {
@@ -125,46 +160,83 @@ namespace NeavaAGBF.Common.Items
             {
                 tooltips.Add(new TooltipLine(Mod, "Level", $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.SkillLevel").Value}: {currentLevel}/{maxLevel}"));
             }
+
+            if (currentLevel < maxLevel)
+            {
+                int requiredGems = CalculateRequiredSkillGems();
+                string gemText = $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Requires").Value} {requiredGems} ";
+                gemText += $"[i:{ModContent.ItemType<SkillGem>()}] {Language.GetText("Mods.NeavaAGBF.WeaponSkill.SkillGems").Value}";
+
+                tooltips.Add(new TooltipLine(Mod, "UpgradeRequirement", gemText)
+                {
+                    OverrideColor = Color.Orange
+                });
+            }
+
         }
 
         public override void PostDrawTooltipLine(Item item, DrawableTooltipLine line)
         {
-            if (line.Name != "Stars" || line.Mod != Mod.Name)
-                return;
-
-            var (goldStars, blueStars, emptyStars) = TooltipStarData;
-
-            DynamicSpriteFont font = FontAssets.MouseText.Value;
-            float scale = 1f;
-            Vector2 start = new Vector2(line.X, line.Y);
-
-            Color goldColor = new Color(255, 215, 0);
-            Color blueColor = new Color(135, 206, 250);
-            Color grayColor = new Color(192, 192, 192);
-
-            // Draw gold stars
-            for (int i = 0; i < goldStars; i++)
+            if (line.Name == "Stars" && line.Mod == Mod.Name)
             {
-                string star = "★";
-                ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, font, star, start, goldColor, 0f, Vector2.Zero, new Vector2(scale));
-                start.X += font.MeasureString(star).X * scale;
+                var (goldStars, blueStars, emptyStars) = TooltipStarData;
+
+                DynamicSpriteFont font = FontAssets.MouseText.Value;
+                float scale = 1f;
+                Vector2 start = new Vector2(line.X, line.Y);
+
+                Color goldColor = new Color(255, 215, 0);
+                Color blueColor = new Color(135, 206, 250);
+                Color grayColor = new Color(192, 192, 192);
+
+                // Draw gold stars
+                for (int i = 0; i < goldStars; i++)
+                {
+                    string star = "★";
+                    ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, font, star, start, goldColor, 0f, Vector2.Zero, new Vector2(scale));
+                    start.X += font.MeasureString(star).X * scale;
+                }
+
+                // Draw blue stars
+                for (int i = 0; i < blueStars; i++)
+                {
+                    string star = "★";
+                    ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, font, star, start, blueColor, 0f, Vector2.Zero, new Vector2(scale));
+                    start.X += font.MeasureString(star).X * scale;
+                }
+
+                // Draw empty stars
+                for (int i = 0; i < emptyStars; i++)
+                {
+                    string star = "☆";
+                    ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, font, star, start, grayColor, 0f, Vector2.Zero, new Vector2(scale));
+                    start.X += font.MeasureString(star).X * scale;
+                }
             }
 
-            // Draw blue stars
-            for (int i = 0; i < blueStars; i++)
+            if (line.Name == "Element" && line.Mod == Mod.Name && WeaponType != null)
             {
-                string star = "★";
-                ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, font, star, start, blueColor, 0f, Vector2.Zero, new Vector2(scale));
-                start.X += font.MeasureString(star).X * scale;
+                DynamicSpriteFont font = FontAssets.MouseText.Value;
+                float elementTextWidth = font.MeasureString(line.Text).X;
+
+                Vector2 position = new Vector2(line.X + elementTextWidth, line.Y);
+
+                WeaponType.DrawIcon(position);
+
+                Vector2 typeNamePosition = new Vector2(position.X + 25, line.Y);
+
+                ChatManager.DrawColorCodedStringWithShadow(
+                    Main.spriteBatch,
+                    font,
+                    WeaponType.Name,
+                    typeNamePosition,
+                    weaponElement.TooltipColor,
+                    0f,
+                    Vector2.Zero,
+                    Vector2.One
+                );
             }
 
-            // Draw empty stars
-            for (int i = 0; i < emptyStars; i++)
-            {
-                string star = "☆";
-                ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, font, star, start, grayColor, 0f, Vector2.Zero, new Vector2(scale));
-                start.X += font.MeasureString(star).X * scale;
-            }
         }
 
 
@@ -189,16 +261,16 @@ namespace NeavaAGBF.Common.Items
             tooltips.Add(skillNameLine);
 
 
-            AddStatTooltip(tooltips, Language.GetText("Mods.NeavaAGBF.WeaponSkill.Health").Value, hpBonus, true, null);
-            AddStatTooltip(tooltips, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}", atkBonus, true, element.TooltipColor);
-            AddStatTooltip(tooltips, Language.GetText("Mods.NeavaAGBF.WeaponSkill.Def").Value, defBonus, false, null);
-            AddStatTooltip(tooltips, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CR").Value}", critRateBonus, true, element.TooltipColor);
-            AddStatTooltip(tooltips, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CD").Value}", critDamageBonus, true, element.TooltipColor);
-            AddStatTooltip(tooltips, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.AS").Value}", attackSpeedBonus, true, element.TooltipColor);
-            AddStatTooltip(tooltips, Language.GetText("Mods.NeavaAGBF.WeaponSkill.MS").Value, movementSpeedBonus, true, null);
+            AddStatTooltip(tooltips, Language.GetText("Mods.NeavaAGBF.WeaponSkill.Health").Value, (float)Math.Round(hpBonus, 1), true, null);
+            AddStatTooltip(tooltips, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}", (float)Math.Round(atkBonus, 1), true, element.TooltipColor);
+            AddStatTooltip(tooltips, Language.GetText("Mods.NeavaAGBF.WeaponSkill.Def").Value, (int)Math.Round(defBonus, 1), false, null);
+            AddStatTooltip(tooltips, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CR").Value}", (int)Math.Round(critRateBonus, 1), true, element.TooltipColor);
+            AddStatTooltip(tooltips, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CD").Value}", (float)Math.Round(critDamageBonus, 1), true, element.TooltipColor);
+            AddStatTooltip(tooltips, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.AS").Value}", (float)Math.Round(attackSpeedBonus, 1), true, element.TooltipColor);
+            AddStatTooltip(tooltips, Language.GetText("Mods.NeavaAGBF.WeaponSkill.MS").Value, (float)Math.Round(movementSpeedBonus, 1), true, null);
 
-            AddStatTooltip(tooltips, Language.GetText("Mods.NeavaAGBF.WeaponSkill.CBGain").Value, chargeBarBonus, true, element.TooltipColor);
-            AddStatTooltip(tooltips, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CBDamage").Value}", chargeAtackBonus, true, element.TooltipColor);
+            AddStatTooltip(tooltips, Language.GetText("Mods.NeavaAGBF.WeaponSkill.CBGain").Value, (float)Math.Round(chargeBarBonus, 1), true, element.TooltipColor);
+            AddStatTooltip(tooltips, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CBDamage").Value}", (float)Math.Round(chargeAtackBonus, 1), true, element.TooltipColor);
         }
 
         private void AddStatTooltip(List<TooltipLine> tooltips, string statName, float value, bool isPercentage, Color? color)

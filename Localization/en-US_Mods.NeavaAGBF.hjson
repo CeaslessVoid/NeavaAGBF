@@ -12,8 +12,13 @@ Items: {
 	}
 
 	UncapAnvil: {
-		DisplayName: Uncap Anvil
-		Tooltip: Not usable as a normal anvil. Right click to open uncap menu
+		DisplayName: Weapon Uncap Anvil.
+		Tooltip: Not usable as a normal anvil. Right click to open weapon uncap menu.
+	}
+
+	SkillGem: {
+		DisplayName: Skill Gem
+		Tooltip: Used to upgrade Weapon Skill Level
 	}
 }
 
@@ -24,6 +29,8 @@ SimpleText: {
 }
 
 WeaponSkill: {
+	Requires: Requires
+	SkillGems: Skill gems to upgrade
 	SkillLevel: Skill Level
 	Health: Health
 	Attack: Attack

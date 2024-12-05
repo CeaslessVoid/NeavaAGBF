@@ -163,10 +163,12 @@ namespace NeavaAGBF.Common.UI
 
                 if (PlayerInput.Triggers.Current.MouseLeft && (Main.mouseItem.type != ItemID.None || playerMod.UncapTarget.type != ItemID.None))
                 {
-                    if (!boolShit)
+                    if (!boolShit && clickCooldownTimer == 0)
                     {
                         boolShit = true;
+                        clickCooldownTimer = 10;
                         playerMod.boolHasChecked = false;
+                        Main.playerInventory = true;
 
                         foreach (Item inputMaterial in playerMod.inputMaterials)
                         {
@@ -385,6 +387,8 @@ namespace NeavaAGBF.Common.UI
                 boolShit = true;
                 clickCooldownTimer = 10;
 
+                Main.playerInventory = true;
+
                 if (Main.mouseItem.type == requiredItem.type)
                 {
                     
@@ -515,6 +519,20 @@ namespace NeavaAGBF.Common.UI
 
             Append(uncapMenu);
 
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            Point? coord = Main.LocalPlayer.GetModPlayer<NeavaAGBFPlayer>().ForgeLocation;
+            if (coord != null)
+            {
+                if (Vector2.Distance(Main.LocalPlayer.Center, Utils.ToVector2(coord.Value) * 16f) > 256f)
+                {
+                    ModContent.GetInstance<AnvilUISystem>().HideMyUI();
+                }
+            }
+
+            base.Update(gameTime);
         }
 
 

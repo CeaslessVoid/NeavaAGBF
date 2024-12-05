@@ -39,7 +39,14 @@ namespace NeavaAGBF.Content.Items.Tiles
 
         public override void AddRecipes()
         {
-            base.AddRecipes();
+            CreateRecipe()
+                .AddIngredient(ItemID.IronAnvil)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.LeadAnvil)
+                .Register();
+
         }
     }
 }

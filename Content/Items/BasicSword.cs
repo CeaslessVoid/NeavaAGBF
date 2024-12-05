@@ -38,7 +38,6 @@ namespace NeavaAGBF.Content.Items
                 new StormwyrmMight()
             };
 
-                globalItem.currentLevel = 0;
                 globalItem.maxLevel = 3;
                 globalItem.weaponElement = Element.Wind;
 
@@ -83,6 +82,8 @@ namespace NeavaAGBF.Content.Items
 
                 globalItem.maxUncap = 5;
                 globalItem.currentUncap = 0;
+
+                globalItem.WeaponType = WeaponType.Sword;
             }
         }
 

@@ -42,6 +42,8 @@ namespace NeavaAGBF.Common.Players
         public List<Item> inputMaterials = new List<Item>();
         public bool boolHasChecked = false;
 
+        public Point? ForgeLocation;
+
         public static float ScaleToFit(Texture2D texture)
         {
             const float maxSize = 42.5f;

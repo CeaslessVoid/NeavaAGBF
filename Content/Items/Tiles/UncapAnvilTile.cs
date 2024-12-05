@@ -11,6 +11,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ObjectData;
 using NeavaAGBF.Common.UI;
+using NeavaAGBF.Common.Players;
 
 namespace NeavaAGBF.Content.Items.Tiles
 {
@@ -54,7 +55,7 @@ namespace NeavaAGBF.Content.Items.Tiles
         public unsafe override bool RightClick(int i, int j)
         {
             ModContent.GetInstance<AnvilUISystem>().ShowMyUI();
-
+            Main.LocalPlayer.GetModPlayer<NeavaAGBFPlayer>().ForgeLocation = new Point?(new Point(i - (int)(Main.tile[i, j].TileFrameX / 16), j));
             return true;
         }
     }
