@@ -164,7 +164,6 @@ namespace NeavaAGBF.Common.Items
             { ItemID.PlatinumBroadsword, (2, 2, 1) },
             { ItemID.Spear, (2, 1, 1) },
             { ItemID.ChainKnife, (2, 1, 1) },
-            { ItemID.BladedGlove, (2, 2, 1) }
         };
 
         public override bool InstancePerEntity => true;

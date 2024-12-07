@@ -54,8 +54,7 @@
               "RelativeToolTip": "NeavaAGBF.cs",
               "ViewState": "AQIAAAwAAAAAAAAAAAAAACQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T10:48:06.548Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-07T10:48:06.548Z"
             },
             {
               "$type": "Document",
@@ -67,8 +66,7 @@
               "RelativeToolTip": "Common\\Items\\WeaponSkillsGlobalItem.cs",
               "ViewState": "AQIAAE8AAAAAAAAAAAAvwGIAAABMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T05:32:24.494Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-07T05:32:24.494Z"
             },
             {
               "$type": "Document",
@@ -80,8 +78,7 @@
               "RelativeToolTip": "WeaponSkills\\Light\\Normal.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAABEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T07:21:06.562Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-07T07:21:06.562Z"
             },
             {
               "$type": "Document",
@@ -91,7 +88,7 @@
               "RelativeDocumentMoniker": "Common\\Items\\WeaponPatch.cs",
               "ToolTip": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\Common\\Items\\WeaponPatch.cs",
               "RelativeToolTip": "Common\\Items\\WeaponPatch.cs",
-              "ViewState": "AQIAAHYAAAAAAAAAAAAQwIcAAAA0AAAA",
+              "ViewState": "AQIAAIIAAAAAAAAAAAAQwJ4AAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-06T10:07:22.776Z",
               "EditorCaption": ""
@@ -106,8 +103,7 @@
               "RelativeToolTip": "Common\\Players\\StatHandler.cs",
               "ViewState": "AQIAAGsAAACAmZmZmZkvwHIAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T06:28:19.665Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-07T06:28:19.665Z"
             },
             {
               "$type": "Document",
@@ -119,8 +115,7 @@
               "RelativeToolTip": "WeaponSkills\\Element.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAACIAAABFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T05:34:26.43Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-07T05:34:26.43Z"
             },
             {
               "$type": "Document",
@@ -132,8 +127,7 @@
               "RelativeToolTip": "WeaponSkills\\WeaponTypes.cs",
               "ViewState": "AQIAAAwAAAAAAAAAAAAAACYAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T02:32:38.684Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-07T02:32:38.684Z"
             },
             {
               "$type": "Document",
@@ -145,8 +139,7 @@
               "RelativeToolTip": "WeaponSkills\\WeaponSkill.cs",
               "ViewState": "AQIAAB4AAACAzszMzAwkwC4AAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T02:04:23.035Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-07T02:04:23.035Z"
             }
           ]
         }
