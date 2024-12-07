@@ -9,6 +9,11 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Content\Items\Others\SkillGem.png" />
+	  <None Remove="WeaponSkills\Special\Balance" />
+	  <None Remove="WeaponSkills\Water\Might.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <AdditionalFiles Include="WeaponSkills\Special\Balance" />
 	</ItemGroup>
 	
 	<ItemGroup>

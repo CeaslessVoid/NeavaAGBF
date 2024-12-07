@@ -4,10 +4,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using NeavaAGBF;
 using NeavaAGBF.WeaponSkills;
-using NeavaAGBF.WeaponSkills.Aegis;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using NeavaAGBF.WeaponSkills.Might;
+using NeavaAGBF.WeaponSkills.Wind;
 using NeavaAGBF.Common.Items;
 using NeavaAGBF.Common.Projectiles;
 
@@ -33,52 +32,21 @@ namespace NeavaAGBF.Content.Items
             if (Item.TryGetGlobalItem(out WeaponSkillsGlobalItem globalItem))
             {
                 globalItem.weaponSkills = new List<WeaponSkill>
-            {
-                new StormwyrmAegis(),
-                new StormwyrmMight()
-            };
+                {
+                    //new StormwyrmAegis(),
+                    //new StormwyrmMight()
+                };
 
                 globalItem.maxLevel = 3;
                 globalItem.weaponElement = Element.Wind;
 
 				globalItem.chargeGain = 100;
 
-                // Language.GetText("Mods.NeavaAGBF.Charge.-----").Value
-                // Move these here for real weapons
 
                 globalItem.chargeName = "Tester's Strike";
-                globalItem.chargeAttackString = "Launches a projectile that doesn 100% damage to a foe. Gain 'Well Fed' buff ";
+                globalItem.chargeAttackString = "Launches a projectile that does 100% damage to a foe. Gain 'Well Fed' buff ";
 
-                globalItem.chargeAttack = (Player player) =>
-                {
-                    Main.NewText($"{player.name} used the Basic Sword Charge Attack!", Color.Yellow);
-
-                    StatHandler playerMod = Main.LocalPlayer.GetModPlayer<StatHandler>();
-
-                    Vector2 playerCenter = player.Center;
-                    Vector2 cursorPosition = Main.MouseWorld;
-
-                    Vector2 velocity = Vector2.Normalize(cursorPosition - playerCenter) * 10f;
-
-                    int projectileType = ModContent.ProjectileType<ProjectilNoCharge>();
-                    int proj = Projectile.NewProjectile(
-                        spawnSource: player.GetSource_ItemUse(Item),
-                        position: playerCenter,
-                        velocity: velocity,
-                        Type: projectileType,
-                        Damage: (int)(Item.damage * playerMod.chargeAttackDamageMultiplier),
-                        KnockBack: 0,
-                        Owner: player.whoAmI
-                    );
-
-                    if (Main.projectile[proj].TryGetGlobalProjectile(out ChargeControlGlobalProjectile globalProj))
-                    {
-                        globalProj.CanGainCharge = false;
-                    }
-
-
-                    player.AddBuff(BuffID.WellFed, 600);
-                };
+                globalItem.chargeAttack = (Player player) => ChargeAttacks.Test(player, Item);
 
                 globalItem.maxUncap = 5;
                 globalItem.currentUncap = 0;

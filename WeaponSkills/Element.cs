@@ -27,10 +27,12 @@ namespace NeavaAGBF.WeaponSkills
         public static readonly Element Wind = new Element(Language.GetText("Mods.NeavaAGBF.Element.Wind").Value, Color.LightGreen);
         public static readonly Element Fire = new Element(Language.GetText("Mods.NeavaAGBF.Element.Fire").Value, Color.Red);
         public static readonly Element Water = new Element(Language.GetText("Mods.NeavaAGBF.Element.Water").Value, Color.Blue);
-        public static readonly Element Earth = new Element(Language.GetText("Mods.NeavaAGBF.Element.Earth").Value, Color.Brown);
+        public static readonly Element Earth = new Element(Language.GetText("Mods.NeavaAGBF.Element.Earth").Value, Color.SaddleBrown);
 
         public static readonly Element Light = new Element(Language.GetText("Mods.NeavaAGBF.Element.Light").Value, Color.LightYellow);
         public static readonly Element Dark = new Element(Language.GetText("Mods.NeavaAGBF.Element.Dark").Value, Color.MediumPurple);
+
+        public static readonly Element Speical = new Element("Special", Color.Transparent);
 
     }
 }

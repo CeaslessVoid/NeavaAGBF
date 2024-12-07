@@ -10,6 +10,9 @@ using NeavaAGBF.Common.Players;
 using Microsoft.Xna.Framework.Input;
 using NeavaAGBF.Common.UI;
 using NeavaAGBF.Common.Items;
+using System.Linq;
+using Terraria.ID;
+using Terraria.GameContent;
 
 namespace NeavaAGBF
 {
@@ -29,8 +32,9 @@ namespace NeavaAGBF
             if (!Main.dedServ) // Only load UI on the client
             {
                 ChargeBar.Instance = new ChargeBar();
-                ChargeBar.Visible = true;
+                ChargeBar.Visible = false;
             }
+
         }
 
         public override void Unload()

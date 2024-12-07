@@ -34,7 +34,7 @@ namespace NeavaAGBF.WeaponSkills
         public static WeaponType Gun = new WeaponType("Gun", "NeavaAGBF/Content/Players/WeaponType/Gun", Color.Silver);
         public static WeaponType Spear = new WeaponType("Spear", "NeavaAGBF/Content/Players/WeaponType/Spear", Color.Brown);
         public static WeaponType Throw = new WeaponType("Throw", "NeavaAGBF/Content/Players/WeaponType/Throw", Color.Gray);
-        public static WeaponType Box = new WeaponType("Box", "NeavaAGBF/Content/Players/WeaponType/Box", Color.Cyan);
+        public static WeaponType Bow = new WeaponType("Bow", "NeavaAGBF/Content/Players/WeaponType/Bow", Color.Cyan);
         public static WeaponType Hand = new WeaponType("Hand", "NeavaAGBF/Content/Players/WeaponType/Hand", Color.Orange);
         public static WeaponType Special = new WeaponType("Special", "NeavaAGBF/Content/Players/WeaponType/Special", Color.Purple);
         public static WeaponType Whip = new WeaponType("Whip", "NeavaAGBF/Content/Players/WeaponType/Whip", Color.Red);

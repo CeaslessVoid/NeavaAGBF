@@ -334,30 +334,41 @@ namespace NeavaAGBF.Common.UI
                 
             }
 
-            if (AreRequirementsMet())
+
+            Texture2D confirmTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/UncapWeapon").Value;
+            Vector2 iconPosition = basePosition - new Vector2(60, 60);
+            
+
+            if (CloseToGui(iconPosition + new Vector2(15, 15)))
             {
-                Texture2D confirmTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/UncapWeapon").Value;
-                Vector2 iconPosition = basePosition - new Vector2(60, 60);
+                confirmTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/UncapWeapon_2").Value;
+                spriteBatch.Draw(confirmTexture, iconPosition, null, Color.White, 0f, Vector2.Zero, 0.65f, SpriteEffects.None, 0f);
 
-
-                if (CloseToGui(iconPosition + new Vector2(15,15)))
+                if (PlayerInput.Triggers.Current.MouseLeft && !boolShit)
                 {
-                    confirmTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/UncapWeapon_2").Value;
-
-                    if (PlayerInput.Triggers.Current.MouseLeft && !boolShit)
+                    if (AreRequirementsMet())
                     {
                         boolShit = true;
                         PerformUncap();
                     }
 
-                    if (!NeavaAGBFPlayer.IsClicking)
+                    else
                     {
-                        boolShit = false;
+                        Main.NewText("");
                     }
 
+                    
                 }
-                spriteBatch.Draw(confirmTexture, iconPosition, null, Color.White, 0f, Vector2.Zero, 0.65f, SpriteEffects.None, 0f);
 
+                if (!NeavaAGBFPlayer.IsClicking)
+                {
+                    boolShit = false;
+                }
+
+            }
+            else
+            {
+                spriteBatch.Draw(confirmTexture, iconPosition, null, Color.White, 0f, Vector2.Zero, 0.65f, SpriteEffects.None, 0f);
             }
         }
 
@@ -454,6 +465,8 @@ namespace NeavaAGBF.Common.UI
 
         private bool AreRequirementsMet()
         {
+            if (playerMod.requirementItems.Count < 1) return false;
+
             for (int i = 0; i < playerMod.requirementItems.Count; i++)
             {
                 if (playerMod.inputMaterials[i].type != playerMod.requirementItems[i].type || playerMod.inputMaterials[i].stack < playerMod.requirementItems[i].stack)

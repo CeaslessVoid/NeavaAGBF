@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using NeavaAGBF.Common.Players;
 
 namespace NeavaAGBF.WeaponSkills
 {
@@ -12,6 +13,8 @@ namespace NeavaAGBF.WeaponSkills
         public string SkillOwner { get; private set; }
         public string SkillName { get; private set; }
         public Element SkillElement { get; private set; }
+
+        public int UncapLevel { get; private set; }
 
         public float ATK { get; protected set; }
         public float HP { get; protected set; }
@@ -36,6 +39,12 @@ namespace NeavaAGBF.WeaponSkills
         public float ChargAttackPerLevel { get; protected set; }
 
         public string CustomText { get; protected set; }
+
+        public float ATKALLELE { get; protected set; }
+        public float ATKALLELEPerLevel { get; protected set; }
+
+        public float DamageCap { get; protected set; }
+        public float DamageCapPerLevel { get; protected set; }
 
         public virtual Color TooltipColor { get; protected set; } = Color.Green;
 

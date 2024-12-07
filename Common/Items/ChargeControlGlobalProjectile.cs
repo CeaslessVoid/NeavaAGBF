@@ -14,6 +14,8 @@ namespace NeavaAGBF.Common.Items
 
         public bool CanGainCharge { get; set; } = true;
 
+        public bool IsChargeAttack { get; set; } = false;
+
         //public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)
         //{
 

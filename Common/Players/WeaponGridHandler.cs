@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using Terraria;
 using NeavaAGBF.Content.Items;
 using NeavaAGBF.Common.Items;
+using log4net.Core;
 
 namespace NeavaAGBF.Common.Players
 {
@@ -30,6 +31,8 @@ namespace NeavaAGBF.Common.Players
             float totalChargeBarGain = 0f;
             float totalChargeDamageGain = 0f;
 
+            float totalDamageCap = 0f;
+
             Item heldItem = player.HeldItem;
             Element heldElement = null;
 
@@ -48,31 +51,39 @@ namespace NeavaAGBF.Common.Players
 
                 foreach (var skill in weaponData.weaponSkills)
                 {
+                    var modPlayer = player.GetModPlayer<StatHandler>();
+
+                    float multiplier = modPlayer.GetStatMultiplier(skill.SkillOwner);
+
                     float currentLevel = weaponData.currentLevel;
-                    totalHpBonusPercent += skill.HP + (skill.HPPerLevel * currentLevel);
-                    totalDefBonus += skill.DEF + (skill.DEFPerLevel * currentLevel);
+                    totalHpBonusPercent += (skill.HP + (skill.HPPerLevel * currentLevel) * multiplier);
+                    totalDefBonus += (skill.DEF + (skill.DEFPerLevel * currentLevel) * multiplier);
 
                     if (heldElement != null && weaponData.weaponElement == heldElement)
                     {
-                        totalAtkPercent += (skill.ATK + (skill.ATKPerLevel * currentLevel)) / 100f;
-                        totalCritRatePercent += (skill.CritRate + (skill.CritRatePerLevel * currentLevel));
-                        totalCritDamagePercent += (skill.CritDamage + (skill.CritDamagePerLevel * currentLevel)) / 100f;
-                        totalAttackSpeedPercent += (skill.AttackSpeed + (skill.AttackSpeedPerLevel * currentLevel)) / 100f;
+                        totalAtkPercent += ((skill.ATK + (skill.ATKPerLevel * currentLevel)) * multiplier) / 100f;
+                        totalCritRatePercent += (skill.CritRate + (skill.CritRatePerLevel * currentLevel)) * multiplier;
+                        totalCritDamagePercent += ((skill.CritDamage + (skill.CritDamagePerLevel * currentLevel)) * multiplier) / 100f;
+                        totalAttackSpeedPercent += ((skill.AttackSpeed + (skill.AttackSpeedPerLevel * currentLevel)) * multiplier) / 100f;
                         
-                        totalChargeDamageGain += (skill.ChargAttack + (skill.ChargAttackPerLevel * currentLevel)) / 100f;
+                        totalChargeDamageGain += ((skill.ChargAttack + (skill.ChargAttackPerLevel * currentLevel)) * multiplier) / 100f;
                     }
 
-                    totalChargeBarGain += (skill.ChargeBarGain + (skill.ChargeBarGainPerLevel * currentLevel)) / 100f;
+                    totalChargeBarGain += ((skill.ChargeBarGain + (skill.ChargeBarGainPerLevel * currentLevel)) * multiplier) / 100f;
+
+                    totalAtkPercent += ((skill.ATKALLELE + (skill.ATKALLELEPerLevel * currentLevel)) / 100f);
+
+                    totalDamageCap += ((skill.DamageCap + (skill.DamageCapPerLevel * currentLevel)) / 100f);
 
                 }
             }
 
-            ApplyBonusesToPlayer(player, totalHpBonusPercent, totalDefBonus, totalAtkPercent, totalCritRatePercent, totalCritDamagePercent, totalAttackSpeedPercent, totalChargeBarGain, totalChargeDamageGain);
+            ApplyBonusesToPlayer(player, totalHpBonusPercent, totalDefBonus, totalAtkPercent, totalCritRatePercent, totalCritDamagePercent, totalAttackSpeedPercent, totalChargeBarGain, totalChargeDamageGain, totalDamageCap);
 
         }
 
 
-        private static void ApplyBonusesToPlayer(Player player, float hpBonusPercent, float defBonus, float atkPercent, float critRatePercent, float critDamagePercent, float attackSpeedPercent, float totalChargeBarGain, float totalChargeDamageGain)
+        private static void ApplyBonusesToPlayer(Player player, float hpBonusPercent, float defBonus, float atkPercent, float critRatePercent, float critDamagePercent, float attackSpeedPercent, float totalChargeBarGain, float totalChargeDamageGain, float totalDamageCap)
         {
             player.statLifeMax2 += (int)(player.statLifeMax * (hpBonusPercent / 100f));
             player.statDefense += (int)defBonus;
@@ -90,6 +101,8 @@ namespace NeavaAGBF.Common.Players
 
                 modPlayer.chargeGainMultiplier += totalChargeBarGain;
                 modPlayer.chargeAttackDamageMultiplier += totalChargeDamageGain;
+
+                modPlayer.DamageCapMulti += totalDamageCap;
             }
         }
     }

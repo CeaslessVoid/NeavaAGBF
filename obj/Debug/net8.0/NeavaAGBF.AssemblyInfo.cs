@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NeavaAGBF")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+37fb61e2e68c75bc885328bacbeb9d7118400b20")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0a7647eb3ac16e56a65b70ce8bc02f3a4e44f2ec")]
 [assembly: System.Reflection.AssemblyProductAttribute("NeavaAGBF")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NeavaAGBF")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

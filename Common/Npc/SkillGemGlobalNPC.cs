@@ -33,15 +33,15 @@ namespace NeavaAGBF.Common.Npc
 
             if (NPC.downedPlantBoss)
             {
-                return Main.rand.NextBool(50);
+                return Main.rand.NextBool(5);
             }
             else if (Main.hardMode)
             {
-                return Main.rand.NextBool(100);
+                return Main.rand.NextBool(25);
             }
             else
             {
-                return Main.rand.NextBool(200);
+                return Main.rand.NextBool(50);
             }
         }
 
