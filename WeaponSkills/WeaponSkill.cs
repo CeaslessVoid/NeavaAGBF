@@ -43,8 +43,21 @@ namespace NeavaAGBF.WeaponSkills
         public float ATKALLELE { get; protected set; }
         public float ATKALLELEPerLevel { get; protected set; }
 
+        // Damage Cap is not used (failed feature)
         public float DamageCap { get; protected set; }
         public float DamageCapPerLevel { get; protected set; }
+
+        public float Enmity { get; protected set; }
+        public float EnmityPerLevel { get; protected set; }
+
+        public float Stamina { get; protected set; }
+        public float StaminaPerLevel { get; protected set; }
+
+        public float DMGReduc { get; protected set; }
+        public float DMGReducPerLevel { get; protected set; }
+
+        public float DMGAmp { get; protected set; }
+        public float DMGAmpU { get; protected set; }
 
         public virtual Color TooltipColor { get; protected set; } = Color.Green;
 

@@ -21,6 +21,7 @@ using Terraria.ID;
 using NeavaAGBF.Common.Players;
 using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
+using Newtonsoft.Json.Linq;
 
 namespace NeavaAGBF.Common.Items
 {
@@ -175,7 +176,7 @@ namespace NeavaAGBF.Common.Items
 
             foreach (var skill in weaponSkills)
             {
-                AddSkillTooltips(tooltips, skill, currentLevel, weaponElement);
+                AddSkillTooltips(tooltips, skill, currentLevel);
             }
 
             if (maxLevel > 0)
@@ -334,7 +335,7 @@ namespace NeavaAGBF.Common.Items
         }
 
 
-        private void AddSkillTooltips(List<TooltipLine> tooltips, WeaponSkill skill, int level, Element element)
+        private void AddSkillTooltips(List<TooltipLine> tooltips, WeaponSkill skill, int level)
         {
 
             Player player = Main.LocalPlayer;
@@ -342,6 +343,7 @@ namespace NeavaAGBF.Common.Items
             var modPlayer = player.GetModPlayer<StatHandler>();
 
             float modifier = modPlayer.GetStatMultiplier(skill.SkillOwner);
+            Element element = skill.SkillElement;
 
             float hpBonus = (skill.HP + (skill.HPPerLevel * level)) * modifier;
             float atkBonus = (skill.ATK + (skill.ATKPerLevel * level) * modifier);
@@ -358,7 +360,15 @@ namespace NeavaAGBF.Common.Items
 
             float allatackBonus = (skill.ATKALLELE + (skill.ATKALLELEPerLevel * level));
 
+            float enmityBonus = (skill.Enmity + (skill.EnmityPerLevel * level));
+            float damageReductionBonus = (skill.DMGReduc + (skill.DMGReducPerLevel * level));
+
+            float staminaBonus = (skill.Stamina + (skill.StaminaPerLevel * level));
+
             float CapBonus = (skill.DamageCap + (skill.DamageCapPerLevel * level));
+
+            float damageAmpBonus = (skill.DMGAmp);
+            float damageAmpBonusU = (skill.DMGAmpU);
 
             string skillOwnerDisplay = string.IsNullOrEmpty(skill.SkillOwner) ? "null" : $"{skill.SkillOwner}'s";
             TooltipLine skillNameLine = new TooltipLine(Mod, "SkillName", $"{skillOwnerDisplay} {skill.SkillElement} {skill.SkillName}")
@@ -376,39 +386,56 @@ namespace NeavaAGBF.Common.Items
 
             bool isShiftHeld = Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift);
 
-            List<string> bonuses = new List<string>(); // Fire!!!
+            List<string> bonuses = new List<string>(); // Fire!!! ICE :SKULL:
 
             if (!isShiftHeld)
             {
-                if (hpBonus != 0) AddStatString(bonuses, "Health", (float)Math.Round(hpBonus, 1), true, null);
-                if (atkBonus != 0) AddStatString(bonuses, $"{element.Name} Attack", (float)Math.Round(atkBonus, 1), true, element.TooltipColor);
-                if (defBonus != 0) AddStatString(bonuses, "Defense", (int)Math.Round(defBonus, 1), false, null);
-                if (critRateBonus != 0) AddStatString(bonuses, $"{element.Name} Critical Rate", (int)Math.Round(critRateBonus, 1), true, element.TooltipColor);
-                if (critDamageBonus != 0) AddStatString(bonuses, $"{element.Name} Critical Damage", (float)Math.Round(critDamageBonus, 1), true, element.TooltipColor);
-                if (attackSpeedBonus != 0) AddStatString(bonuses, $"{element.Name} Attack Speed", (float)Math.Round(attackSpeedBonus, 1), true, element.TooltipColor);
-                if (movementSpeedBonus != 0) AddStatString(bonuses, "Movement Speed", (float)Math.Round(movementSpeedBonus, 1), true, null);
-                if (chargeBarBonus != 0) AddStatString(bonuses, "Charge Bar Gain", (float)Math.Round(chargeBarBonus, 1), true, element.TooltipColor);
-                if (chargeAttackBonus != 0) AddStatString(bonuses, $"{element.Name} Charge Attack Damage", (float)Math.Round(chargeAttackBonus, 1), true, element.TooltipColor);
+                if (hpBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Health").Value}", (float)Math.Round(hpBonus, 1), true, null);
+                if (atkBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}", (float)Math.Round(atkBonus, 1), true, element.TooltipColor);
+                if (defBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Def").Value}", (int)Math.Round(defBonus, 1), false, null);
+                if (critRateBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CR").Value}", (float)Math.Round(critRateBonus, 1), true, element.TooltipColor);
+                if (critDamageBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CD").Value}", (float)Math.Round(critDamageBonus, 1), true, element.TooltipColor);
+                if (attackSpeedBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.AS").Value}", (float)Math.Round(attackSpeedBonus, 1), true, element.TooltipColor);
+                if (movementSpeedBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.MS").Value}", (float)Math.Round(movementSpeedBonus, 1), true, null);
+                if (chargeBarBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.CBGain").Value}", (float)Math.Round(chargeBarBonus, 1), true, element.TooltipColor);
+                if (chargeAttackBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CBDamage").Value}", (float)Math.Round(chargeAttackBonus, 1), true, element.TooltipColor);
 
-                if (allatackBonus != 0) AddStatString(bonuses, $"All Element Attack Damage", (float)Math.Round(allatackBonus, 1), true, element.TooltipColor);
+                if (allatackBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}", (float)Math.Round(allatackBonus, 1), true, element.TooltipColor);
 
-                if (CapBonus != 0) AddStatString(bonuses, $"Damage Cap", (float)Math.Round(CapBonus, 1), true, element.TooltipColor);
+                if (CapBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.DCap").Value}", (float)Math.Round(CapBonus, 1), true, element.TooltipColor);
+
+                if (enmityBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Enmity").Value}", (float)Math.Round(enmityBonus, 1), true, element.TooltipColor);
+                if (staminaBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Stamina").Value}", (float)Math.Round(staminaBonus, 1), true, element.TooltipColor);
+
+                if (damageReductionBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.DR").Value}", (float)Math.Round(damageReductionBonus, 1), true, element.TooltipColor);
+
+                if (damageAmpBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.DamageAmp").Value}", (float)Math.Round(damageAmpBonus, 1), true, element.TooltipColor);
+                if (damageAmpBonusU != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.DamageAmp").Value}", (float)Math.Round(damageAmpBonusU, 1), true, element.TooltipColor);
             }
             else
             {
-                if (hpBonus != 0) AddStatString(bonuses, "Health", $"({skill.HP} + {skill.HPPerLevel} per level) * {modifier}", null);
-                if (atkBonus != 0) AddStatString(bonuses, $"{element.Name} Attack", $"({skill.ATK} + {skill.ATKPerLevel} per level) * {modifier}", element.TooltipColor);
-                if (defBonus != 0) AddStatString(bonuses, "Defense", $"({skill.DEF} + {skill.DEFPerLevel} per level) * {modifier}", null);
-                if (critRateBonus != 0) AddStatString(bonuses, $"{element.Name} Critical Rate", $"({skill.CritRate} + {skill.CritRatePerLevel} per level) * {modifier}", element.TooltipColor);
-                if (critDamageBonus != 0) AddStatString(bonuses, $"{element.Name} Critical Damage", $"({skill.CritDamage} + {skill.CritDamagePerLevel} per level) * {modifier}", element.TooltipColor);
-                if (attackSpeedBonus != 0) AddStatString(bonuses, $"{element.Name} Attack Speed", $"({skill.AttackSpeed} + {skill.AttackSpeedPerLevel} per level) * {modifier}", element.TooltipColor);
-                if (movementSpeedBonus != 0) AddStatString(bonuses, "Movement Speed", $"({skill.MovementSpeed} + {skill.MovementSpeedPerLevel} per level) * {modifier}", null);
-                if (chargeBarBonus != 0) AddStatString(bonuses, "Charge Bar Gain", $"({skill.ChargeBarGain} + {skill.ChargeBarGainPerLevel} per level) * {modifier}", element.TooltipColor);
-                if (chargeAttackBonus != 0) AddStatString(bonuses, $"{element.Name} Charge Attack Damage", $"({skill.ChargAttack} + {skill.ChargAttackPerLevel} per level) * {modifier}", element.TooltipColor);
+                if (hpBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Health").Value}", $"({Math.Abs(skill.HP)} + {Math.Abs(skill.HPPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", null, hpBonus > 0);
+                if (atkBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}", $"({Math.Abs(skill.ATK)} + {Math.Abs(skill.ATKPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", element.TooltipColor, atkBonus > 0);
+                if (defBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Def").Value}", $"({Math.Abs(skill.DEF)} + {Math.Abs(skill.DEFPerLevel)}  {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", null, defBonus > 0);
+                if (critRateBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CR").Value}", $"({Math.Abs(skill.CritRate)} + {Math.Abs(skill.CritRatePerLevel)}  {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", element.TooltipColor, critRateBonus > 0);
+                if (critDamageBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CD").Value}", $"({Math.Abs(skill.CritDamage)} + {Math.Abs(skill.CritDamagePerLevel)}  {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", element.TooltipColor, critDamageBonus > 0);
+                if (attackSpeedBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.AS").Value}", $"({Math.Abs(skill.AttackSpeed)} + {Math.Abs(skill.AttackSpeedPerLevel)}  {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", element.TooltipColor, attackSpeedBonus > 0);
+                if (movementSpeedBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.MS").Value}", $"({Math.Abs(skill.MovementSpeed)} + {Math.Abs(skill.MovementSpeedPerLevel)}  {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", null, movementSpeedBonus > 0);
+                if (chargeBarBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.CBGain").Value}", $"({skill.ChargeBarGain} + {skill.ChargeBarGainPerLevel} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", element.TooltipColor);
+                if (chargeAttackBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CBDamage").Value}", $"({skill.ChargAttack} + {skill.ChargAttackPerLevel} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", element.TooltipColor);
 
-                if (allatackBonus != 0) AddStatString(bonuses, $"All Element Attack Damage", $"({skill.ATKALLELE} + {skill.ATKALLELEPerLevel} per level)", element.TooltipColor);
+                if (allatackBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.AllEleAtk").Value}", $"({Math.Abs(skill.ATKALLELE)} + {Math.Abs(skill.ATKALLELEPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value})", element.TooltipColor, allatackBonus > 0);
 
-                if (CapBonus != 0) AddStatString(bonuses, $"Damage Cap", $"({skill.DamageCap} + {skill.DamageCapPerLevel} per level)", element.TooltipColor);
+                if (CapBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.DCap").Value}", $"({skill.DamageCap} + {skill.DamageCapPerLevel} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value})", element.TooltipColor);
+
+                if (enmityBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}", $"({Math.Abs(skill.Enmity)} + {Math.Abs(skill.EnmityPerLevel)}  {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) *  {modifier} * {Language.GetText("Mods.NeavaAGBF.WeaponSkill.EnmityDesc").Value}", element.TooltipColor, enmityBonus > 0);
+                if (staminaBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}", $"({Math.Abs(skill.Stamina)} + {Math.Abs(skill.StaminaPerLevel)}  {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) *  {modifier} * {Language.GetText("Mods.NeavaAGBF.WeaponSkill.StaminaDesc").Value}", element.TooltipColor, staminaBonus > 0);
+
+                if (damageReductionBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.DR").Value}", $"({Math.Abs(skill.DMGReduc)} + {Math.Abs(skill.DMGReducPerLevel)}  {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) *  {modifier}", element.TooltipColor, damageReductionBonus > 0);
+
+                if (damageAmpBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Damage").Value}", $"{Math.Abs(skill.DMGAmp)}", element.TooltipColor, damageAmpBonus > 0);
+                if (damageAmpBonusU != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Damage").Value}", $"({Math.Abs(skill.DMGAmpU)})", element.TooltipColor, damageAmpBonusU > 0);
+
             }
 
             if (bonuses.Count > 0)
@@ -429,16 +456,20 @@ namespace NeavaAGBF.Common.Items
             if (value != 0)
             {
                 string sign = value > 0 ? "+" : "";
-                string formattedValue = isPercentage ? $"{sign}{value}%" : $"{sign}{value}";
-                bonuses.Add($"{formattedValue} boost to {statName}");
+                string formattedValue = isPercentage ? $"{sign}{Math.Abs(value)}%" : $"{sign}{value}";
+                string isBoon = value > 0 ? "boost" : "hit";
+                bonuses.Add($"{formattedValue} {isBoon} to {statName}");
             }
         }
 
-        void AddStatString(List<string> bonuses, string statName, string detailedValue, Color? color)
+        void AddStatString(List<string> bonuses, string statName, string detailedValue, Color? color, bool isPos = false)
         {
+
             if (!string.IsNullOrEmpty(detailedValue))
             {
-                bonuses.Add($"{detailedValue} boost to {statName}");
+                string isBoon = isPos ? "boost" : "hit";
+
+                bonuses.Add($"{detailedValue} {isBoon} to {statName}");
             }
         }
 

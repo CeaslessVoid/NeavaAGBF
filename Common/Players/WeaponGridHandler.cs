@@ -31,7 +31,11 @@ namespace NeavaAGBF.Common.Players
             float totalChargeBarGain = 0f;
             float totalChargeDamageGain = 0f;
 
+            float totalDamageReduction = 0f;
+
             float totalDamageCap = 0f;
+
+            float totalAmp = 0f;
 
             Item heldItem = player.HeldItem;
             Element heldElement = null;
@@ -59,6 +63,8 @@ namespace NeavaAGBF.Common.Players
                     totalHpBonusPercent += (skill.HP + (skill.HPPerLevel * currentLevel) * multiplier);
                     totalDefBonus += (skill.DEF + (skill.DEFPerLevel * currentLevel) * multiplier);
 
+                    totalDamageReduction += (skill.DMGReduc + (skill.DMGReducPerLevel * currentLevel)) / 100f;
+
                     if (heldElement != null && weaponData.weaponElement == heldElement)
                     {
                         totalAtkPercent += ((skill.ATK + (skill.ATKPerLevel * currentLevel)) * multiplier) / 100f;
@@ -67,6 +73,14 @@ namespace NeavaAGBF.Common.Players
                         totalAttackSpeedPercent += ((skill.AttackSpeed + (skill.AttackSpeedPerLevel * currentLevel)) * multiplier) / 100f;
                         
                         totalChargeDamageGain += ((skill.ChargAttack + (skill.ChargAttackPerLevel * currentLevel)) * multiplier) / 100f;
+
+                        // Enmity
+                        modPlayer.enmityMod += ((skill.Enmity + (skill.Enmity * currentLevel)) * multiplier) / 100f;
+
+                        // Stamina
+                        modPlayer.staminaMod += ((skill.Stamina + (skill.StaminaPerLevel * currentLevel)) * multiplier) / 100f;
+
+                        totalAmp += skill.DMGAmp / 100f;
                     }
 
                     totalChargeBarGain += ((skill.ChargeBarGain + (skill.ChargeBarGainPerLevel * currentLevel)) * multiplier) / 100f;
@@ -75,15 +89,18 @@ namespace NeavaAGBF.Common.Players
 
                     totalDamageCap += ((skill.DamageCap + (skill.DamageCapPerLevel * currentLevel)) / 100f);
 
+                    // Amp unconditional
+                    totalAmp += skill.DMGAmpU / 100f;
+
                 }
             }
 
-            ApplyBonusesToPlayer(player, totalHpBonusPercent, totalDefBonus, totalAtkPercent, totalCritRatePercent, totalCritDamagePercent, totalAttackSpeedPercent, totalChargeBarGain, totalChargeDamageGain, totalDamageCap);
+            ApplyBonusesToPlayer(player, totalHpBonusPercent, totalDefBonus, totalAtkPercent, totalCritRatePercent, totalCritDamagePercent, totalAttackSpeedPercent, totalChargeBarGain, totalChargeDamageGain, totalDamageCap, totalDamageReduction, totalAmp);
 
         }
 
 
-        private static void ApplyBonusesToPlayer(Player player, float hpBonusPercent, float defBonus, float atkPercent, float critRatePercent, float critDamagePercent, float attackSpeedPercent, float totalChargeBarGain, float totalChargeDamageGain, float totalDamageCap)
+        private static void ApplyBonusesToPlayer(Player player, float hpBonusPercent, float defBonus, float atkPercent, float critRatePercent, float critDamagePercent, float attackSpeedPercent, float totalChargeBarGain, float totalChargeDamageGain, float totalDamageCap, float totalDamageReduction, float totalAmp)
         {
             player.statLifeMax2 += (int)(player.statLifeMax * (hpBonusPercent / 100f));
             player.statDefense += (int)defBonus;
@@ -92,9 +109,12 @@ namespace NeavaAGBF.Common.Players
             {
                 var modPlayer = player.GetModPlayer<StatHandler>();
 
+                atkPercent += modPlayer.CalculateEnmityAtkPercent() + modPlayer.CalculateStaminaAtkPercent();
+
                 player.GetAttackSpeed(DamageClass.Generic) += attackSpeedPercent;
                 player.GetCritChance(DamageClass.Generic) += critRatePercent;
                 player.GetDamage(DamageClass.Generic) += atkPercent;
+                player.endurance += totalDamageReduction;
 
                 // Custom Stats go here
                 modPlayer.BonusCritDamage += critDamagePercent;
@@ -102,7 +122,9 @@ namespace NeavaAGBF.Common.Players
                 modPlayer.chargeGainMultiplier += totalChargeBarGain;
                 modPlayer.chargeAttackDamageMultiplier += totalChargeDamageGain;
 
-                modPlayer.DamageCapMulti += totalDamageCap;
+                modPlayer.damageAmp = totalAmp + 1f;
+
+                //modPlayer.DamageCapMulti += totalDamageCap; // Damage cap
             }
         }
     }

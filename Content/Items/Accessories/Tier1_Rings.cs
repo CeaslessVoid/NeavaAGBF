@@ -125,4 +125,70 @@ namespace NeavaAGBF.Content.Items.Accessories
                 .Register();
         }
     }
+
+    public class NormalRing_Dark : ModItem
+    {
+
+        public override void SetDefaults()
+        {
+            Item.width = 42;
+            Item.height = 42;
+            Item.accessory = true;
+            Item.rare = ItemRarityID.Lime;
+            Item.value = Item.sellPrice(gold: 1);
+        }
+
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            player.GetModPlayer<StatHandler>().StatMultiplierDarkNormal += 0.1f;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.BloodWater)
+                .AddIngredient(ItemID.DiamondRing, 1)
+                .AddIngredient(ItemID.Deathweed, 5)
+                .AddIngredient(ItemID.ShadowScale, 15)
+                .AddTile(TileID.DemonAltar)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.UnholyWater)
+                .AddIngredient(ItemID.DiamondRing, 1)
+                .AddIngredient(ItemID.Deathweed, 5)
+                .AddIngredient(ItemID.TissueSample, 15)
+                .AddTile(TileID.DemonAltar)
+                .Register();
+        }
+    }
+
+    public class NormalRing_Light : ModItem
+    {
+
+        public override void SetDefaults()
+        {
+            Item.width = 42;
+            Item.height = 42;
+            Item.accessory = true;
+            Item.rare = ItemRarityID.Lime;
+            Item.value = Item.sellPrice(gold: 1);
+        }
+
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            player.GetModPlayer<StatHandler>().StatMultiplierLightNormal += 0.1f;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.WormScarf)
+                .AddIngredient(ItemID.DiamondRing, 1)
+                .AddIngredient(ItemID.HolyWater, 5)
+                .AddIngredient(ItemID.PixieDust, 15)
+                .AddTile(TileID.DemonAltar)
+                .Register();
+        }
+    }
 }

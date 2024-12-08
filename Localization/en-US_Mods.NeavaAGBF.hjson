@@ -8,7 +8,11 @@ Items: {
 
 	UncapAnvil: {
 		DisplayName: Weapon Uncap Anvil.
-		Tooltip: Not usable as a normal anvil. Right click to open weapon uncap menu.
+		Tooltip:
+			'''
+			Not usable as a normal anvil => Right click to open weapon uncap menu.
+			Uncapping weapons increases its maximum skill level, and potentially unlocks new skills.
+			'''
 	}
 
 	SkillGem: {
@@ -26,23 +30,33 @@ Items: {
 	}
 
 	NormalRing_Earth: {
-		DisplayName: Ring of Earth
+		DisplayName: "[c/8b4513:Ring of Earth]"
 		Tooltip: "[c/FF9F33:10%] boost to [c/8b4513:Earth's], [c/8b4513:Mountain's], and [c/8b4513:Terra's] weapon skills"
 	}
 
 	NormalRing_Fire: {
-		DisplayName: Ring of Fire
+		DisplayName: "[c/ff0000:Ring of Fire]"
 		Tooltip: "[c/FF9F33:10%] boost to [c/ff0000:Fire's], [c/ff0000:Hellfire's], and [c/ff0000:Inferno's] weapon skills"
 	}
 
 	NormalRing_Water: {
-		DisplayName: Ring of Water
+		DisplayName: "[c/0000e1:Ring of Water]"
 		Tooltip: "[c/FF9F33:10%] boost to [c/0000e1:Water's], [c/0000e1:Tsunami's], and [c/0000e1:Hoarfrost's] weapon skills"
 	}
 
 	NormalRing_Wind: {
-		DisplayName: Ring of Wind
+		DisplayName: "[c/90ee90:Ring of Wind]"
 		Tooltip: "[c/FF9F33:10%] boost to [c/90ee90:Wind's], [c/90ee90:Whirlwind's], and [c/90ee90:Ventosus's] weapon skills"
+	}
+
+	NormalRing_Dark: {
+		DisplayName: "[c/9370db:Ring of Dark]"
+		Tooltip: "[c/FF9F33:10%] boost to [c/9370db:Dark's], [c/9370db:Hatred's], and [c/9370db:Oblivion's] weapon skills"
+	}
+
+	NormalRing_Light: {
+		DisplayName: "[c/ffff00:Ring of Light]"
+		Tooltip: "[c/FF9F33:10%] boost to [c/ffff00:Light's], [c/ffff00:Thunder's], and [c/ffff00:Zion's] weapon skills"
 	}
 }
 
@@ -55,18 +69,28 @@ SimpleText: {
 
 WeaponSkill: {
 	Requires: Requires
+	PL: Per Level
 	PerLevel: Max per uncap
 	SkillGems: Skill gems to upgrade
 	SkillLevel: Skill Level
 	Health: Health
 	Attack: Attack
 	Def: Defense
-	CR: Crit Rate
+	CR: Crit Chance
 	CD: Crit Damage
 	AS: Attack Speed
 	MS: Movement Speed
 	CBGain: Charge Bar Gain
 	CBDamage: Charge Attack Damage
+	DCap: Damage Cap
+	Enmity: Enmity
+	EnmityDesc: Missing Health%
+	Stamina: Stamina
+	StaminaDesc: Current Health%
+	DR: Damage Reduction
+	AllEleAtk: All Element Attack
+	Damage: Damage
+	DamageAmp: Damage Amp
 }
 
 Element: {

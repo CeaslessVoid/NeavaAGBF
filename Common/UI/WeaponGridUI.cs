@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 
 namespace NeavaAGBF.Common.UI
 {
@@ -17,6 +18,12 @@ namespace NeavaAGBF.Common.UI
     {
         private Vector2 dragOffset;
         private bool dragging;
+        private Asset<Texture2D> backgroundTexture;
+        public override void OnInitialize()
+        {
+            backgroundTexture = ModContent.Request<Texture2D>("NeavaAGBF/Content/Players/GBFGridDynamicAnim");
+            Recalculate();
+        }
 
         public override void LeftMouseDown(UIMouseEvent evt)
         {
@@ -66,6 +73,18 @@ namespace NeavaAGBF.Common.UI
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
+            //base.DrawSelf(spriteBatch);
+
+            //CalculatedStyle dimensions2 = GetDimensions();
+
+            //CalculatedStyle dimensions = new CalculatedStyle();
+            //dimensions.Width = 300;
+            //dimensions.Height = 240;
+
+            //dimensions.X = dimensions2.X;
+            //dimensions.Y = dimensions2.Y;
+
+            //spriteBatch.Draw(backgroundTexture.Value, dimensions.ToRectangle(), Color.White);
         }
     }
 

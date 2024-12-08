@@ -65,7 +65,7 @@ namespace NeavaAGBF.Common.Items
             {
                 new UncapRequirement(ItemID.Wood, 5),
                 new UncapRequirement(ItemID.StoneBlock, 10)
-            }); ;
+            });
                 uncapGroupTest.AddRequirement(2, new List<UncapRequirement>
             {
                 new UncapRequirement(ItemID.Wood, 5),
@@ -109,12 +109,29 @@ namespace NeavaAGBF.Common.Items
     { 
     
         public static void AddUncapGruops(Dictionary<string, UncapGroup> uncapDict) 
-        { 
+        {
             // Add uncap groups here
 
 
+            // Hero Weapons; Knights edge and Excalibur + Booth True Variants. Also has Terrablade
+            UncapGroup uncapGroupHero = new UncapGroup("Hero");
+            uncapGroupHero.AddRequirement(1, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.HallowedBar, 15),
+                new UncapRequirement(ItemID.AvengerEmblem, 1),
+                new UncapRequirement(ItemID.HellstoneBar, 10),
+                new UncapRequirement(ItemID.PlatinumCoin, 2)
+            });
+            uncapGroupHero.AddRequirement(2, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.HallowedBar, 30),
+                new UncapRequirement(ItemID.BrokenHeroSword, 1),
+                new UncapRequirement(ItemID.PlanteraTrophy, 1),
+                new UncapRequirement(ItemID.Seedler, 1),
+                new UncapRequirement(ItemID.PlatinumCoin, 3)
+            });
 
-
+            uncapDict.Add(uncapGroupHero.Name, uncapGroupHero);
 
         }
     

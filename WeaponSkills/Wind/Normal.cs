@@ -47,7 +47,17 @@ namespace NeavaAGBF.WeaponSkills.Wind
         public WindVerity() : base("Wind", "Verity", Element.Wind)
         {
             CritRate = 1;
-            CritRatePerLevel = 0.1f;
+            CritRatePerLevel = 0.2f;
+        }
+
+    }
+
+    public class WindStamina : WeaponSkill
+    {
+        public WindStamina() : base("Wind", "Stamina", Element.Wind)
+        {
+            Stamina = 1.4f;
+            StaminaPerLevel = 0.8f;
         }
 
     }

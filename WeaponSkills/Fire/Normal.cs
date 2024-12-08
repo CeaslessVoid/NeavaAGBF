@@ -38,12 +38,37 @@ namespace NeavaAGBF.WeaponSkills.Fire
 
     }
 
+    public class FireCelere : WeaponSkill
+    {
+        public FireCelere() : base("Fire", "Celere", Element.Fire)
+        {
+
+            CritRate = 1;
+            CritRatePerLevel = 0.2f;
+
+            ATK = 1;
+            ATKPerLevel = 0.5f;
+        }
+
+    }
+
+    public class FireEnrage : WeaponSkill
+    {
+        public FireEnrage() : base("Fire", "Enrage", Element.Fire)
+        {
+
+            CritDamage = 1f;
+            CritDamagePerLevel = 0.5f;
+        }
+
+    }
+
     public class FireVerity : WeaponSkill
     {
         public FireVerity() : base("Fire", "Verity", Element.Fire)
         {
             CritRate = 1;
-            CritRatePerLevel = 0.1f;
+            CritRatePerLevel = 0.2f;
         }
 
     }

@@ -20,6 +20,7 @@ using System;
 using NeavaAGBF.WeaponSkills;
 using NeavaAGBF.Common.Items;
 using System.Linq;
+using Microsoft.CodeAnalysis.Emit;
 
 namespace NeavaAGBF.Common.Players
 {
@@ -33,6 +34,12 @@ namespace NeavaAGBF.Common.Players
 
         public float chargeGainMultiplier = 1f;
         public float chargeAttackDamageMultiplier = 1f;
+
+        public float enmityMod = 0.0f;
+
+        public float staminaMod = 0.0f;
+
+        public float damageAmp = 1.0f;
 
         // Stat Multpliers
 
@@ -52,8 +59,8 @@ namespace NeavaAGBF.Common.Players
         public float StatMultiplierLightNormal = 1f;
         public float StatMultiplierDarkNormal = 1f;
 
-        public float DamageCapBase = 10;
-        public float DamageCapMulti = 1f;
+        //public float DamageCapBase = 100;
+        //public float DamageCapMulti = 1f;
 
         public float GetStatMultiplier(String owner)
         {
@@ -93,6 +100,9 @@ namespace NeavaAGBF.Common.Players
         {
             BonusCritDamage = 0f;
 
+            enmityMod = 0f;
+            staminaMod = 0f;
+
             chargeGainMultiplier = 1f;
             chargeAttackDamageMultiplier = 1f;
 
@@ -110,13 +120,47 @@ namespace NeavaAGBF.Common.Players
             StatMultiplierLightNormal = 1f;
             StatMultiplierDarkNormal = 1f;
 
-            DamageCapMulti = 1f;
+            //DamageCapMulti = 1f;
 
+        }
+
+        public float CalculateEnmityAtkPercent()
+        {
+
+            float healthPercentage = (float)Player.statLife / Player.statLifeMax2;
+
+            if (healthPercentage > 0.51f)
+            {
+                return 0f;
+            }
+
+            float scaledHealth = Utils.Clamp((0.51f - healthPercentage) / (0.51f - 0.10f), 0f, 1f);
+            float atkBonus = scaledHealth * enmityMod;
+
+            return atkBonus;
+        }
+
+        public float CalculateStaminaAtkPercent()
+        {
+
+            float healthPercentage = (float)Player.statLife / Player.statLifeMax2;
+
+            if (healthPercentage < 0.49f)
+            {
+                return 0f;
+            }
+
+            float scaledHealth = Utils.Clamp((healthPercentage - 0.49f) / (0.9f - 0.49f), 0f, 1f);
+            float atkBonus = scaledHealth * staminaMod;
+
+            return atkBonus;
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.CritDamage += BonusCritDamage;
+            modifiers.FinalDamage *= damageAmp;
+
+            base.ModifyHitNPC(target, ref modifiers);
         }
 
 
@@ -135,7 +179,6 @@ namespace NeavaAGBF.Common.Players
 
         public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            base.OnHitNPCWithItem(item,target, hit, damageDone);
 
             //if (Player.HeldItem.TryGetGlobalItem(out WeaponSkillsGlobalItem globalItem))
             //{
@@ -150,7 +193,6 @@ namespace NeavaAGBF.Common.Players
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            base.OnHitNPCWithProj(proj,target,hit, damageDone);
 
             //if (proj.TryGetGlobalProjectile(out ChargeControlGlobalProjectile globalProj) && !globalProj.CanGainCharge)
             //    return;
@@ -168,9 +210,5 @@ namespace NeavaAGBF.Common.Players
             //    //Main.NewText($"Charge Gained! Current Charge: {(int)currentCharge}/{MaxCharge}", Color.Cyan);
             //}
         }
-
-        
-
     }
-
 }

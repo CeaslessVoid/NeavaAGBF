@@ -43,7 +43,20 @@ namespace NeavaAGBF.WeaponSkills.Water
         public WaterVerity() : base("Water", "Verity", Element.Water)
         {
             CritRate = 1;
-            CritRatePerLevel = 0.1f;
+            CritRatePerLevel = 0.2f;
+        }
+
+    }
+
+    public class WaterSpearhead : WeaponSkill
+    {
+        public WaterSpearhead() : base("Water", "Spearhead", Element.Water)
+        {
+            CritRate = 1;
+            CritRatePerLevel = 0.2f;
+
+            AttackSpeed = 1;
+            AttackSpeedPerLevel = 0.4f;
         }
 
     }

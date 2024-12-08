@@ -10,10 +10,10 @@
 	<ItemGroup>
 	  <None Remove="Content\Items\Others\SkillGem.png" />
 	  <None Remove="WeaponSkills\Special\Balance" />
+	  <None Remove="WeaponSkills\Special\Bane.png" />
+	  <None Remove="WeaponSkills\Special\Enchantment.png" />
+	  <None Remove="WeaponSkills\Special\Star_Touch.png" />
 	  <None Remove="WeaponSkills\Water\Might.png" />
-	</ItemGroup>
-	<ItemGroup>
-	  <AdditionalFiles Include="WeaponSkills\Special\Balance" />
 	</ItemGroup>
 	
 	<ItemGroup>

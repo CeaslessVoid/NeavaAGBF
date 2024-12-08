@@ -27,12 +27,23 @@ namespace NeavaAGBF.WeaponSkills.Earth
 
     }
 
+    public class EarthFortified : WeaponSkill
+    {
+        public EarthFortified() : base("Earth", "Fortified", Element.Earth)
+        {
+
+            DEF = 2;
+            DEFPerLevel = 0.5f;
+        }
+
+    }
+
     public class EarthVerity : WeaponSkill
     {
         public EarthVerity() : base("Earth", "Verity", Element.Earth)
         {
             CritRate = 1;
-            CritRatePerLevel = 0.1f;
+            CritRatePerLevel = 0.2f;
         }
 
     }

@@ -21,7 +21,30 @@ namespace NeavaAGBF.WeaponSkills.Dark
         public DarkVerity() : base("Dark", "Verity", Element.Dark)
         {
             CritRate = 1;
-            CritRatePerLevel = 0.1f;
+            CritRatePerLevel = 0.2f;
+        }
+
+    }
+
+    public class DarkEnmity : WeaponSkill
+    {
+        public DarkEnmity() : base("Dark", "Enmity", Element.Dark)
+        {
+            Enmity = 3f;
+            EnmityPerLevel = 1.0f;
+        }
+
+    }
+
+    public class DarkBloodshed : WeaponSkill
+    {
+        public DarkBloodshed() : base("Dark", "Bloodshed", Element.Dark)
+        {
+            ATK = 6;
+            ATKPerLevel = 1.5f;
+
+            HP = -10f;
+
         }
 
     }

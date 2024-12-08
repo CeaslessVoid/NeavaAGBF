@@ -25,4 +25,33 @@ namespace NeavaAGBF.WeaponSkills.None
         }
 
     }
+
+    public class NoneEnchantment : WeaponSkill
+    {
+        public NoneEnchantment() : base("null", "Enchantment", Element.Speical)
+        {
+            ATKALLELE = 1;
+            ATKALLELEPerLevel = 0.5f;
+        }
+
+    }
+
+    public class NoneBane : WeaponSkill
+    {
+        public NoneBane() : base("null", "Bane", Element.Speical)
+        {
+            DMGAmpU = 5;
+        }
+
+    }
+
+    public class NoneStarTouch : WeaponSkill
+    {
+        public NoneStarTouch() : base("null", "Star Touch", Element.Speical)
+        {
+            ATKALLELE = 1;
+            ATKALLELEPerLevel = 0.5f;
+        }
+
+    }
 }
