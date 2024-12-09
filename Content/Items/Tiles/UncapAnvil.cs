@@ -24,7 +24,7 @@ namespace NeavaAGBF.Content.Items.Tiles
             base.Item.autoReuse = true;
             base.Item.maxStack = 1;
             base.Item.consumable = true;
-            base.Item.createTile = ModContent.TileType<UncapAnvil_Tile>();
+            base.Item.createTile = ModContent.TileType<UncapAnvilTile>();
             base.Item.width = 28;
             base.Item.height = 14;
             base.Item.value = 7600;

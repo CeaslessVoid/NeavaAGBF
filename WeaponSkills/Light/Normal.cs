@@ -26,6 +26,19 @@ namespace NeavaAGBF.WeaponSkills.Wind
 
     }
 
+    public class LightMajesty : WeaponSkill
+    {
+        public LightMajesty() : base("Light", "Majesty", Element.Light)
+        {
+            HP = 3;
+            HPPerLevel = 1f;
+
+            ATK = 1;
+            ATKPerLevel = 0.5f;
+        }
+
+    }
+
     public class LightVerity : WeaponSkill
     {
         public LightVerity() : base("Light", "Verity", Element.Light)

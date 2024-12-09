@@ -27,6 +27,19 @@ namespace NeavaAGBF.WeaponSkills.Fire
 
     }
 
+    public class FireSun : WeaponSkill
+    {
+        public FireSun() : base("Fire", "Sun", Element.Fire)
+        {
+            CritDamage = 1.5f;
+
+            ATK = 2.5f;
+
+            CritRate = 1.5f;
+        }
+
+    }
+
     public class FireFortified : WeaponSkill
     {
         public FireFortified() : base("Fire", "Fortified", Element.Fire)

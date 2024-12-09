@@ -60,8 +60,8 @@ namespace NeavaAGBF.Common.Players
                     float multiplier = modPlayer.GetStatMultiplier(skill.SkillOwner);
 
                     float currentLevel = weaponData.currentLevel;
-                    totalHpBonusPercent += (skill.HP + (skill.HPPerLevel * currentLevel) * multiplier);
-                    totalDefBonus += (skill.DEF + (skill.DEFPerLevel * currentLevel) * multiplier);
+                    totalHpBonusPercent += (skill.HP + (skill.HPPerLevel * currentLevel)) * multiplier;
+                    totalDefBonus += (skill.DEF + (skill.DEFPerLevel * currentLevel)) * multiplier;
 
                     totalDamageReduction += (skill.DMGReduc + (skill.DMGReducPerLevel * currentLevel)) / 100f;
 

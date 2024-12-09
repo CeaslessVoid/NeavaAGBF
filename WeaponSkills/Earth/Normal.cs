@@ -27,6 +27,19 @@ namespace NeavaAGBF.WeaponSkills.Earth
 
     }
 
+    public class EarthMajesty : WeaponSkill
+    {
+        public EarthMajesty() : base("Earth", "Majesty", Element.Earth)
+        {
+
+            HP = 3;
+            HPPerLevel = 1f;
+            ATK = 1;
+            ATKPerLevel = 0.5f;
+        }
+
+    }
+
     public class EarthFortified : WeaponSkill
     {
         public EarthFortified() : base("Earth", "Fortified", Element.Earth)

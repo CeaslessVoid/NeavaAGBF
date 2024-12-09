@@ -65,6 +65,7 @@ SimpleText: {
 	UncapItem: Plance an item here
 	NoMoreUncapItem: This item cannot be uncapped further
 	HoldShift: Hold SHIFT for more information
+	UncapAnvilTile: Uncap Anvil
 }
 
 WeaponSkill: {

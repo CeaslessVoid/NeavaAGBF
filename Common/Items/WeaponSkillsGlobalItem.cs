@@ -346,28 +346,28 @@ namespace NeavaAGBF.Common.Items
             Element element = skill.SkillElement;
 
             float hpBonus = (skill.HP + (skill.HPPerLevel * level)) * modifier;
-            float atkBonus = (skill.ATK + (skill.ATKPerLevel * level) * modifier);
-            float defBonus = (skill.DEF + (skill.DEFPerLevel * level) * modifier);
-            float critRateBonus = (skill.CritRate + (skill.CritRatePerLevel * level) * modifier);
-            float critDamageBonus = (skill.CritDamage + (skill.CritDamagePerLevel * level) * modifier);
-            float attackSpeedBonus = (skill.AttackSpeed + (skill.AttackSpeedPerLevel * level) * modifier);
-            float movementSpeedBonus = (skill.MovementSpeed + (skill.MovementSpeedPerLevel * level) * modifier);
+            float atkBonus = (skill.ATK + (skill.ATKPerLevel * level)) * modifier;
+            float defBonus = (skill.DEF + (skill.DEFPerLevel * level)) * modifier;
+            float critRateBonus = (skill.CritRate + (skill.CritRatePerLevel * level)) * modifier;
+            float critDamageBonus = (skill.CritDamage + (skill.CritDamagePerLevel * level)) * modifier;
+            float attackSpeedBonus = (skill.AttackSpeed + (skill.AttackSpeedPerLevel * level)) * modifier;
+            float movementSpeedBonus = (skill.MovementSpeed + (skill.MovementSpeedPerLevel * level)) * modifier;
 
-            float chargeBarBonus = (skill.ChargeBarGain + (skill.ChargeBarGainPerLevel * level) * modifier);
-            float chargeAttackBonus = (skill.ChargAttack + (skill.ChargAttackPerLevel * level) * modifier);
+            float chargeBarBonus = (skill.ChargeBarGain + (skill.ChargeBarGainPerLevel * level)) * modifier;
+            float chargeAttackBonus = (skill.ChargAttack + (skill.ChargAttackPerLevel * level)) * modifier;
 
             string customEffect = skill.CustomText;
 
             float allatackBonus = (skill.ATKALLELE + (skill.ATKALLELEPerLevel * level));
 
-            float enmityBonus = (skill.Enmity + (skill.EnmityPerLevel * level));
-            float damageReductionBonus = (skill.DMGReduc + (skill.DMGReducPerLevel * level));
+            float enmityBonus = (skill.Enmity + (skill.EnmityPerLevel * level)) * modifier;
+            float damageReductionBonus = (skill.DMGReduc + (skill.DMGReducPerLevel * level)) * modifier;
 
-            float staminaBonus = (skill.Stamina + (skill.StaminaPerLevel * level));
+            float staminaBonus = (skill.Stamina + (skill.StaminaPerLevel * level)) * modifier;
 
             float CapBonus = (skill.DamageCap + (skill.DamageCapPerLevel * level));
 
-            float damageAmpBonus = (skill.DMGAmp);
+            float damageAmpBonus = (skill.DMGAmp) * modifier;
             float damageAmpBonusU = (skill.DMGAmpU);
 
             string skillOwnerDisplay = string.IsNullOrEmpty(skill.SkillOwner) ? "null" : $"{skill.SkillOwner}'s";
@@ -390,8 +390,8 @@ namespace NeavaAGBF.Common.Items
 
             if (!isShiftHeld)
             {
-                if (hpBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Health").Value}", (float)Math.Round(hpBonus, 1), true, null);
-                if (atkBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}", (float)Math.Round(atkBonus, 1), true, element.TooltipColor);
+                if (hpBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Health").Value}", (float)Math.Round(hpBonus, 2), true, null);
+                if (atkBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}", (float)Math.Round(atkBonus, 2), true, element.TooltipColor);
                 if (defBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Def").Value}", (int)Math.Round(defBonus, 1), false, null);
                 if (critRateBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CR").Value}", (float)Math.Round(critRateBonus, 1), true, element.TooltipColor);
                 if (critDamageBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CD").Value}", (float)Math.Round(critDamageBonus, 1), true, element.TooltipColor);
@@ -414,27 +414,88 @@ namespace NeavaAGBF.Common.Items
             }
             else
             {
-                if (hpBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Health").Value}", $"({Math.Abs(skill.HP)} + {Math.Abs(skill.HPPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", null, hpBonus > 0);
-                if (atkBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}", $"({Math.Abs(skill.ATK)} + {Math.Abs(skill.ATKPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", element.TooltipColor, atkBonus > 0);
-                if (defBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Def").Value}", $"({Math.Abs(skill.DEF)} + {Math.Abs(skill.DEFPerLevel)}  {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", null, defBonus > 0);
-                if (critRateBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CR").Value}", $"({Math.Abs(skill.CritRate)} + {Math.Abs(skill.CritRatePerLevel)}  {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", element.TooltipColor, critRateBonus > 0);
-                if (critDamageBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CD").Value}", $"({Math.Abs(skill.CritDamage)} + {Math.Abs(skill.CritDamagePerLevel)}  {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", element.TooltipColor, critDamageBonus > 0);
-                if (attackSpeedBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.AS").Value}", $"({Math.Abs(skill.AttackSpeed)} + {Math.Abs(skill.AttackSpeedPerLevel)}  {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", element.TooltipColor, attackSpeedBonus > 0);
-                if (movementSpeedBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.MS").Value}", $"({Math.Abs(skill.MovementSpeed)} + {Math.Abs(skill.MovementSpeedPerLevel)}  {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", null, movementSpeedBonus > 0);
-                if (chargeBarBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.CBGain").Value}", $"({skill.ChargeBarGain} + {skill.ChargeBarGainPerLevel} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", element.TooltipColor);
-                if (chargeAttackBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CBDamage").Value}", $"({skill.ChargAttack} + {skill.ChargAttackPerLevel} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", element.TooltipColor);
+                if (hpBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Health").Value}", skill.HPPerLevel == 0
+                    ? $"{Math.Abs(skill.HP)} * {modifier}"
+                    : $"({Math.Abs(skill.HP)} + {Math.Abs(skill.HPPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", null, hpBonus > 0);
 
-                if (allatackBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.AllEleAtk").Value}", $"({Math.Abs(skill.ATKALLELE)} + {Math.Abs(skill.ATKALLELEPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value})", element.TooltipColor, allatackBonus > 0);
+                if (atkBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}", skill.ATKPerLevel == 0
+                    ? $"{Math.Abs(skill.ATK)} * {modifier}"
+                    : $"({Math.Abs(skill.ATK)} + {Math.Abs(skill.ATKPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", element.TooltipColor, atkBonus > 0);
 
-                if (CapBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.DCap").Value}", $"({skill.DamageCap} + {skill.DamageCapPerLevel} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value})", element.TooltipColor);
+                if (defBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Def").Value}", skill.DEFPerLevel == 0
+                    ? $"{Math.Abs(skill.DEF)} * {modifier}"
+                    : $"({Math.Abs(skill.DEF)} + {Math.Abs(skill.DEFPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", null, defBonus > 0);
 
-                if (enmityBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}", $"({Math.Abs(skill.Enmity)} + {Math.Abs(skill.EnmityPerLevel)}  {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) *  {modifier} * {Language.GetText("Mods.NeavaAGBF.WeaponSkill.EnmityDesc").Value}", element.TooltipColor, enmityBonus > 0);
-                if (staminaBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}", $"({Math.Abs(skill.Stamina)} + {Math.Abs(skill.StaminaPerLevel)}  {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) *  {modifier} * {Language.GetText("Mods.NeavaAGBF.WeaponSkill.StaminaDesc").Value}", element.TooltipColor, staminaBonus > 0);
+                if (critRateBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CR").Value}", skill.CritRatePerLevel == 0
+                    ? $"{Math.Abs(skill.CritRate)} * {modifier}"
+                    : $"({Math.Abs(skill.CritRate)} + {Math.Abs(skill.CritRatePerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", element.TooltipColor, critRateBonus > 0);
 
-                if (damageReductionBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.DR").Value}", $"({Math.Abs(skill.DMGReduc)} + {Math.Abs(skill.DMGReducPerLevel)}  {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) *  {modifier}", element.TooltipColor, damageReductionBonus > 0);
+                if (critDamageBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CD").Value}", skill.CritDamagePerLevel == 0
+                    ? $"{Math.Abs(skill.CritDamage)} * {modifier}"
+                    : $"({Math.Abs(skill.CritDamage)} + {Math.Abs(skill.CritDamagePerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", element.TooltipColor, critDamageBonus > 0);
 
-                if (damageAmpBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Damage").Value}", $"{Math.Abs(skill.DMGAmp)}", element.TooltipColor, damageAmpBonus > 0);
-                if (damageAmpBonusU != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Damage").Value}", $"({Math.Abs(skill.DMGAmpU)})", element.TooltipColor, damageAmpBonusU > 0);
+                if (attackSpeedBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.AS").Value}", skill.AttackSpeedPerLevel == 0
+                    ? $"{Math.Abs(skill.AttackSpeed)} * {modifier}"
+                    : $"({Math.Abs(skill.AttackSpeed)} + {Math.Abs(skill.AttackSpeedPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", element.TooltipColor, attackSpeedBonus > 0);
+
+                if (movementSpeedBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.MS").Value}", skill.MovementSpeedPerLevel == 0
+                    ? $"{Math.Abs(skill.MovementSpeed)} * {modifier}"
+                    : $"({Math.Abs(skill.MovementSpeed)} + {Math.Abs(skill.MovementSpeedPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}", null, movementSpeedBonus > 0);
+
+                if (chargeBarBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.CBGain").Value}",
+                    skill.ChargeBarGainPerLevel == 0
+                    ? $"{skill.ChargeBarGain} * {modifier}"
+                    : $"({skill.ChargeBarGain} + {skill.ChargeBarGainPerLevel} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}",
+                    element.TooltipColor);
+
+                if (chargeAttackBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CBDamage").Value}",
+                    skill.ChargAttackPerLevel == 0
+                    ? $"{skill.ChargAttack} * {modifier}"
+                    : $"({skill.ChargAttack} + {skill.ChargAttackPerLevel} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}",
+                    element.TooltipColor);
+
+                if (allatackBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.AllEleAtk").Value}",
+                    skill.ATKALLELEPerLevel == 0
+                    ? $"{Math.Abs(skill.ATKALLELE)}"
+                    : $"({Math.Abs(skill.ATKALLELE)} + {Math.Abs(skill.ATKALLELEPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value})",
+                    element.TooltipColor, allatackBonus > 0);
+
+                if (CapBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.DCap").Value}",
+                    skill.DamageCapPerLevel == 0
+                    ? $"{skill.DamageCap}"
+                    : $"({skill.DamageCap} + {skill.DamageCapPerLevel} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value})",
+                    element.TooltipColor);
+
+
+                if (enmityBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}",
+                    skill.EnmityPerLevel == 0
+                    ? $"{Math.Abs(skill.Enmity)} * {modifier} * {Language.GetText("Mods.NeavaAGBF.WeaponSkill.EnmityDesc").Value}"
+                    : $"({Math.Abs(skill.Enmity)} + {Math.Abs(skill.EnmityPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier} * {Language.GetText("Mods.NeavaAGBF.WeaponSkill.EnmityDesc").Value}",
+                    element.TooltipColor, enmityBonus > 0);
+
+                if (staminaBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}",
+                    skill.StaminaPerLevel == 0
+                    ? $"{Math.Abs(skill.Stamina)} * {modifier} * {Language.GetText("Mods.NeavaAGBF.WeaponSkill.StaminaDesc").Value}"
+                    : $"({Math.Abs(skill.Stamina)} + {Math.Abs(skill.StaminaPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier} * {Language.GetText("Mods.NeavaAGBF.WeaponSkill.StaminaDesc").Value}",
+                    element.TooltipColor, staminaBonus > 0);
+
+                if (damageReductionBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.DR").Value}",
+                    skill.DMGReducPerLevel == 0
+                    ? $"{Math.Abs(skill.DMGReduc)} * {modifier}"
+                    : $"({Math.Abs(skill.DMGReduc)} + {Math.Abs(skill.DMGReducPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}",
+                    element.TooltipColor, damageReductionBonus > 0);
+
+                if (damageAmpBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Damage").Value}",
+                    skill.DMGAmp == 0
+                    ? $"{Math.Abs(skill.DMGAmp)}"
+                    : $"{Math.Abs(skill.DMGAmp)}",
+                    element.TooltipColor, damageAmpBonus > 0);
+
+                if (damageAmpBonusU != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Damage").Value}",
+                    skill.DMGAmpU == 0
+                    ? $"{Math.Abs(skill.DMGAmpU)}"
+                    : $"{Math.Abs(skill.DMGAmpU)}",
+                    element.TooltipColor, damageAmpBonusU > 0);
 
             }
 
@@ -471,6 +532,16 @@ namespace NeavaAGBF.Common.Items
 
                 bonuses.Add($"{detailedValue} {isBoon} to {statName}");
             }
+        }
+
+        private string GetStatString(float baseStat, float perLevel, string modifierText)
+        {
+            if (perLevel == 0)
+            {
+                return $"{Math.Abs(baseStat)} {modifierText}";
+            }
+
+            return $"({Math.Abs(baseStat)} + {Math.Abs(perLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) {modifierText}";
         }
 
         private string CombineBonusesIntoSentence(List<string> bonuses)

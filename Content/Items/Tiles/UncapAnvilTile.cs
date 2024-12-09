@@ -12,10 +12,11 @@ using Terraria.Localization;
 using Terraria.ObjectData;
 using NeavaAGBF.Common.UI;
 using NeavaAGBF.Common.Players;
+using Terraria.GameContent.ObjectInteractions;
 
 namespace NeavaAGBF.Content.Items.Tiles
 {
-    public class UncapAnvil_Tile : ModTile
+    public class UncapAnvilTile : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -25,6 +26,7 @@ namespace NeavaAGBF.Content.Items.Tiles
             Main.tileLavaDeath[(int)base.Type] = true;
             Main.tileFrameImportant[(int)base.Type] = true;
             TileID.Sets.IgnoredByNpcStepUp[(int)base.Type] = true;
+            TileID.Sets.HasOutlines[(int)base.Type] = true;
             base.DustType = 309;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x1);
             TileObjectData.newTile.CoordinateHeights = new int[]
@@ -32,7 +34,7 @@ namespace NeavaAGBF.Content.Items.Tiles
                 18
             };
             TileObjectData.addTile((int)base.Type);
-            base.AddMapEntry(new Color(0, 0, 200), Language.GetText("ItemName.WorkBench"));
+            base.AddMapEntry(new Color(0, 0, 200), Language.GetText("Mods.NeavaAGBF.SimpleText.UncapAnvilTile"));
         }
 
         public override void NumDust(int x, int y, bool fail, ref int num)
@@ -56,7 +58,14 @@ namespace NeavaAGBF.Content.Items.Tiles
         {
             ModContent.GetInstance<AnvilUISystem>().ShowMyUI();
             Main.LocalPlayer.GetModPlayer<NeavaAGBFPlayer>().ForgeLocation = new Point?(new Point(i - (int)(Main.tile[i, j].TileFrameX / 16), j));
+            Main.playerInventory = true;
             return true;
         }
+
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
+        {
+            return true;
+        }
+
     }
 }

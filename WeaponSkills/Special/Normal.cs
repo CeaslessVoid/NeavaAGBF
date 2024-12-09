@@ -10,8 +10,7 @@ namespace NeavaAGBF.WeaponSkills.None
     {
         public NoneArts() : base("null", "Arts", Element.Speical)
         {
-            ATKALLELE = 0.6f;
-            ATKALLELEPerLevel = 0.3f;
+            ATKALLELE = 1.5f;
         }
 
     }
@@ -20,8 +19,7 @@ namespace NeavaAGBF.WeaponSkills.None
     {
         public NoneBalance() : base("null", "Balance", Element.Speical)
         {
-            ATKALLELE = 1;
-            ATKALLELEPerLevel = 0.5f;
+            ATKALLELE = 2f;
         }
 
     }
@@ -30,8 +28,7 @@ namespace NeavaAGBF.WeaponSkills.None
     {
         public NoneEnchantment() : base("null", "Enchantment", Element.Speical)
         {
-            ATKALLELE = 1;
-            ATKALLELEPerLevel = 0.5f;
+            ATKALLELE = 3;
         }
 
     }
@@ -49,8 +46,7 @@ namespace NeavaAGBF.WeaponSkills.None
     {
         public NoneStarTouch() : base("null", "Star Touch", Element.Speical)
         {
-            ATKALLELE = 1;
-            ATKALLELEPerLevel = 0.5f;
+            ATKALLELE = 3;
         }
 
     }

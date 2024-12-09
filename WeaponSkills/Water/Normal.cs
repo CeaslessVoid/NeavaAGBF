@@ -27,6 +27,20 @@ namespace NeavaAGBF.WeaponSkills.Water
 
     }
 
+    public class WaterMoon : WeaponSkill
+    {
+        public WaterMoon() : base("Water", "Moon", Element.Water)
+        {
+
+            AttackSpeed = 3.0f;
+
+            ATK = 2.5f;
+
+            CritRate = 1.5f;
+        }
+
+    }
+
     public class WaterTrium : WeaponSkill
     {
         public WaterTrium() : base("Water", "Trium", Element.Water)

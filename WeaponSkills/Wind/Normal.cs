@@ -29,6 +29,19 @@ namespace NeavaAGBF.WeaponSkills.Wind
 
     }
 
+    public class WindMajesty : WeaponSkill
+    {
+        public WindMajesty() : base("Wind", "Majesty", Element.Wind)
+        {
+            ATK = 1;
+            ATKPerLevel = 0.5f;
+
+            HP = 3;
+            HPPerLevel = 1f;
+        }
+
+    }
+
     // Fortified is defence as there is no base def
     // Sprite: Preemptive Wall
     public class WindFortified : WeaponSkill
