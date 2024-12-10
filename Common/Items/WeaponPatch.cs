@@ -189,7 +189,7 @@ namespace NeavaAGBF.Common.Items
         { ItemID.SnowballCannon, (Element.Water, WeaponType.Gun, new List<WeaponSkill> { new WaterMystery(), new WaterMight() }, (3,3,1,0), null, null) },
         { ItemID.PainterPaintballGun, (Element.Water, WeaponType.Gun, new List<WeaponSkill> { new WaterMystery(), new WaterAegis() }, (3,3,1,0), null, null) },
         { ItemID.Harpoon, (Element.Earth, WeaponType.Gun, new List<WeaponSkill> { new EarthMajesty(), new EarthFortified() }, (3,3,1,0), null, null) },
-        { ItemID.StarCannon, (Element.Earth, WeaponType.Gun, new List<WeaponSkill> { new StarCannonMain(), new LightMystery(), new LightMystery() }, (6,3,1,3), null, (0.01f, 3, "Test")) },
+        { ItemID.StarCannon, (Element.Light, WeaponType.Gun, new List<WeaponSkill> { new StarCannonMain(), new LightMystery(), new LightMajesty() }, (6,3,1,3), null, (0.01f, 3, "Test")) },
         { ItemID.WandofFrosting, (Element.Water, WeaponType.Arcane, new List<WeaponSkill> { new WaterMight(), new WaterVerity() }, (2,3,1,0), null, null) },
         { ItemID.ThunderStaff, (Element.Water, WeaponType.Arcane, new List<WeaponSkill> { new WaterDeathstrike(), new WaterVerity() }, (6,3,1,3), null, null) },
         { ItemID.AmethystStaff, (Element.Dark, WeaponType.Arcane, new List<WeaponSkill> { new DarkDeathstrike() }, (2,3,1,0), null, null) },
@@ -217,8 +217,9 @@ namespace NeavaAGBF.Common.Items
         { ItemID.HornetStaff, (Element.Earth, WeaponType.Arcane, new List<WeaponSkill> { new NoneSummonCharge(), new EarthMajesty() }, (3,3,1,0), null, null) },
         { ItemID.VampireFrogStaff, (Element.Dark, WeaponType.Arcane, new List<WeaponSkill> { new NoneSummonCharge(), new DarkMajesty() }, (3,3,1,0), null, null) },
         { ItemID.ImpStaff, (Element.Fire, WeaponType.Arcane, new List<WeaponSkill> { new NoneSummonCharge(), new FireFortified() }, (3,3,1,0), null, null) },
-        { ItemID.BlandWhip, (Element.Earth, WeaponType.Whip, new List<WeaponSkill> { new EarthAegis() }, (2,3,1,0), null, null) },
+        { ItemID.BlandWhip, (Element.Earth, WeaponType.Whip, new List<WeaponSkill> { new EarthAegis() }, (2,3,1,0), null, (1,1,null)) },
         { ItemID.ThornWhip, (Element.Earth, WeaponType.Whip, new List<WeaponSkill> { new WindEssence() }, (3,3,1,0), null, null) },
+        { ItemID.BoneWhip, (Element.Earth, WeaponType.Whip, new List<WeaponSkill> { new DarkEssence(), new DarkMajesty() }, (3,3,1,0), null, null) },
         };
 
         public override bool InstancePerEntity => true;
@@ -260,14 +261,14 @@ namespace NeavaAGBF.Common.Items
                 if (data.chargeStats.HasValue)
                 {
                     globalItem.chargeAttackDamage = data.chargeStats.Value.chargeAttackDamage;
-
                     globalItem.chargeGain = data.chargeStats.Value.chargeGain;
 
-                    if (data.chargeStats.Value.charge != null)
+                    if (!string.IsNullOrEmpty(data.chargeStats.Value.charge) &&
+                        ChargeAttacks.chargeAttackDict.TryGetValue(data.chargeStats.Value.charge, out var chargeData))
                     {
-                        ChargeAttacks.chargeAttackDict.TryGetValue(data.chargeStats.Value.charge, out var chargeAttackMethod);
-
-                        globalItem.chargeAttack = (Player player, float multi) => chargeAttackMethod(player, entity, multi);
+                        globalItem.chargeAttack = (Player player, float multi) => chargeData.Action(player, entity, multi);
+                        globalItem.chargeName = chargeData.Name;
+                        globalItem.chargeAttackString = chargeData.Description;
                     }
                     else
                     {

@@ -18,129 +18,104 @@ namespace NeavaAGBF.Common.Players
 
         public void ApplyWeaponGridEffects(Player player)
         {
-            NeavaAGBFPlayer playerMod = Main.LocalPlayer.GetModPlayer<NeavaAGBFPlayer>();
+            var playerMod = Main.LocalPlayer.GetModPlayer<NeavaAGBFPlayer>();
             var modPlayer = player.GetModPlayer<StatHandler>();
 
-            float totalHpBonusPercent = 0f;
-            float totalDefBonus = 0f;
-
-            float totalAtkPercent = 0f;
-            float totalCritRatePercent = 0f;
-            float totalCritDamagePercent = 0f;
-            float totalAttackSpeedPercent = 0f;
-
-            float totalChargeBarGain = 0f;
-            float totalChargeDamageGain = 0f;
-
-            float totalDamageReduction = 0f;
-
-            float totalDamageCap = 0f;
-
-            float totalAmp = 0f;
-
-            float totalAmmoEf = 0f;
-
-            float totalEcho = 0f;
-
-            float totalFlatAtk = 0f;
+            var totals = new StatTotals();
 
             Item heldItem = player.HeldItem;
-            Element heldElement = null;
-
-
-            if (heldItem.TryGetGlobalItem(out WeaponSkillsGlobalItem heldWeapon))
-            {
-                heldElement = heldWeapon.weaponElement;
-            }
+            Element heldElement = heldItem.TryGetGlobalItem(out WeaponSkillsGlobalItem heldWeapon)
+                ? heldWeapon.weaponElement
+                : null;
 
             foreach (var weaponItem in playerMod.WeaponGrid)
             {
                 if (weaponItem == null || !weaponItem.active || !weaponItem.TryGetGlobalItem(out WeaponSkillsGlobalItem weaponData))
-                {
                     continue;
-                }
 
                 foreach (var skill in weaponData.weaponSkills)
                 {
-                    
-
                     float multiplier = modPlayer.GetStatMultiplier(skill.SkillOwner);
-
                     float currentLevel = weaponData.currentLevel;
-                    totalHpBonusPercent += (skill.HP + (skill.HPPerLevel * currentLevel)) * multiplier;
-                    totalDefBonus += (skill.DEF + (skill.DEFPerLevel * currentLevel)) * multiplier;
 
-                    totalDamageReduction += (skill.DMGReduc + (skill.DMGReducPerLevel * currentLevel)) / 100f;
+                    // General stats
+                    totals.HpBonusPercent += (skill.HP + (skill.HPPerLevel * currentLevel)) * multiplier;
+                    totals.DefBonus += (skill.DEF + (skill.DEFPerLevel * currentLevel)) * multiplier;
+                    totals.DamageReduction += (skill.DMGReduc + (skill.DMGReducPerLevel * currentLevel)) / 100f;
 
+                    // Element-matching stats
                     if (heldElement != null && weaponData.weaponElement == heldElement)
                     {
-                        totalAtkPercent += ((skill.ATK + (skill.ATKPerLevel * currentLevel)) * multiplier) / 100f;
-                        totalCritRatePercent += (skill.CritRate + (skill.CritRatePerLevel * currentLevel)) * multiplier;
-                        totalCritDamagePercent += ((skill.CritDamage + (skill.CritDamagePerLevel * currentLevel)) * multiplier) / 100f;
-                        totalAttackSpeedPercent += ((skill.AttackSpeed + (skill.AttackSpeedPerLevel * currentLevel)) * multiplier) / 100f;
-                        
-                        totalChargeDamageGain += ((skill.ChargAttack + (skill.ChargAttackPerLevel * currentLevel)) * multiplier) / 100f;
-
-                        // Enmity
-                        modPlayer.enmityMod += ((skill.Enmity + (skill.Enmity * currentLevel)) * multiplier) / 100f;
-
-                        // Stamina
-                        modPlayer.staminaMod += ((skill.Stamina + (skill.StaminaPerLevel * currentLevel)) * multiplier) / 100f;
-
-                        totalAmp += skill.DMGAmp / 100f;
-
-                        totalEcho += ((skill.Echo + (skill.EchoPerLevel * currentLevel)) * multiplier) / 100f;
-
-                        totalFlatAtk += (skill.FlatAtk + (skill.FlatAtkPerLevel * currentLevel)) * multiplier;
+                        AddMatchingElementStats(skill, multiplier, currentLevel, totals, modPlayer);
                     }
 
-                    totalChargeBarGain += ((skill.ChargeBarGain + (skill.ChargeBarGainPerLevel * currentLevel)) * multiplier) / 100f;
-
-                    totalAtkPercent += ((skill.ATKALLELE + (skill.ATKALLELEPerLevel * currentLevel)) / 100f);
-
-                    totalDamageCap += ((skill.DamageCap + (skill.DamageCapPerLevel * currentLevel)) / 100f);
-
-                    totalAmmoEf += skill.SaveAmmo / 100f;
-
-                    // Amp unconditional
-                    totalAmp += skill.DMGAmpU / 100f;
-
+                    // Universal stats
+                    totals.ChargeBarGain += ((skill.ChargeBarGain + (skill.ChargeBarGainPerLevel * currentLevel)) * multiplier) / 100f;
+                    totals.AtkPercent += ((skill.ATKALLELE + (skill.ATKALLELEPerLevel * currentLevel)) / 100f);
+                    totals.AmmoEfficiency += skill.SaveAmmo / 100f;
+                    totals.DamageAmp += skill.DMGAmpU / 100f;
                 }
             }
 
-            ApplyBonusesToPlayer(player, totalHpBonusPercent, totalDefBonus, totalAtkPercent, totalCritRatePercent, totalCritDamagePercent, totalAttackSpeedPercent, totalChargeBarGain, totalChargeDamageGain, totalDamageCap, totalDamageReduction, totalAmp, totalAmmoEf, totalEcho, totalFlatAtk);
+            ApplyBonusesToPlayer(player, totals, modPlayer);    
 
         }
 
 
-        private static void ApplyBonusesToPlayer(Player player, float hpBonusPercent, float defBonus, float atkPercent, float critRatePercent, float critDamagePercent, float attackSpeedPercent, float totalChargeBarGain, float totalChargeDamageGain, float totalDamageCap, float totalDamageReduction, float totalAmp, float totalAmmoEf, float totalEcho, float totalFlatAtk)
+        private static void AddMatchingElementStats(WeaponSkill skill, float multiplier, float currentLevel, StatTotals totals, StatHandler modPlayer)
         {
-            player.statLifeMax2 += (int)(player.statLifeMax * (hpBonusPercent / 100f));
-            player.statDefense += (int)defBonus;
+            totals.AtkPercent += ((skill.ATK + (skill.ATKPerLevel * currentLevel)) * multiplier) / 100f;
+            totals.CritRatePercent += (skill.CritRate + (skill.CritRatePerLevel * currentLevel)) * multiplier;
+            totals.CritDamagePercent += ((skill.CritDamage + (skill.CritDamagePerLevel * currentLevel)) * multiplier) / 100f;
+            totals.AttackSpeedPercent += ((skill.AttackSpeed + (skill.AttackSpeedPerLevel * currentLevel)) * multiplier) / 100f;
+            totals.ChargeDamageGain += ((skill.ChargAttack + (skill.ChargAttackPerLevel * currentLevel)) * multiplier) / 100f;
+            totals.FlatAtk += (skill.FlatAtk + (skill.FlatAtkPerLevel * currentLevel)) * multiplier;
+            totals.DamageAmp += skill.DMGAmp / 100f;
+            totals.Echo += ((skill.Echo + (skill.EchoPerLevel * currentLevel)) * multiplier) / 100f;
 
-            var modPlayer = player.GetModPlayer<StatHandler>();
+            // Special stats
+            modPlayer.enmityMod += ((skill.Enmity + (skill.Enmity * currentLevel)) * multiplier) / 100f;
+            modPlayer.staminaMod += ((skill.Stamina + (skill.StaminaPerLevel * currentLevel)) * multiplier) / 100f;
+        }
 
-            atkPercent += modPlayer.CalculateEnmityAtkPercent() + modPlayer.CalculateStaminaAtkPercent();
+        private static void ApplyBonusesToPlayer(Player player, StatTotals totals, StatHandler modPlayer)
+        {
+            player.statLifeMax2 += (int)(player.statLifeMax * (totals.HpBonusPercent / 100f));
+            player.statDefense += (int)totals.DefBonus;
 
-            player.GetAttackSpeed(DamageClass.Generic) += attackSpeedPercent;
-            player.GetCritChance(DamageClass.Generic) += critRatePercent;
-            player.GetDamage(DamageClass.Generic) += atkPercent;
+            totals.AtkPercent += modPlayer.CalculateEnmityAtkPercent() + modPlayer.CalculateStaminaAtkPercent();
 
-            player.GetDamage(DamageClass.Generic).Flat += (int)totalFlatAtk;
+            player.GetAttackSpeed(DamageClass.Generic) += totals.AttackSpeedPercent;
+            player.GetCritChance(DamageClass.Generic) += totals.CritRatePercent;
+            player.GetDamage(DamageClass.Generic) += totals.AtkPercent;
 
-            player.endurance += totalDamageReduction;
+            player.GetDamage(DamageClass.Generic).Flat += (int)totals.FlatAtk;
+            player.endurance += totals.DamageReduction;
 
-            // Custom Stats go here
-            modPlayer.BonusCritDamage = 1 + critDamagePercent;
+            // Custom stats
+            modPlayer.BonusCritDamage = 1 + totals.CritDamagePercent;
+            modPlayer.chargeGainMultiplier = 1 + totals.ChargeBarGain;
+            modPlayer.chargeAttackDamageMultiplier = 1 + totals.ChargeDamageGain;
+            modPlayer.damageAmp = totals.DamageAmp + 1f;
+            modPlayer.ammoFree = totals.AmmoEfficiency;
+            modPlayer.echo = totals.Echo;
+        }
 
-            modPlayer.chargeGainMultiplier = 1 + totalChargeBarGain;
-            modPlayer.chargeAttackDamageMultiplier = 1 + totalChargeDamageGain;
-
-            modPlayer.damageAmp = totalAmp + 1f;
-
-            modPlayer.ammoFree = totalAmmoEf;
-
-            modPlayer.echo = totalEcho;
+        private class StatTotals
+        {
+            public float HpBonusPercent = 0f;
+            public float DefBonus = 0f;
+            public float AtkPercent = 0f;
+            public float CritRatePercent = 0f;
+            public float CritDamagePercent = 0f;
+            public float AttackSpeedPercent = 0f;
+            public float ChargeBarGain = 0f;
+            public float ChargeDamageGain = 0f;
+            public float DamageReduction = 0f;
+            public float DamageAmp = 0f;
+            public float AmmoEfficiency = 0f;
+            public float Echo = 0f;
+            public float FlatAtk = 0f;
         }
     }
 

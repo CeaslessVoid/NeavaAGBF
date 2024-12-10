@@ -10,12 +10,13 @@ namespace NeavaAGBF.WeaponSkills
 {
     public abstract class WeaponSkill
     {
-        public string SkillOwner { get; private set; }
-        public string SkillName { get; private set; }
-        public Element SkillElement { get; private set; }
+        public string SkillOwner { get; }
+        public string SkillName { get; }
+        public Element SkillElement { get; }
 
         public int UncapLevel { get; private set; }
 
+        // Stats and bonuses
         public float ATK { get; protected set; }
         public float HP { get; protected set; }
         public float DEF { get; protected set; }
@@ -32,42 +33,34 @@ namespace NeavaAGBF.WeaponSkills
         public float AttackSpeedPerLevel { get; protected set; }
         public float MovementSpeedPerLevel { get; protected set; }
 
+        // Charge-related stats
         public float ChargeBarGain { get; protected set; }
         public float ChargAttack { get; protected set; }
-
         public float ChargeBarGainPerLevel { get; protected set; }
         public float ChargAttackPerLevel { get; protected set; }
 
+        // Miscellaneous
         public string CustomText { get; protected set; }
 
         public float ATKALLELE { get; protected set; }
         public float ATKALLELEPerLevel { get; protected set; }
 
-        // Damage Cap is not used (failed feature)
-        public float DamageCap { get; protected set; }
-        public float DamageCapPerLevel { get; protected set; }
-
         public float Enmity { get; protected set; }
         public float EnmityPerLevel { get; protected set; }
-
         public float Stamina { get; protected set; }
         public float StaminaPerLevel { get; protected set; }
-
         public float DMGReduc { get; protected set; }
         public float DMGReducPerLevel { get; protected set; }
-
         public float DMGAmp { get; protected set; }
         public float DMGAmpU { get; protected set; }
-
         public float SaveAmmo { get; protected set; }
-
         public float Echo { get; protected set; }
         public float EchoPerLevel { get; protected set; }
-
         public float FlatAtk { get; protected set; }
         public float FlatAtkPerLevel { get; protected set; }
 
-        public virtual Color TooltipColor { get; protected set; } = Color.Green;
+
+        public Color TooltipColor { get; protected set; } = Color.Green;
 
         protected WeaponSkill(string owner, string name, Element element)
         {
@@ -76,10 +69,7 @@ namespace NeavaAGBF.WeaponSkills
             SkillElement = element;
         }
 
-        public override string ToString()
-        {
-            return $"{SkillName} ({SkillOwner}) - Element: {SkillElement.Name}";
-        }
+        public override string ToString() => $"{SkillName} ({SkillOwner}) - Element: {SkillElement.Name}";
     }
 
 }

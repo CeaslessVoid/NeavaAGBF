@@ -125,22 +125,6 @@ namespace NeavaAGBF.Common.Players
             StatMultiplierDarkNormal = 1f;
 
         }
-
-        public static void ResetMultis()
-        {
-            //StatHandler player = Main.LocalPlayer.GetModPlayer<StatHandler>();
-
-            //player.BonusCritDamage = 0f;
-
-            //player.enmityMod = 0f;
-            //player.staminaMod = 0f;
-
-            //player.chargeGainMultiplier = 1f;
-            //player.chargeAttackDamageMultiplier = 1f;
-
-            //player.ammoFree = 0f;
-        }
-
         public float CalculateEnmityAtkPercent()
         {
 

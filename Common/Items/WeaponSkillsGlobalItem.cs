@@ -59,11 +59,6 @@ namespace NeavaAGBF.Common.Items
         public WeaponType WeaponType { get; set; } = null;
         public override bool InstancePerEntity => true;
 
-        public WeaponSkillsGlobalItem()
-        {
-            //currentUncap = baseUncap; // ???
-        }
-
         public override void SaveData(Item item, TagCompound tag)
         {
             tag["currentLevel"] = currentLevel;
@@ -102,32 +97,16 @@ namespace NeavaAGBF.Common.Items
 
         public override void RightClick(Item item, Player player)
         {
-
-            WeaponSkillsGlobalItem weaponItem = item.GetGlobalItem<WeaponSkillsGlobalItem>();
-
-            if (weaponItem.maxLevel < 1)
-                return;
+            if (!CanUpgrade(item) || player == null || item == null) return;
 
             int requiredGems = CalculateRequiredSkillGems();
-
-            if (!CanUpgrade(item))return;
-
-            if (player == null || item == null)
-                return;
-
             Main.mouseItem.stack -= requiredGems;
-
-            if (Main.mouseItem.stack <0)
-            {
-                Main.mouseItem.TurnToAir();
-            }
+            if (Main.mouseItem.stack <= 0) Main.mouseItem.TurnToAir();
 
             item.stack++;
-
-            
-            weaponItem.currentLevel++;
+            currentLevel++;
         }
-        
+
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             if (weaponElement != null)
@@ -152,23 +131,11 @@ namespace NeavaAGBF.Common.Items
 
             TooltipStarData = (goldStars, blueStars, emptyStars);
 
-            //if (chargeAttackString != null)
-            //{
-            //    tooltips.Add(new TooltipLine(Mod, "Spacer", $"-")
-            //    {
-            //        //OverrideColor = skill.TooltipColor
-            //        OverrideColor = Color.Transparent,
-            //    });
-
-            //    tooltips.Add(new TooltipLine(Mod, "Charge", $"       {chargeName}"));
-            //    tooltips.Add(new TooltipLine(Mod, "ChargeInfo", $"        {chargeAttackString}"));
-
-            //    tooltips.Add(new TooltipLine(Mod, "Spacer", $"-")
-            //    {
-            //        //OverrideColor = skill.TooltipColor
-            //        OverrideColor = Color.Transparent,
-            //    });
-            //}
+            if (chargeAttackString != null)
+            {
+                tooltips.Add(new TooltipLine(Mod, "Charge", $"       {chargeName}"));
+                tooltips.Add(new TooltipLine(Mod, "ChargeInfo", $"        {chargeAttackString}"));
+            }
 
             foreach (var skill in weaponSkills)
             {
@@ -365,8 +332,6 @@ namespace NeavaAGBF.Common.Items
 
             float staminaBonus = (skill.Stamina + (skill.StaminaPerLevel * level)) * modifier;
 
-            float CapBonus = (skill.DamageCap + (skill.DamageCapPerLevel * level));
-
             float damageAmpBonus = (skill.DMGAmp) * modifier;
             float damageAmpBonusU = (skill.DMGAmpU);
 
@@ -405,8 +370,6 @@ namespace NeavaAGBF.Common.Items
                 if (chargeAttackBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CBDamage").Value}", (float)Math.Round(chargeAttackBonus, 1), true, element.TooltipColor);
 
                 if (allatackBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}", (float)Math.Round(allatackBonus, 1), true, element.TooltipColor);
-
-                if (CapBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.DCap").Value}", (float)Math.Round(CapBonus, 1), true, element.TooltipColor);
 
                 if (enmityBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Enmity").Value}", (float)Math.Round(enmityBonus, 1), true, element.TooltipColor);
                 if (staminaBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Stamina").Value}", (float)Math.Round(staminaBonus, 1), true, element.TooltipColor);
@@ -469,13 +432,6 @@ namespace NeavaAGBF.Common.Items
                     ? $"{Math.Abs(skill.ATKALLELE)}"
                     : $"({Math.Abs(skill.ATKALLELE)} + {Math.Abs(skill.ATKALLELEPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value})",
                     element.TooltipColor, allatackBonus > 0);
-
-                if (CapBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.DCap").Value}",
-                    skill.DamageCapPerLevel == 0
-                    ? $"{skill.DamageCap}"
-                    : $"({skill.DamageCap} + {skill.DamageCapPerLevel} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value})",
-                    element.TooltipColor);
-
 
                 if (enmityBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Attack").Value}",
                     skill.EnmityPerLevel == 0

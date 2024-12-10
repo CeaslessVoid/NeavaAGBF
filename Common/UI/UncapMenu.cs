@@ -128,7 +128,7 @@ namespace NeavaAGBF.Common.UI
 
             Color slotColor = new Color(255, 255, 255, 222);
 
-            Vector2 mainPosition = new Vector2(
+            Vector2 mainPosition = new Vector2( // Use to have a use
                 dimensions.X + (dimensions.Width / 2) - (weaponSlotTexture.Width / 2),
                 dimensions.Y + (dimensions.Height / 2) - (weaponSlotTexture.Height / 2)
             );
@@ -136,18 +136,6 @@ namespace NeavaAGBF.Common.UI
             Vector2 realPostion = new Vector2(
                 dimensions.X + (dimensions.Width / 2),
                 dimensions.Y + (dimensions.Height / 2)
-            );
-
-            spriteBatch.Draw(
-                weaponSlotTexture,
-                mainPosition,
-                null,
-                slotColor,
-                0f,
-                Vector2.Zero,
-                1f,
-                SpriteEffects.None,
-                0f
             );
 
             // Bullshit
@@ -160,8 +148,10 @@ namespace NeavaAGBF.Common.UI
                 Main.instance.MouseText(Language.GetText("Mods.NeavaAGBF.SimpleText.UncapItem").Value);
 
 
+                bool isMouseItemValid = Main.mouseItem.type != ItemID.None;
+                bool isUncapTargetValid = playerMod.UncapTarget.type != ItemID.None;
 
-                if (PlayerInput.Triggers.Current.MouseLeft && (Main.mouseItem.type != ItemID.None || playerMod.UncapTarget.type != ItemID.None))
+                if (PlayerInput.Triggers.Current.MouseLeft && (isMouseItemValid || isUncapTargetValid))
                 {
                     if (!boolShit && clickCooldownTimer == 0)
                     {
@@ -174,11 +164,21 @@ namespace NeavaAGBF.Common.UI
                         {
                             if (inputMaterial != null && inputMaterial.type != ItemID.None)
                             {
-                                Item leftover = Main.LocalPlayer.GetItem(Main.myPlayer, inputMaterial, GetItemSettings.InventoryEntityToPlayerInventorySettings);
+                                Item leftover = Main.LocalPlayer.GetItem(
+                                    Main.myPlayer,
+                                    inputMaterial,
+                                    GetItemSettings.InventoryEntityToPlayerInventorySettings
+                                );
+
 
                                 if (leftover != null && leftover.type != ItemID.None && leftover.stack > 0)
                                 {
-                                    Item.NewItem(Main.LocalPlayer.GetSource_Misc("UncapEject"), Main.LocalPlayer.Center, leftover.type, leftover.stack);
+                                    Item.NewItem(
+                                        Main.LocalPlayer.GetSource_Misc("UncapEject"),
+                                        Main.LocalPlayer.Center,
+                                        leftover.type,
+                                        leftover.stack
+                                    );
                                 }
                             }
                         }
@@ -263,9 +263,28 @@ namespace NeavaAGBF.Common.UI
             }
 
             Texture2D itemTexture = TextureAssets.Item[playerMod.UncapTarget.type].Value;
-            Main.spriteBatch.Draw(itemTexture, realPostion, null, Color.White, 0f, Utils.Size(itemTexture) / 2f, NeavaAGBFPlayer.ScaleToFit(itemTexture), SpriteEffects.None, 0f);
 
-            
+            int frameCount = Main.itemAnimations[playerMod.UncapTarget.type]?.FrameCount ?? 1;
+            int frameHeight = frameCount > 1 ? itemTexture.Height / frameCount : itemTexture.Height;
+            int frameY = frameCount > 1 ? ((int)(Main.GlobalTimeWrappedHourly * 10) % frameCount) * frameHeight : 0;
+
+            Rectangle sourceRectangle = new Rectangle(0, frameY, itemTexture.Width, frameHeight);
+
+            Vector2 origin = new Vector2(itemTexture.Width / 2f, frameHeight / 2f);
+
+            Main.spriteBatch.Draw(
+                itemTexture,
+                realPostion,
+                sourceRectangle,
+                Color.White,
+                0f,
+                origin,
+                1.0f,     //NeavaAGBFPlayer.ScaleToFit(itemTexture), Breaks animated items
+                SpriteEffects.None,
+                0f
+            );
+
+
 
         }
 

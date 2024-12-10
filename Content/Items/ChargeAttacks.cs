@@ -15,17 +15,37 @@ namespace NeavaAGBF.Content.Items
 {
     public class ChargeAttacks
     {
+        public class ChargeData
+        {
+            public string Name { get; }
+            public string Description { get; }
+            public Action<Player, Item, float> Action { get; }
+
+            public ChargeData(string name, string description, Action<Player, Item, float> action)
+            {
+                Name = name;
+                Description = description;
+                Action = action;
+            }
+        }
+
         //private static readonly StatHandler playerMod = Main.LocalPlayer.GetModPlayer<StatHandler>();
-        public static readonly Dictionary<string, Action<Player, Item, float>> chargeAttackDict = new()
-{
-            { "Test", ChargeAttacks.Test },
-        };
+        public static readonly Dictionary<string, ChargeData> chargeAttackDict = new()
+    {
+        {
+            "Test",
+            new ChargeData(
+                "Tester's Strike",
+                "Launches a projectile that does 100% damage to a foe. Gain 'Well Fed' buff",
+                Test
+            )
+        },
+    };
 
 
         public static void Test(Player player, Item item, float multi)
         {
             Main.NewText($"{player.name} used the Basic Sword Charge Attack!", Color.Yellow);
-
 
             Vector2 playerCenter = player.Center;
             Vector2 cursorPosition = Main.MouseWorld;

@@ -82,4 +82,14 @@ namespace NeavaAGBF.WeaponSkills.Dark
         }
 
     }
+
+    public class DarkEssence : WeaponSkill
+    {
+        public DarkEssence() : base("Dark", "Essence", Element.Dark)
+        {
+            FlatAtk = 1.0f;
+            FlatAtkPerLevel = 0.2f;
+        }
+
+    }
 }

@@ -62,7 +62,7 @@ Items: {
 
 SimpleText: {
 	OpenGrid: Toggle Weapon Grid
-	UncapItem: Plance an item here
+	UncapItem: Plance a weapon here to uncap
 	NoMoreUncapItem: This item cannot be uncapped further
 	HoldShift: Hold SHIFT for more information
 	UncapAnvilTile: Uncap Anvil
