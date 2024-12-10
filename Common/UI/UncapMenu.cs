@@ -278,9 +278,8 @@ namespace NeavaAGBF.Common.UI
         {
             const int boxSpacing = 60;
             const float boxScale = 1.0f;
-            Color boxColor = new Color(255, 255, 255, 50);
+            
             Color boxColor2 = new Color(255, 255, 255, 255);
-
             Color Color1 = new Color(0, 0, 0, 0);
             Color Color2 = new Color(255, 255, 255, 255);
 
@@ -302,14 +301,29 @@ namespace NeavaAGBF.Common.UI
 
                 if (reqItem.type != ItemID.None)
                 {
+                    Color boxColor = new Color(255, 255, 255, 50);
+
+                    Main.instance.LoadItem(reqItem.type);
 
                     Texture2D itemTexture = TextureAssets.Item[reqItem.type].Value;
 
-                    if (inputItem != null && inputItem.type != ItemID.None) spriteBatch.Draw(itemTexture, slotPosition, null, boxColor2, 0f, Utils.Size(itemTexture) / 2f, boxScale, SpriteEffects.None, 0f);
+                    if (inputItem != null && inputItem.type != ItemID.None)
+                        boxColor = boxColor2;
 
-                    else spriteBatch.Draw(itemTexture, slotPosition, null, boxColor, 0f, Utils.Size(itemTexture) / 2f, boxScale, SpriteEffects.None, 0f);
+                    int frameCount = Main.itemAnimations[reqItem.type]?.FrameCount ?? 1;
+                    int frameHeight = itemTexture.Height / frameCount;
+                    int frameY = 0;
 
+                    if (frameCount > 1)
+                    {
+                        int frame = (int)(Main.GlobalTimeWrappedHourly * 10) % frameCount; // Adjust speed as needed
+                        frameY = frame * frameHeight;
+                    }
+                    Rectangle sourceRectangle = new Rectangle(0, frameY, itemTexture.Width, frameHeight);
 
+                    Vector2 origin = new Vector2(itemTexture.Width / 2f, frameHeight / 2f);
+
+                    spriteBatch.Draw(itemTexture, slotPosition, sourceRectangle, boxColor, 0f, origin, boxScale, SpriteEffects.None, 0f);
 
                     if (Main.mouseX >= slotPosition.X - (slotTexture.Width / 2 * boxScale) &&
                         Main.mouseX <= slotPosition.X + (slotTexture.Width / 2 * boxScale) &&
@@ -351,12 +365,6 @@ namespace NeavaAGBF.Common.UI
                         boolShit = true;
                         PerformUncap();
                     }
-
-                    else
-                    {
-                        Main.NewText("");
-                    }
-
                     
                 }
 

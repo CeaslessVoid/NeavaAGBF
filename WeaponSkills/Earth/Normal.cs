@@ -61,5 +61,25 @@ namespace NeavaAGBF.WeaponSkills.Earth
 
     }
 
+    public class EarthMystery : WeaponSkill
+    {
+        public EarthMystery() : base("Earth", "Mystery", Element.Earth)
+        {
+            ChargAttack = 1f;
+            ChargAttackPerLevel = 0.5f;
+        }
+
+    }
+
+    public class EarthDeathstrike : WeaponSkill
+    {
+        public EarthDeathstrike() : base("Earth", "Deathstrike", Element.Earth)
+        {
+            Echo = 1.25f;
+            EchoPerLevel = 0.1f;
+        }
+
+    }
+
 
 }

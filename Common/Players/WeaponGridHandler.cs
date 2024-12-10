@@ -19,6 +19,7 @@ namespace NeavaAGBF.Common.Players
         public void ApplyWeaponGridEffects(Player player)
         {
             NeavaAGBFPlayer playerMod = Main.LocalPlayer.GetModPlayer<NeavaAGBFPlayer>();
+            var modPlayer = player.GetModPlayer<StatHandler>();
 
             float totalHpBonusPercent = 0f;
             float totalDefBonus = 0f;
@@ -36,6 +37,10 @@ namespace NeavaAGBF.Common.Players
             float totalDamageCap = 0f;
 
             float totalAmp = 0f;
+
+            float totalAmmoEf = 0f;
+
+            float totalEcho = 0f;
 
             Item heldItem = player.HeldItem;
             Element heldElement = null;
@@ -55,7 +60,7 @@ namespace NeavaAGBF.Common.Players
 
                 foreach (var skill in weaponData.weaponSkills)
                 {
-                    var modPlayer = player.GetModPlayer<StatHandler>();
+                    
 
                     float multiplier = modPlayer.GetStatMultiplier(skill.SkillOwner);
 
@@ -81,6 +86,8 @@ namespace NeavaAGBF.Common.Players
                         modPlayer.staminaMod += ((skill.Stamina + (skill.StaminaPerLevel * currentLevel)) * multiplier) / 100f;
 
                         totalAmp += skill.DMGAmp / 100f;
+
+                        totalEcho += ((skill.Echo + (skill.EchoPerLevel * currentLevel)) * multiplier) / 100f;
                     }
 
                     totalChargeBarGain += ((skill.ChargeBarGain + (skill.ChargeBarGainPerLevel * currentLevel)) * multiplier) / 100f;
@@ -89,43 +96,45 @@ namespace NeavaAGBF.Common.Players
 
                     totalDamageCap += ((skill.DamageCap + (skill.DamageCapPerLevel * currentLevel)) / 100f);
 
+                    totalAmmoEf += skill.SaveAmmo / 100f;
+
                     // Amp unconditional
                     totalAmp += skill.DMGAmpU / 100f;
 
                 }
             }
 
-            ApplyBonusesToPlayer(player, totalHpBonusPercent, totalDefBonus, totalAtkPercent, totalCritRatePercent, totalCritDamagePercent, totalAttackSpeedPercent, totalChargeBarGain, totalChargeDamageGain, totalDamageCap, totalDamageReduction, totalAmp);
+            ApplyBonusesToPlayer(player, totalHpBonusPercent, totalDefBonus, totalAtkPercent, totalCritRatePercent, totalCritDamagePercent, totalAttackSpeedPercent, totalChargeBarGain, totalChargeDamageGain, totalDamageCap, totalDamageReduction, totalAmp, totalAmmoEf, totalEcho);
 
         }
 
 
-        private static void ApplyBonusesToPlayer(Player player, float hpBonusPercent, float defBonus, float atkPercent, float critRatePercent, float critDamagePercent, float attackSpeedPercent, float totalChargeBarGain, float totalChargeDamageGain, float totalDamageCap, float totalDamageReduction, float totalAmp)
+        private static void ApplyBonusesToPlayer(Player player, float hpBonusPercent, float defBonus, float atkPercent, float critRatePercent, float critDamagePercent, float attackSpeedPercent, float totalChargeBarGain, float totalChargeDamageGain, float totalDamageCap, float totalDamageReduction, float totalAmp, float totalAmmoEf, float totalEcho)
         {
             player.statLifeMax2 += (int)(player.statLifeMax * (hpBonusPercent / 100f));
             player.statDefense += (int)defBonus;
 
-            if (atkPercent > 0 || critRatePercent > 0 || critDamagePercent > 0 || attackSpeedPercent > 0)
-            {
-                var modPlayer = player.GetModPlayer<StatHandler>();
+            var modPlayer = player.GetModPlayer<StatHandler>();
 
-                atkPercent += modPlayer.CalculateEnmityAtkPercent() + modPlayer.CalculateStaminaAtkPercent();
+            atkPercent += modPlayer.CalculateEnmityAtkPercent() + modPlayer.CalculateStaminaAtkPercent();
 
-                player.GetAttackSpeed(DamageClass.Generic) += attackSpeedPercent;
-                player.GetCritChance(DamageClass.Generic) += critRatePercent;
-                player.GetDamage(DamageClass.Generic) += atkPercent;
-                player.endurance += totalDamageReduction;
+            player.GetAttackSpeed(DamageClass.Generic) += attackSpeedPercent;
+            player.GetCritChance(DamageClass.Generic) += critRatePercent;
+            player.GetDamage(DamageClass.Generic) += atkPercent;
 
-                // Custom Stats go here
-                modPlayer.BonusCritDamage += critDamagePercent;
+            player.endurance += totalDamageReduction;
 
-                modPlayer.chargeGainMultiplier += totalChargeBarGain;
-                modPlayer.chargeAttackDamageMultiplier += totalChargeDamageGain;
+            // Custom Stats go here
+            modPlayer.BonusCritDamage = 1 + critDamagePercent;
 
-                modPlayer.damageAmp = totalAmp + 1f;
+            modPlayer.chargeGainMultiplier = 1 + totalChargeBarGain;
+            modPlayer.chargeAttackDamageMultiplier = 1 + totalChargeDamageGain;
 
-                //modPlayer.DamageCapMulti += totalDamageCap; // Damage cap
-            }
+            modPlayer.damageAmp = totalAmp + 1f;
+
+            modPlayer.ammoFree = totalAmmoEf;
+
+            modPlayer.echo = totalEcho;
         }
     }
 

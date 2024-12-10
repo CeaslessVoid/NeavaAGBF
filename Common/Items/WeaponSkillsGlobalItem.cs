@@ -33,7 +33,7 @@ namespace NeavaAGBF.Common.Items
         public int maxLevel = 0;
         public Element weaponElement = null;
 
-        public float chargeGain = 0.25f;
+        public float chargeGain = 0.1f;
         public float chargeAttackDamage = 1f;
 
         public string chargeName = null;
@@ -44,7 +44,7 @@ namespace NeavaAGBF.Common.Items
 
         //};
 
-        public Action<Player> chargeAttack = null;
+        public Action<Player, float> chargeAttack = null;
 
         //public int baseUncap = 0;
         public int maxUncap = 0;
@@ -106,11 +106,7 @@ namespace NeavaAGBF.Common.Items
             WeaponSkillsGlobalItem weaponItem = item.GetGlobalItem<WeaponSkillsGlobalItem>();
 
             if (weaponItem.maxLevel < 1)
-            {
-                Main.NewText(item.stack.ToString());
-
                 return;
-            }
 
             int requiredGems = CalculateRequiredSkillGems();
 
@@ -276,9 +272,13 @@ namespace NeavaAGBF.Common.Items
 
                 string imagePath = $"NeavaAGBF/WeaponSkills/{elementName}/{formattedSkillName}";
 
-                Asset<Texture2D> textureAsset = ModContent.Request<Texture2D>(imagePath, AssetRequestMode.ImmediateLoad);
-                if (textureAsset == null)
-                    return;
+                Asset<Texture2D> textureAsset = null;
+
+                if (ownerName != "null's")
+                    textureAsset = ModContent.Request<Texture2D>(imagePath, AssetRequestMode.ImmediateLoad);
+                else
+                    textureAsset = ModContent.Request<Texture2D>("NeavaAGBF/WeaponSkills/Special/Special", AssetRequestMode.ImmediateLoad);
+
 
                 Texture2D skillIcon = textureAsset.Value;
 
@@ -370,6 +370,8 @@ namespace NeavaAGBF.Common.Items
             float damageAmpBonus = (skill.DMGAmp) * modifier;
             float damageAmpBonusU = (skill.DMGAmpU);
 
+            float echo = (skill.Echo + (skill.EchoPerLevel * level)) * modifier;
+
             string skillOwnerDisplay = string.IsNullOrEmpty(skill.SkillOwner) ? "null" : $"{skill.SkillOwner}'s";
             TooltipLine skillNameLine = new TooltipLine(Mod, "SkillName", $"{skillOwnerDisplay} {skill.SkillElement} {skill.SkillName}")
             {
@@ -380,7 +382,7 @@ namespace NeavaAGBF.Common.Items
 
             if (!string.IsNullOrEmpty(customEffect))
             {
-                tooltips.Add(new TooltipLine(Mod, "Custom" ,$"{customEffect}"));
+                tooltips.Add(new TooltipLine(Mod, "Custom" ,$"        {customEffect}"));
                 return;
             }
 
@@ -411,6 +413,10 @@ namespace NeavaAGBF.Common.Items
 
                 if (damageAmpBonus != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.DamageAmp").Value}", (float)Math.Round(damageAmpBonus, 1), true, element.TooltipColor);
                 if (damageAmpBonusU != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.DamageAmp").Value}", (float)Math.Round(damageAmpBonusU, 1), true, element.TooltipColor);
+
+                if (skill.SaveAmmo != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.AmmoE").Value}", (float)Math.Round(skill.SaveAmmo, 1), true, element.TooltipColor);
+
+                if (echo != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Echo").Value}", (float)Math.Round(echo, 1), true, element.TooltipColor);
             }
             else
             {
@@ -486,16 +492,22 @@ namespace NeavaAGBF.Common.Items
                     element.TooltipColor, damageReductionBonus > 0);
 
                 if (damageAmpBonus != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Damage").Value}",
-                    skill.DMGAmp == 0
-                    ? $"{Math.Abs(skill.DMGAmp)}"
-                    : $"{Math.Abs(skill.DMGAmp)}",
+                    $"{skill.DMGAmp}",
                     element.TooltipColor, damageAmpBonus > 0);
 
                 if (damageAmpBonusU != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Damage").Value}",
-                    skill.DMGAmpU == 0
-                    ? $"{Math.Abs(skill.DMGAmpU)}"
-                    : $"{Math.Abs(skill.DMGAmpU)}",
+                    $"{skill.DMGAmpU}",
                     element.TooltipColor, damageAmpBonusU > 0);
+
+                if (skill.SaveAmmo != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.AmmoE").Value}",
+                    $"{skill.SaveAmmo}",
+                    element.TooltipColor, skill.SaveAmmo > 0);
+
+                if (echo != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Echo").Value}",
+                    skill.Echo == 0
+                    ? $"{Math.Abs(skill.Echo)} * {modifier}"
+                    : $"({Math.Abs(skill.Echo)} + {Math.Abs(skill.EchoPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}",
+                    element.TooltipColor, echo > 0);
 
             }
 

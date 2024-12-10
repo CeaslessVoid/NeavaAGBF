@@ -27,15 +27,16 @@ namespace NeavaAGBF.WeaponSkills.Fire
 
     }
 
-    public class FireSun : WeaponSkill
+    public class FireMajesty : WeaponSkill
     {
-        public FireSun() : base("Fire", "Sun", Element.Fire)
+        public FireMajesty() : base("Fire", "Majesty", Element.Fire)
         {
-            CritDamage = 1.5f;
 
-            ATK = 2.5f;
+            HP = 3;
+            HPPerLevel = 1f;
 
-            CritRate = 1.5f;
+            ATK = 1;
+            ATKPerLevel = 0.5f;
         }
 
     }
@@ -82,6 +83,26 @@ namespace NeavaAGBF.WeaponSkills.Fire
         {
             CritRate = 1;
             CritRatePerLevel = 0.2f;
+        }
+
+    }
+
+    public class FireMystery : WeaponSkill
+    {
+        public FireMystery() : base("Fire", "Mystery", Element.Fire)
+        {
+            ChargAttack = 1f;
+            ChargAttackPerLevel = 0.5f;
+        }
+
+    }
+
+    public class FireDeathstrike : WeaponSkill
+    {
+        public FireDeathstrike() : base("Fire", "Deathstrike", Element.Fire)
+        {
+            Echo = 1.25f;
+            EchoPerLevel = 0.1f;
         }
 
     }

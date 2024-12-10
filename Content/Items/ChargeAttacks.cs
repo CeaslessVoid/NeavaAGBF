@@ -13,14 +13,19 @@ using Microsoft.Xna.Framework;
 
 namespace NeavaAGBF.Content.Items
 {
-    public static class ChargeAttacks
+    public class ChargeAttacks
     {
+        //private static readonly StatHandler playerMod = Main.LocalPlayer.GetModPlayer<StatHandler>();
+        public static readonly Dictionary<string, Action<Player, Item, float>> chargeAttackDict = new()
+{
+            { "Test", ChargeAttacks.Test },
+        };
 
-        public static void Test(Player player, Item item)
+
+        public static void Test(Player player, Item item, float multi)
         {
             Main.NewText($"{player.name} used the Basic Sword Charge Attack!", Color.Yellow);
 
-            StatHandler playerMod = Main.LocalPlayer.GetModPlayer<StatHandler>();
 
             Vector2 playerCenter = player.Center;
             Vector2 cursorPosition = Main.MouseWorld;
@@ -33,7 +38,7 @@ namespace NeavaAGBF.Content.Items
                 position: playerCenter,
                 velocity: velocity,
                 Type: projectileType,
-                Damage: (int)(item.damage * playerMod.chargeAttackDamageMultiplier),
+                Damage: (int)(item.damage * multi),
                 KnockBack: 0,
                 Owner: player.whoAmI
             );

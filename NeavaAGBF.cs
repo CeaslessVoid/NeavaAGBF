@@ -32,7 +32,7 @@ namespace NeavaAGBF
             if (!Main.dedServ) // Only load UI on the client
             {
                 ChargeBar.Instance = new ChargeBar();
-                ChargeBar.Visible = false;
+                ChargeBar.Visible = true;
             }
 
         }

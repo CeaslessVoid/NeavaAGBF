@@ -120,6 +120,7 @@ namespace NeavaAGBF.Common.Items
                 new UncapRequirement(ItemID.HallowedBar, 15),
                 new UncapRequirement(ItemID.AvengerEmblem, 1),
                 new UncapRequirement(ItemID.HellstoneBar, 10),
+                new UncapRequirement(ItemID.SoulofMight, 10),
                 new UncapRequirement(ItemID.PlatinumCoin, 2)
             });
             uncapGroupHero.AddRequirement(2, new List<UncapRequirement>

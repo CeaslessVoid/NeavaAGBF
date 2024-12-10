@@ -75,6 +75,26 @@ namespace NeavaAGBF.WeaponSkills.Wind
 
     }
 
+    public class WindMystery : WeaponSkill
+    {
+        public WindMystery() : base("Wind", "Mystery", Element.Wind)
+        {
+            ChargAttack = 1f;
+            ChargAttackPerLevel = 0.5f;
+        }
+
+    }
+
+    public class WindDeathstrike : WeaponSkill
+    {
+        public WindDeathstrike() : base("Wind", "Deathstrike", Element.Wind)
+        {
+            Echo = 1.25f;
+            EchoPerLevel= 0.1f;
+        }
+
+    }
+
     //public class StormwyrmAegis : WeaponSkill
     //{
     //    public StormwyrmAegis() : base("Stormwyrm", "Aegis", Element.Wind)

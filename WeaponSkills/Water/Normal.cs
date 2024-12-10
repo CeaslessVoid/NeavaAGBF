@@ -27,20 +27,6 @@ namespace NeavaAGBF.WeaponSkills.Water
 
     }
 
-    public class WaterMoon : WeaponSkill
-    {
-        public WaterMoon() : base("Water", "Moon", Element.Water)
-        {
-
-            AttackSpeed = 3.0f;
-
-            ATK = 2.5f;
-
-            CritRate = 1.5f;
-        }
-
-    }
-
     public class WaterTrium : WeaponSkill
     {
         public WaterTrium() : base("Water", "Trium", Element.Water)
@@ -71,6 +57,26 @@ namespace NeavaAGBF.WeaponSkills.Water
 
             AttackSpeed = 1;
             AttackSpeedPerLevel = 0.4f;
+        }
+
+    }
+
+    public class WaterMystery : WeaponSkill
+    {
+        public WaterMystery() : base("Water", "Mystery", Element.Water)
+        {
+            ChargAttack = 1f;
+            ChargAttackPerLevel = 0.5f;
+        }
+
+    }
+
+    public class WaterDeathstrike : WeaponSkill
+    {
+        public WaterDeathstrike() : base("Water", "Deathstrike", Element.Water)
+        {
+            Echo = 1.25f;
+            EchoPerLevel = 0.1f;
         }
 
     }

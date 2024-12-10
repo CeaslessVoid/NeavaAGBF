@@ -83,6 +83,16 @@ namespace NeavaAGBF.Common.Items
 
             return new List<WeaponSkill>();
         }
-
     }
+
+
+
+    // Basic charge
+
+
+
+
+
+
+
 }

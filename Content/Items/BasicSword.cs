@@ -38,7 +38,7 @@ namespace NeavaAGBF.Content.Items
                 };
 
                 globalItem.maxLevel = 3;
-                globalItem.weaponElement = Element.Wind;
+                globalItem.weaponElement = Element.Fire;
 
 				globalItem.chargeGain = 100;
 
@@ -46,7 +46,7 @@ namespace NeavaAGBF.Content.Items
                 globalItem.chargeName = "Tester's Strike";
                 globalItem.chargeAttackString = "Launches a projectile that does 100% damage to a foe. Gain 'Well Fed' buff ";
 
-                globalItem.chargeAttack = (Player player) => ChargeAttacks.Test(player, Item);
+                globalItem.chargeAttack = (Player player, float multi) => ChargeAttacks.Test(player, Item, multi);
 
                 globalItem.maxUncap = 5;
                 globalItem.currentUncap = 0;

@@ -41,6 +41,10 @@ namespace NeavaAGBF.Common.Players
 
         public float damageAmp = 1.0f;
 
+        public float ammoFree = 0.0f;
+
+        public float echo = 0.0f;
+
         // Stat Multpliers
 
         public float StatMultiplierWindOmega = 1f;
@@ -98,13 +102,13 @@ namespace NeavaAGBF.Common.Players
 
         public override void ResetEffects()
         {
-            BonusCritDamage = 0f;
+            ammoFree = 0f;
 
             enmityMod = 0f;
             staminaMod = 0f;
 
             chargeGainMultiplier = 1f;
-            chargeAttackDamageMultiplier = 1f;
+            //chargeAttackDamageMultiplier = 1f;
 
             StatMultiplierWindOmega = 1f;
             StatMultiplierFireOmega = 1f;
@@ -120,8 +124,21 @@ namespace NeavaAGBF.Common.Players
             StatMultiplierLightNormal = 1f;
             StatMultiplierDarkNormal = 1f;
 
-            //DamageCapMulti = 1f;
+        }
 
+        public static void ResetMultis()
+        {
+            //StatHandler player = Main.LocalPlayer.GetModPlayer<StatHandler>();
+
+            //player.BonusCritDamage = 0f;
+
+            //player.enmityMod = 0f;
+            //player.staminaMod = 0f;
+
+            //player.chargeGainMultiplier = 1f;
+            //player.chargeAttackDamageMultiplier = 1f;
+
+            //player.ammoFree = 0f;
         }
 
         public float CalculateEnmityAtkPercent()
@@ -156,6 +173,7 @@ namespace NeavaAGBF.Common.Players
             return atkBonus;
         }
 
+
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             modifiers.FinalDamage *= damageAmp;
@@ -163,52 +181,69 @@ namespace NeavaAGBF.Common.Players
             base.ModifyHitNPC(target, ref modifiers);
         }
 
+        public override bool CanConsumeAmmo(Item weapon, Item ammo)
+        {
+            return Main.rand.NextFloat() > ammoFree;
+        }
 
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
-            //if (NeavaAGBF.ChargeAttackKey.JustPressed && readyToChargeAttack)
-            //{
-            //    if (Player.HeldItem.TryGetGlobalItem(out WeaponSkillsGlobalItem globalItem) && globalItem.chargeAttack != null)
-            //    {
-            //        globalItem.chargeAttack.Invoke(Player);
+            if (NeavaAGBF.ChargeAttackKey.JustPressed && readyToChargeAttack)
+            {
+                if (Player.HeldItem.TryGetGlobalItem(out WeaponSkillsGlobalItem globalItem) && globalItem.chargeAttack != null)
+                {
+                    globalItem.chargeAttack.Invoke(Player, chargeAttackDamageMultiplier);
 
-            //        currentCharge = 0;
-            //    }
-            //}
+                    currentCharge = 0;
+                }
+            }
         }
 
         public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)
         {
 
-            //if (Player.HeldItem.TryGetGlobalItem(out WeaponSkillsGlobalItem globalItem))
-            //{
-            //    float chargeGain = globalItem.chargeGain;
-            //    float totalChargeGain = chargeGain * this.chargeGainMultiplier;
+            if (Player.HeldItem.TryGetGlobalItem(out WeaponSkillsGlobalItem globalItem))
+            {
+                float chargeGain = globalItem.chargeGain;
+                float totalChargeGain = chargeGain * this.chargeGainMultiplier;
 
-            //    currentCharge = Math.Min(currentCharge + totalChargeGain, MaxCharge);
+                currentCharge = Math.Min(currentCharge + totalChargeGain, MaxCharge);
 
-            //    //Main.NewText($"Charge Gained! Current Charge: {currentCharge}/{MaxCharge}", Color.Cyan);
-            //}
+                //Main.NewText($"Charge Gained! Current Charge: {currentCharge}/{MaxCharge}", Color.Cyan);
+            }
         }
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
         {
 
-            //if (proj.TryGetGlobalProjectile(out ChargeControlGlobalProjectile globalProj) && !globalProj.CanGainCharge)
-            //    return;
+            if (proj.TryGetGlobalProjectile(out ChargeControlGlobalProjectile globalProj) && !globalProj.CanGainCharge)
+                return;
 
-            //if (Player.HeldItem.TryGetGlobalItem(out WeaponSkillsGlobalItem globalItem))
-            //{
-            //    float chargeGain = globalItem.chargeGain;
-            //    float totalChargeGain = chargeGain * this.chargeGainMultiplier;
+            if (Player.HeldItem.TryGetGlobalItem(out WeaponSkillsGlobalItem globalItem))
+            {
+                float chargeGain = globalItem.chargeGain;
+                float totalChargeGain = chargeGain * this.chargeGainMultiplier;
 
-            //    if (proj.DamageType == DamageClass.Summon)
-            //        totalChargeGain = 0.1f;
+                if (proj.DamageType == DamageClass.Summon)
+                    totalChargeGain = 0.1f;
 
-            //    currentCharge = Math.Min(currentCharge + totalChargeGain, MaxCharge);
+                currentCharge = Math.Min(currentCharge + totalChargeGain, MaxCharge);
 
-            //    //Main.NewText($"Charge Gained! Current Charge: {(int)currentCharge}/{MaxCharge}", Color.Cyan);
-            //}
+                //Main.NewText($"Charge Gained! Current Charge: {(int)currentCharge}/{MaxCharge}", Color.Cyan);
+            }
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (echo > 0)
+            {
+                hit.DamageType = DamageClass.Generic;
+                hit.Crit = false;
+                hit.Knockback = 0f;
+                hit.Damage = (int)(hit.Damage * echo);
+
+                target.StrikeNPC(hit);
+            }
         }
     }
 }

@@ -48,4 +48,25 @@ namespace NeavaAGBF.WeaponSkills.Dark
         }
 
     }
+
+    public class DarkMystery : WeaponSkill
+    {
+        public DarkMystery() : base("Dark", "Mystery", Element.Dark)
+        {
+            ChargAttack = 1f;
+            ChargAttackPerLevel = 0.5f;
+
+        }
+
+    }
+
+    public class DarkDeathstrike : WeaponSkill
+    {
+        public DarkDeathstrike() : base("Dark", "Deathstrike", Element.Dark)
+        {
+            Echo = 1.25f;
+            EchoPerLevel = 0.1f;
+        }
+
+    }
 }

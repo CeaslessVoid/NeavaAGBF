@@ -62,4 +62,24 @@ namespace NeavaAGBF.WeaponSkills.Wind
 
     }
 
+    public class LightMystery : WeaponSkill
+    {
+        public LightMystery() : base("Light", "Mystery", Element.Light)
+        {
+            ChargAttack = 1f;
+            ChargAttackPerLevel = 0.5f;
+        }
+
+    }
+
+    public class LightDeathstrike : WeaponSkill
+    {
+        public LightDeathstrike() : base("Light", "Deathstrike", Element.Light)
+        {
+            Echo = 1.25f;
+            EchoPerLevel = 0.1f;
+        }
+
+    }
+
 }

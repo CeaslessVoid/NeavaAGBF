@@ -50,4 +50,49 @@ namespace NeavaAGBF.WeaponSkills.None
         }
 
     }
+
+    public class NoneWaterMoon : WeaponSkill
+    {
+        public NoneWaterMoon() : base("null", "Blue Moon", Element.Water)
+        {
+
+            AttackSpeed = 3.0f;
+
+            ATK = 2.5f;
+
+            CritRate = 1.5f;
+        }
+
+    }
+
+    public class NoneFireSun : WeaponSkill
+    {
+        public NoneFireSun() : base("null", "Red Sun", Element.Fire)
+        {
+            CritDamage = 1.5f;
+
+            ATK = 2.5f;
+
+            CritRate = 1.5f;
+        }
+
+    }
+
+    public class NoneAmmoSave : WeaponSkill
+    {
+        public NoneAmmoSave() : base("null", "Efficiency", Element.Fire)
+        {
+            SaveAmmo = 5f;
+        }
+
+    }
+
+    public class StarCannonMain : WeaponSkill
+    {
+        public StarCannonMain() : base("null", "(When Main Weapon)", Element.Speical)
+        {
+            CustomText = "90% Hit to charge bar gain. 200% Boost to charge attack damage.";
+        }
+
+    }
 }

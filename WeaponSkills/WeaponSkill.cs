@@ -59,6 +59,11 @@ namespace NeavaAGBF.WeaponSkills
         public float DMGAmp { get; protected set; }
         public float DMGAmpU { get; protected set; }
 
+        public float SaveAmmo { get; protected set; }
+
+        public float Echo { get; protected set; }
+        public float EchoPerLevel { get; protected set; }
+
         public virtual Color TooltipColor { get; protected set; } = Color.Green;
 
         protected WeaponSkill(string owner, string name, Element element)

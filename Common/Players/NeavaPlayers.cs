@@ -300,12 +300,16 @@ namespace NeavaAGBF.Common.Players
                     if (!IsClicking && PlayerInput.Triggers.Current.MouseLeft && (Main.mouseItem.type != ItemID.None || playerMod.WeaponGrid[i].type != ItemID.None))
                     {
                         SoundEngine.PlaySound(SoundID.Grab);
+                        
 
                         Item temp = playerMod.WeaponGrid[i];
 
 
                         playerMod.WeaponGrid[i] = Main.mouseItem;
                         Main.mouseItem = temp;
+
+                        //StatHandler player = Main.LocalPlayer.GetModPlayer<StatHandler>();
+                        //player.ResetMultis();
 
                         //Main.NewText($"WeaponGrid[{i}] = {WeaponGrid[i]?.Name ?? "None"}, Main.mouseItem = {Main.mouseItem?.Name ?? "None"}");
                     }
@@ -324,10 +328,13 @@ namespace NeavaAGBF.Common.Players
             IsClicking = PlayerInput.Triggers.Current.MouseLeft;
         }
 
+        //public override void PostUpdateEquips()
+        //{
+
+        //}
+
         public override void PostUpdateEquips()
         {
-            base.PostUpdate();
-
             WeaponGridHandler weaponGridHandler = new WeaponGridHandler();
             weaponGridHandler.ApplyWeaponGridEffects(Player);
         }

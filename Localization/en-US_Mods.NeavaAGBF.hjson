@@ -92,6 +92,8 @@ WeaponSkill: {
 	AllEleAtk: All Element Attack
 	Damage: Damage
 	DamageAmp: Damage Amp
+	AmmoE: Ammo Efficiency
+	Echo: Bonus Damage
 }
 
 Element: {
