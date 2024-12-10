@@ -111,7 +111,7 @@ namespace NeavaAGBF.Common.Items
         { ItemID.ZombieArm, (Element.Dark, WeaponType.Sword, new List<WeaponSkill> { new DarkEnmity() }, (2, 3, 1, 0), null, null) },
         { ItemID.Gladius, (Element.Water, WeaponType.Sword, new List<WeaponSkill> { new WaterTrium(), new EarthMight() }, (2, 3, 1, 0), null, null) },
         { ItemID.BatBat, (Element.Dark, WeaponType.Special, new List<WeaponSkill> { new DarkMight() }, (2,3,1, 0), null, null) },
-        { ItemID.TentacleSpike, (Element.Dark, WeaponType.Sword, new List<WeaponSkill> { new DarkMight() }, (2,3,1, 0), null, null) },
+        { ItemID.TentacleSpike, (Element.Dark, WeaponType.Sword, new List<WeaponSkill> { new DarkMajesty() }, (2,3,1, 0), null, null) },
         { ItemID.BoneSword, (Element.Earth, WeaponType.Sword, new List<WeaponSkill> { new EarthAegis(), new WindAegis() }, (2,3,1, 0), null, null) },
         { ItemID.CandyCaneSword, (Element.Water, WeaponType.Sword, new List<WeaponSkill> { new WaterVerity(), new WaterTrium() }, (3, 3, 1, 0), null, null) },
         { ItemID.Katana, (Element.Wind, WeaponType.Sword, new List<WeaponSkill> { new WindAegis(), new WindStamina(), new WindMajesty()}, (3, 3, 1, 0), null, null) },
@@ -139,7 +139,7 @@ namespace NeavaAGBF.Common.Items
         { ItemID.HiveFive, (Element.Earth, WeaponType.Hand, new List<WeaponSkill> { new EarthFortified(), new EarthVerity()}, (3, 3, 1, 0), null, null) },
         { ItemID.Trident, (Element.Water, WeaponType.Spear, new List<WeaponSkill> { new WaterSpearhead()}, (1, 3, 1, 0), null, null) },
         { ItemID.ThunderSpear, (Element.Water, WeaponType.Spear, new List<WeaponSkill> { new WaterTrium(), new WaterVerity()}, (2, 3, 1, 0), null, null) },
-        { ItemID.TheRottedFork, (Element.Dark, WeaponType.Spear, new List<WeaponSkill> { new DarkVerity(), new DarkMight()}, (3, 3, 1, 0), null, null) },
+        { ItemID.TheRottedFork, (Element.Dark, WeaponType.Spear, new List<WeaponSkill> { new DarkVerity(), new DarkMajesty()}, (3, 3, 1, 0), null, null) },
         { ItemID.DarkLance, (Element.Dark, WeaponType.Spear, new List<WeaponSkill> { new DarkVerity(), new DarkBloodshed(), new DarkMight() }, (6, 3, 1, 3), null, null) },
         { ItemID.Swordfish, (Element.Water, WeaponType.Spear, new List<WeaponSkill> { new WaterSpearhead(), new WaterTrium(), new WaterMight() }, (6, 3, 1, 3), null, null) },
         { ItemID.EnchantedBoomerang, (Element.Wind, WeaponType.Hand, new List<WeaponSkill> { new WindFortified(), new WindMajesty() }, (6, 3, 1, 3), null, null) },
@@ -213,7 +213,12 @@ namespace NeavaAGBF.Common.Items
         { ItemID.BabyBirdStaff, (Element.Wind, WeaponType.Arcane, null, (6,3,1,3), null, null) },
         { ItemID.SlimeStaff, (Element.Wind, WeaponType.Arcane, null, (2,3,1,3), null, null) },
         { ItemID.FlinxStaff, (Element.Wind, WeaponType.Arcane, new List<WeaponSkill> { new WindVerity() }, (3,3,1,0), null, null) },
-        { ItemID.AbigailsFlower, (Element.Dark, WeaponType.Arcane, new List<WeaponSkill> { new DarkDeathstrike() }, (3,3,1,0), null, null) },
+        { ItemID.AbigailsFlower, (Element.Dark, WeaponType.Arcane, new List<WeaponSkill> { new NoneSummonCharge(), new DarkBloodshed() }, (6,3,1,3), null, null) },
+        { ItemID.HornetStaff, (Element.Earth, WeaponType.Arcane, new List<WeaponSkill> { new NoneSummonCharge(), new EarthMajesty() }, (3,3,1,0), null, null) },
+        { ItemID.VampireFrogStaff, (Element.Dark, WeaponType.Arcane, new List<WeaponSkill> { new NoneSummonCharge(), new DarkMajesty() }, (3,3,1,0), null, null) },
+        { ItemID.ImpStaff, (Element.Fire, WeaponType.Arcane, new List<WeaponSkill> { new NoneSummonCharge(), new FireFortified() }, (3,3,1,0), null, null) },
+        { ItemID.BlandWhip, (Element.Earth, WeaponType.Whip, new List<WeaponSkill> { new EarthAegis() }, (2,3,1,0), null, null) },
+        { ItemID.ThornWhip, (Element.Earth, WeaponType.Whip, new List<WeaponSkill> { new WindEssence() }, (3,3,1,0), null, null) },
         };
 
         public override bool InstancePerEntity => true;

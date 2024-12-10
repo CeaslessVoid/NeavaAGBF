@@ -95,6 +95,16 @@ namespace NeavaAGBF.WeaponSkills.Wind
 
     }
 
+    public class WindEssence : WeaponSkill
+    {
+        public WindEssence() : base("Wind", "Essence", Element.Wind)
+        {
+            FlatAtk = 1.0f;
+            FlatAtkPerLevel = 0.2f;
+        }
+
+    }
+
     //public class StormwyrmAegis : WeaponSkill
     //{
     //    public StormwyrmAegis() : base("Stormwyrm", "Aegis", Element.Wind)

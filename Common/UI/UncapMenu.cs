@@ -311,19 +311,30 @@ namespace NeavaAGBF.Common.UI
                         boxColor = boxColor2;
 
                     int frameCount = Main.itemAnimations[reqItem.type]?.FrameCount ?? 1;
-                    int frameHeight = itemTexture.Height / frameCount;
-                    int frameY = 0;
+                    int frameHeight = frameCount > 1 ? itemTexture.Height / frameCount : itemTexture.Height;
+                    int frameY = frameCount > 1 ? ((int)(Main.GlobalTimeWrappedHourly * 10) % frameCount) * frameHeight : 0;
 
-                    if (frameCount > 1)
-                    {
-                        int frame = (int)(Main.GlobalTimeWrappedHourly * 10) % frameCount; // Adjust speed as needed
-                        frameY = frame * frameHeight;
-                    }
+                    //if (frameCount > 1)
+                    //{
+                    //    int frame = (int)(Main.GlobalTimeWrappedHourly * 10) % frameCount; // Adjust speed as needed
+                    //    frameY = frame * frameHeight;
+                    //}
+
                     Rectangle sourceRectangle = new Rectangle(0, frameY, itemTexture.Width, frameHeight);
 
                     Vector2 origin = new Vector2(itemTexture.Width / 2f, frameHeight / 2f);
 
-                    spriteBatch.Draw(itemTexture, slotPosition, sourceRectangle, boxColor, 0f, origin, boxScale, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(
+                        itemTexture,
+                        slotPosition,
+                        sourceRectangle,
+                        boxColor,
+                        0f,
+                        origin,
+                        boxScale,
+                        SpriteEffects.None,
+                        0f
+                    );
 
                     if (Main.mouseX >= slotPosition.X - (slotTexture.Width / 2 * boxScale) &&
                         Main.mouseX <= slotPosition.X + (slotTexture.Width / 2 * boxScale) &&

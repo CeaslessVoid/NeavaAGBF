@@ -16,6 +16,19 @@ namespace NeavaAGBF.WeaponSkills.Dark
 
     }
 
+    public class DarkMajesty : WeaponSkill
+    {
+        public DarkMajesty() : base("Dark", "Majesty", Element.Dark)
+        {
+            HP = 3;
+            HPPerLevel = 1f;
+
+            ATK = 1;
+            ATKPerLevel = 0.5f;
+        }
+
+    }
+
     public class DarkVerity : WeaponSkill
     {
         public DarkVerity() : base("Dark", "Verity", Element.Dark)

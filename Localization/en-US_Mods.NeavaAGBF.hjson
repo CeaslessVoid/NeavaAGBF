@@ -94,6 +94,7 @@ WeaponSkill: {
 	DamageAmp: Damage Amp
 	AmmoE: Ammo Efficiency
 	Echo: Bonus Damage
+	flatAtk: Flat Attack
 }
 
 Element: {

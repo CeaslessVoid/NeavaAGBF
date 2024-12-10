@@ -222,10 +222,12 @@ namespace NeavaAGBF.Common.Players
             if (Player.HeldItem.TryGetGlobalItem(out WeaponSkillsGlobalItem globalItem))
             {
                 float chargeGain = globalItem.chargeGain;
-                float totalChargeGain = chargeGain * this.chargeGainMultiplier;
+                float totalChargeGain = chargeGain;
 
                 if (proj.DamageType == DamageClass.Summon)
-                    totalChargeGain = 0.1f;
+                    totalChargeGain = 0.01f;
+
+                totalChargeGain *= this.chargeGainMultiplier;
 
                 currentCharge = Math.Min(currentCharge + totalChargeGain, MaxCharge);
 

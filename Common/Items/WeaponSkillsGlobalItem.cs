@@ -372,6 +372,8 @@ namespace NeavaAGBF.Common.Items
 
             float echo = (skill.Echo + (skill.EchoPerLevel * level)) * modifier;
 
+            float flatAtk = (skill.FlatAtk + (skill.FlatAtkPerLevel * level)) * modifier;
+
             string skillOwnerDisplay = string.IsNullOrEmpty(skill.SkillOwner) ? "null" : $"{skill.SkillOwner}'s";
             TooltipLine skillNameLine = new TooltipLine(Mod, "SkillName", $"{skillOwnerDisplay} {skill.SkillElement} {skill.SkillName}")
             {
@@ -417,6 +419,8 @@ namespace NeavaAGBF.Common.Items
                 if (skill.SaveAmmo != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.AmmoE").Value}", (float)Math.Round(skill.SaveAmmo, 1), true, element.TooltipColor);
 
                 if (echo != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Echo").Value}", (float)Math.Round(echo, 1), true, element.TooltipColor);
+
+                if (flatAtk != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.flatAtk").Value}", (float)Math.Round(flatAtk, 1), true, element.TooltipColor);
             }
             else
             {
@@ -508,6 +512,12 @@ namespace NeavaAGBF.Common.Items
                     ? $"{Math.Abs(skill.Echo)} * {modifier}"
                     : $"({Math.Abs(skill.Echo)} + {Math.Abs(skill.EchoPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}",
                     element.TooltipColor, echo > 0);
+
+                if (flatAtk != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.flatAtk").Value}",
+                    skill.Echo == 0
+                    ? $"{Math.Abs(skill.FlatAtk)} * {modifier}"
+                    : $"({Math.Abs(skill.FlatAtk)} + {Math.Abs(skill.FlatAtkPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}",
+                    element.TooltipColor, flatAtk > 0);
 
             }
 

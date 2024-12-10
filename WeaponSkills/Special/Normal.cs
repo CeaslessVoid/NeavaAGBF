@@ -95,4 +95,13 @@ namespace NeavaAGBF.WeaponSkills.None
         }
 
     }
+
+    public class NoneSummonCharge : WeaponSkill
+    {
+        public NoneSummonCharge() : base("null", "Essence", Element.Speical)
+        {
+            ChargeBarGain = 5;
+        }
+
+    }
 }

@@ -42,6 +42,8 @@ namespace NeavaAGBF.Common.Players
 
             float totalEcho = 0f;
 
+            float totalFlatAtk = 0f;
+
             Item heldItem = player.HeldItem;
             Element heldElement = null;
 
@@ -88,6 +90,8 @@ namespace NeavaAGBF.Common.Players
                         totalAmp += skill.DMGAmp / 100f;
 
                         totalEcho += ((skill.Echo + (skill.EchoPerLevel * currentLevel)) * multiplier) / 100f;
+
+                        totalFlatAtk += (skill.FlatAtk + (skill.FlatAtkPerLevel * currentLevel)) * multiplier;
                     }
 
                     totalChargeBarGain += ((skill.ChargeBarGain + (skill.ChargeBarGainPerLevel * currentLevel)) * multiplier) / 100f;
@@ -104,12 +108,12 @@ namespace NeavaAGBF.Common.Players
                 }
             }
 
-            ApplyBonusesToPlayer(player, totalHpBonusPercent, totalDefBonus, totalAtkPercent, totalCritRatePercent, totalCritDamagePercent, totalAttackSpeedPercent, totalChargeBarGain, totalChargeDamageGain, totalDamageCap, totalDamageReduction, totalAmp, totalAmmoEf, totalEcho);
+            ApplyBonusesToPlayer(player, totalHpBonusPercent, totalDefBonus, totalAtkPercent, totalCritRatePercent, totalCritDamagePercent, totalAttackSpeedPercent, totalChargeBarGain, totalChargeDamageGain, totalDamageCap, totalDamageReduction, totalAmp, totalAmmoEf, totalEcho, totalFlatAtk);
 
         }
 
 
-        private static void ApplyBonusesToPlayer(Player player, float hpBonusPercent, float defBonus, float atkPercent, float critRatePercent, float critDamagePercent, float attackSpeedPercent, float totalChargeBarGain, float totalChargeDamageGain, float totalDamageCap, float totalDamageReduction, float totalAmp, float totalAmmoEf, float totalEcho)
+        private static void ApplyBonusesToPlayer(Player player, float hpBonusPercent, float defBonus, float atkPercent, float critRatePercent, float critDamagePercent, float attackSpeedPercent, float totalChargeBarGain, float totalChargeDamageGain, float totalDamageCap, float totalDamageReduction, float totalAmp, float totalAmmoEf, float totalEcho, float totalFlatAtk)
         {
             player.statLifeMax2 += (int)(player.statLifeMax * (hpBonusPercent / 100f));
             player.statDefense += (int)defBonus;
@@ -121,6 +125,8 @@ namespace NeavaAGBF.Common.Players
             player.GetAttackSpeed(DamageClass.Generic) += attackSpeedPercent;
             player.GetCritChance(DamageClass.Generic) += critRatePercent;
             player.GetDamage(DamageClass.Generic) += atkPercent;
+
+            player.GetDamage(DamageClass.Generic).Flat += (int)totalFlatAtk;
 
             player.endurance += totalDamageReduction;
 
