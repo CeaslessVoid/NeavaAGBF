@@ -106,4 +106,35 @@ namespace NeavaAGBF.WeaponSkills.Fire
         }
 
     }
+
+    public class FireMight2 : WeaponSkill
+    {
+        public FireMight2() : base("Hellfire", "Might II", Element.Fire)
+        {
+            ATK = 3;
+            ATKPerLevel = 0.7f;
+
+        }
+
+    }
+    public class FireVerity2 : WeaponSkill
+    {
+        public FireVerity2() : base("Hellfire", "Verity II", Element.Fire)
+        {
+            CritRate = 3.2f;
+            CritRatePerLevel = 0.3f;
+        }
+
+    }
+
+    public class FireDemolishment : WeaponSkill
+    {
+        public FireDemolishment() : base("Hellfire", "Demolishment", Element.Fire)
+        {
+            DMGAmp = 3f;
+
+            UncapLevel = 3;
+        }
+
+    }
 }

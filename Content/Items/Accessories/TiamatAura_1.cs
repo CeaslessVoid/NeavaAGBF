@@ -24,7 +24,7 @@ namespace NeavaAGBF.Content.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<StatHandler>().StatMultiplierWindOmega += 0.6f;
+            //player.GetModPlayer<StatHandler>().StatMultiplierWindOmega += 0.6f;
         }
 
         //public override void AddRecipes()

@@ -114,7 +114,7 @@ namespace NeavaAGBF.Common.Items
         { ItemID.TentacleSpike, (Element.Dark, WeaponType.Sword, new List<WeaponSkill> { new DarkMajesty() }, (2,3,1, 0), null, null) },
         { ItemID.BoneSword, (Element.Earth, WeaponType.Sword, new List<WeaponSkill> { new EarthAegis(), new WindAegis() }, (2,3,1, 0), null, null) },
         { ItemID.CandyCaneSword, (Element.Water, WeaponType.Sword, new List<WeaponSkill> { new WaterVerity(), new WaterTrium() }, (3, 3, 1, 0), null, null) },
-        { ItemID.Katana, (Element.Wind, WeaponType.Sword, new List<WeaponSkill> { new WindAegis(), new WindStamina(), new WindMajesty()}, (3, 3, 1, 0), null, null) },
+        { ItemID.Katana, (Element.Wind, WeaponType.Sword, new List<WeaponSkill> { new WindStamina(), new WindMajesty()}, (3, 3, 1, 0), null, null) },
         { ItemID.IceBlade, (Element.Water, WeaponType.Sword, new List<WeaponSkill> { new WaterSpearhead(), new WaterMight()}, (6, 3, 1, 3), null, null) },
         { ItemID.LightsBane, (Element.Dark, WeaponType.Sword, new List<WeaponSkill> { new DarkEnmity(), new DarkBloodshed()}, (3, 3, 1, 0), null, null) },
         { ItemID.TragicUmbrella, (Element.Dark, WeaponType.Sword, new List<WeaponSkill> { new DarkEnmity(), new WindMajesty()}, (3, 3, 1, 0), null, null) },
@@ -126,9 +126,9 @@ namespace NeavaAGBF.Common.Items
         { ItemID.PurpleClubberfish, (Element.Dark, WeaponType.Sword, new List<WeaponSkill> { new EarthMajesty(), new DarkVerity()}, (3, 3, 1, 0), null, null) },
         { ItemID.BeeKeeper, (Element.Wind, WeaponType.Sword, new List<WeaponSkill> { new WindStamina(), new WindVerity()}, (3, 3, 1, 0), null, null) },
         { ItemID.FalconBlade, (Element.Earth, WeaponType.Hand, new List<WeaponSkill> { new EarthMajesty(), new EarthFortified()}, (3, 2, 1, 0), null, null) },
-        { ItemID.BladeofGrass, (Element.Wind, WeaponType.Sword, new List<WeaponSkill> { new WindVerity(), new WindMight(), new EarthFortified()}, (3, 3, 1, 0), null, null) },
+        { ItemID.BladeofGrass, (Element.Wind, WeaponType.Sword, new List<WeaponSkill> { new WindVerity(), new EarthFortified()}, (3, 3, 1, 0), null, null) },
         { ItemID.FieryGreatsword, (Element.Fire, WeaponType.Sword, new List<WeaponSkill> { new FireEnrage(), new FireCelere()}, (3, 3, 1, 0), null, null) },
-        { ItemID.NightsEdge, (Element.Dark, WeaponType.Sword, new List<WeaponSkill> { new NoneEnchantment(), new NoneBane(),new DarkEnmity()}, (6, 4, 2, 3), "Hero", null) },
+        { ItemID.NightsEdge, (Element.Dark, WeaponType.Sword, new List<WeaponSkill> { new NoneEnchantment(), new NoneBane(),new DarkEnmity()}, (6, 5, 2, 3), "Hero", null) },
         { ItemID.Rally, (Element.Earth, WeaponType.Hand, new List<WeaponSkill> { new EarthFortified()}, (2, 3, 1, 0), null, null) },
         { ItemID.CrimsonYoyo, (Element.Dark, WeaponType.Hand, new List<WeaponSkill> { new DarkMight(), new DarkVerity()}, (2, 3, 1, 0), null, null) },
         { ItemID.CorruptYoyo, (Element.Earth, WeaponType.Hand, new List<WeaponSkill> { new DarkMight(), new DarkVerity()}, (2, 3, 1, 0), null, null) },
@@ -140,8 +140,8 @@ namespace NeavaAGBF.Common.Items
         { ItemID.Trident, (Element.Water, WeaponType.Spear, new List<WeaponSkill> { new WaterSpearhead()}, (1, 3, 1, 0), null, null) },
         { ItemID.ThunderSpear, (Element.Water, WeaponType.Spear, new List<WeaponSkill> { new WaterTrium(), new WaterVerity()}, (2, 3, 1, 0), null, null) },
         { ItemID.TheRottedFork, (Element.Dark, WeaponType.Spear, new List<WeaponSkill> { new DarkVerity(), new DarkMajesty()}, (3, 3, 1, 0), null, null) },
-        { ItemID.DarkLance, (Element.Dark, WeaponType.Spear, new List<WeaponSkill> { new DarkVerity(), new DarkBloodshed(), new DarkMight() }, (6, 3, 1, 3), null, null) },
-        { ItemID.Swordfish, (Element.Water, WeaponType.Spear, new List<WeaponSkill> { new WaterSpearhead(), new WaterTrium(), new WaterMight() }, (6, 3, 1, 3), null, null) },
+        { ItemID.DarkLance, (Element.Dark, WeaponType.Spear, new List<WeaponSkill> { new DarkVerity(), new DarkBloodshed() }, (6, 3, 1, 3), null, null) },
+        { ItemID.Swordfish, (Element.Water, WeaponType.Spear, new List<WeaponSkill> { new WaterSpearhead(), new WaterTrium() }, (6, 3, 1, 3), null, null) },
         { ItemID.EnchantedBoomerang, (Element.Wind, WeaponType.Hand, new List<WeaponSkill> { new WindFortified(), new WindMajesty() }, (6, 3, 1, 3), null, null) },
         { ItemID.FruitcakeChakram, (Element.Wind, WeaponType.Hand, new List<WeaponSkill> { new WindFortified(), new WindMajesty() }, (6, 3, 1, 3), null, null) },
         { ItemID.BloodyMachete, (Element.Fire, WeaponType.Hand, new List<WeaponSkill> { new FireCelere(), new WindVerity() }, (3, 3, 1, 0), null, null) },
@@ -209,7 +209,7 @@ namespace NeavaAGBF.Common.Items
         { ItemID.WaterBolt, (Element.Water, WeaponType.Arcane, new List<WeaponSkill> { new WaterDeathstrike(), new WaterSpearhead() }, (6,3,1,3), null, null) },
         { ItemID.BookofSkulls, (Element.Dark, WeaponType.Arcane, new List<WeaponSkill> { new DarkDeathstrike(), new DarkVerity() }, (3,3,1,0), null, null) },
         { ItemID.DemonScythe, (Element.Dark, WeaponType.Arcane, new List<WeaponSkill> { new DarkDeathstrike(), new DarkEnmity() }, (3,3,1,0), null, null) },
-        { ItemID.CrimsonRod, (Element.Dark, WeaponType.Arcane, new List<WeaponSkill> { new DarkDeathstrike(), new DarkBloodshed(), new DarkMight() }, (6,3,1,3), null, null) },
+        { ItemID.CrimsonRod, (Element.Dark, WeaponType.Arcane, new List<WeaponSkill> { new DarkDeathstrike(), new DarkBloodshed() }, (6,3,1,3), null, null) },
         { ItemID.BabyBirdStaff, (Element.Wind, WeaponType.Arcane, null, (6,3,1,3), null, null) },
         { ItemID.SlimeStaff, (Element.Wind, WeaponType.Arcane, null, (2,3,1,3), null, null) },
         { ItemID.FlinxStaff, (Element.Wind, WeaponType.Arcane, new List<WeaponSkill> { new WindVerity() }, (3,3,1,0), null, null) },
@@ -220,6 +220,36 @@ namespace NeavaAGBF.Common.Items
         { ItemID.BlandWhip, (Element.Earth, WeaponType.Whip, new List<WeaponSkill> { new EarthAegis() }, (2,3,1,0), null, (1,1,null)) },
         { ItemID.ThornWhip, (Element.Earth, WeaponType.Whip, new List<WeaponSkill> { new WindEssence() }, (3,3,1,0), null, null) },
         { ItemID.BoneWhip, (Element.Earth, WeaponType.Whip, new List<WeaponSkill> { new DarkEssence(), new DarkMajesty() }, (3,3,1,0), null, null) },
+
+        // Hardmode Items
+
+        { ItemID.TaxCollectorsStickOfDoom, (Element.Dark, WeaponType.Sword, new List<WeaponSkill> { new DarkAegis2(), new DarkMajesty() }, (5,5,2,0), "DarkBasic", null) },
+        { ItemID.SlapHand, (Element.Dark, WeaponType.Sword, new List<WeaponSkill> { new DarkMight2() }, (5,5,2,0), "DarkBasic", null) },
+        { ItemID.CobaltSword, (Element.Water, WeaponType.Sword, new List<WeaponSkill> { new WaterAegis2() }, (5,5,2,0), "WaterBasic", null) },
+        { ItemID.PalladiumSword, (Element.Water, WeaponType.Sword, new List<WeaponSkill> { new WaterAegis2() }, (5,5,2,0), "WaterBasic", null) },
+
+        { ItemID.BluePhasesaber, (Element.Water, WeaponType.Sword, new List<WeaponSkill> { new WaterMight2(), new WaterVerity2() }, (5, 5, 2, 0), "WaterBasic", null) },
+        { ItemID.GreenPhasesaber, (Element.Wind, WeaponType.Sword, new List<WeaponSkill> { new WindMight2(), new WindVerity2() }, (5, 5, 2, 0), "WindBasic", null) },
+        { ItemID.OrangePhasesaber, (Element.Earth, WeaponType.Sword, new List<WeaponSkill> { new EarthMight2(), new EarthVerity2() }, (5, 5, 2, 0), "EarthBasic", null) },
+        { ItemID.PurplePhasesaber, (Element.Dark, WeaponType.Sword, new List<WeaponSkill> { new DarkMight2(), new DarkVerity2() }, (5, 5, 2, 0), "DarkBasic", null) },
+        { ItemID.RedPhasesaber, (Element.Fire, WeaponType.Sword, new List<WeaponSkill> { new FireMight2(), new FireVerity2() }, (5, 5, 2, 0), "FireBasic", null) },
+        { ItemID.YellowPhasesaber, (Element.Light, WeaponType.Sword, new List<WeaponSkill> { new LightMight2(), new LightVerity2() }, (5, 5, 2, 0), "LightBasic", null) },
+        { ItemID.WhitePhasesaber, (Element.Light, WeaponType.Sword, new List<WeaponSkill> { new NoneBalance2() }, (5, 5, 2, 0), "LightBasic", null) },
+
+        { ItemID.IceSickle, (Element.Water, WeaponType.Sword, new List<WeaponSkill> { new WaterSpearhead(), new WaterDemolishment() }, (5, 5, 2, 0), "WaterBasic", null) },
+        { 3823, (Element.Fire, WeaponType.Sword, new List<WeaponSkill> { new FireMight2(), new FireDemolishment() }, (5, 5, 2, 0), "FireBasic", null) },
+
+        { ItemID.MythrilSword, (Element.Earth, WeaponType.Sword, new List<WeaponSkill> { new EarthAegis2(), new EarthMight2() }, (5,5,2,0), "EarthBasic", null) },
+        { ItemID.OrichalcumSword, (Element.Earth, WeaponType.Sword, new List<WeaponSkill> { new EarthAegis2(), new EarthMight2() }, (5,5,2,0), "EarthBasic", null) },
+
+        { ItemID.BreakerBlade, (Element.Special, WeaponType.Sword, new List<WeaponSkill> { new SpecialElementWeapon(), new BreakerGuard() }, (5,3,2,0), null, null) },
+        { ItemID.Cutlass, (Element.Wind, WeaponType.Sword, new List<WeaponSkill> { new WindStamina2(), new WindAegis2() }, (5,5,2,0), "Pirate", null) },
+        { ItemID.Frostbrand, (Element.Water, WeaponType.Sword, new List<WeaponSkill> { new WaterMight2(), new WaterAegis2() }, (5,5,2,0), "WaterBasic", null) },
+
+        { ItemID.AdamantiteSword, (Element.Light, WeaponType.Sword, new List<WeaponSkill> { new LightMight2(), new LightAegis2() }, (5,5,2,0), "LightBasic", null) },
+        { ItemID.TitaniumSword, (Element.Light, WeaponType.Sword, new List<WeaponSkill> { new LightMight2(), new LightAegis2() }, (5,5,2,0), "LightBasic", null) },
+        { ItemID.BeamSword, (Element.Light, WeaponType.Sword, new List<WeaponSkill> { new LightMight2(), new LightMajesy2() }, (5,5,2,0), "LightBasic", null) },
+
         };
 
         public override bool InstancePerEntity => true;

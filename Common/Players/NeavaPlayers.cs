@@ -232,7 +232,7 @@ namespace NeavaAGBF.Common.Players
             bool isMouseOverButton = Vector2.Distance(toggleButtonPosition, Main.MouseScreen) <= 19f;
 
             Main.spriteBatch.Draw(
-                IsWeaponGridOpen ? gridOpenTexture : gridClosedTexture,
+                isMouseOverButton ? gridOpenTexture : gridClosedTexture,
                 toggleButtonPosition,
                 null,
                 IsWeaponGridOpen ? new Color(255, 255, 155) : new Color(255, 255, 255),

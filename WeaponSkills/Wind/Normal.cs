@@ -105,25 +105,45 @@ namespace NeavaAGBF.WeaponSkills.Wind
 
     }
 
-    //public class StormwyrmAegis : WeaponSkill
-    //{
-    //    public StormwyrmAegis() : base("Stormwyrm", "Aegis", Element.Wind)
-    //    {
-    //        HP = 1;
-    //        HPPerLevel = 0.6f;
-    //    }
+    public class WindMight2 : WeaponSkill
+    {
+        public WindMight2() : base("Whirlwind", "Might II", Element.Wind)
+        {
+            ATK = 3;
+            ATKPerLevel = 0.7f;
+        }
 
-    //}
+    }
 
-    //public class StormwyrmMight : WeaponSkill
-    //{
-    //    public StormwyrmMight() : base("Stormwyrm", "Might", Element.Wind)
-    //    {
-    //        ATK = 1;
-    //        ATKPerLevel = 0.5f;
-    //    }
+    public class WindVerity2 : WeaponSkill
+    {
+        public WindVerity2() : base("Whirlwind", "Verity II", Element.Wind)
+        {
+            CritRate = 3.2f;
+            CritRatePerLevel = 0.3f;
+        }
 
-    //}
+    }
 
+    public class WindAegis2 : WeaponSkill
+    {
+        public WindAegis2() : base("Wind", "Aegis II", Element.Wind)
+        {
+
+            HP = 6;
+            HPPerLevel = 1.5f;
+        }
+
+    }
+
+    public class WindStamina2 : WeaponSkill
+    {
+        public WindStamina2() : base("Wind", "Stamina II", Element.Wind)
+        {
+            Stamina = 3.2f;
+            StaminaPerLevel = 1.1f;
+        }
+
+    }
 
 }

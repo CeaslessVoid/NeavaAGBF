@@ -134,6 +134,150 @@ namespace NeavaAGBF.Common.Items
 
             uncapDict.Add(uncapGroupHero.Name, uncapGroupHero);
 
+            // Basic Dark
+
+            UncapGroup uncapGroupDark = new UncapGroup("DarkBasic");
+            uncapGroupDark.AddRequirement(1, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.HallowedBar, 5),
+                new UncapRequirement(ItemID.Obsidian, 10),
+                new UncapRequirement(ItemID.Deathweed, 25),
+                new UncapRequirement(ItemID.GoldCoin, 50)
+            });
+            uncapGroupDark.AddRequirement(2, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.HallowedBar, 15),
+                new UncapRequirement(ItemID.AvengerEmblem, 1),
+                new UncapRequirement(ItemID.SoulofMight, 10),
+                new UncapRequirement(ItemID.MoonStone, 1),
+                new UncapRequirement(ItemID.PlatinumCoin, 1)
+            });
+
+            uncapDict.Add(uncapGroupDark.Name, uncapGroupDark);
+
+            // Basic Water
+
+            UncapGroup uncapGroupWater = new UncapGroup("WaterBasic");
+            uncapGroupWater.AddRequirement(1, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.HallowedBar, 15),
+                new UncapRequirement(ItemID.IceSlimeBanner, 1),
+                new UncapRequirement(ItemID.Shiverthorn, 25),
+                new UncapRequirement(ItemID.GoldCoin, 50)
+            });
+            uncapGroupWater.AddRequirement(2, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.HallowedBar, 15),
+                new UncapRequirement(ItemID.AvengerEmblem, 1),
+                new UncapRequirement(ItemID.SoulofSight, 10),
+                new UncapRequirement(ItemID.FrozenTurtleShell, 1),
+                new UncapRequirement(ItemID.PlatinumCoin, 1)
+            });
+
+            uncapDict.Add(uncapGroupWater.Name, uncapGroupWater);
+
+            // Basic Wind
+
+            UncapGroup uncapGroupWind = new UncapGroup("WindBasic");
+            uncapGroupWind.AddRequirement(1, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.HallowedBar, 15),
+                new UncapRequirement(ItemID.HarpyBanner, 1),
+                new UncapRequirement(ItemID.Feather, 25),
+                new UncapRequirement(ItemID.GoldCoin, 50)
+            });
+            uncapGroupWind.AddRequirement(2, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.HallowedBar, 15),
+                new UncapRequirement(ItemID.AvengerEmblem, 1),
+                new UncapRequirement(ItemID.SoulofFright, 10),
+                new UncapRequirement(ItemID.SoulofFlight, 100),
+                new UncapRequirement(ItemID.PlatinumCoin, 1)
+            });
+
+            uncapDict.Add(uncapGroupWind.Name, uncapGroupWind);
+
+            // Basic Earth
+
+            UncapGroup uncapGroupEarth = new UncapGroup("EarthBasic");
+            uncapGroupEarth.AddRequirement(1, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.HallowedBar, 15),
+                new UncapRequirement(ItemID.Stinger, 10),
+                new UncapRequirement(ItemID.JungleRose, 10),
+                new UncapRequirement(ItemID.GoldCoin, 50)
+            });
+            uncapGroupEarth.AddRequirement(2, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.HallowedBar, 15),
+                new UncapRequirement(ItemID.AvengerEmblem, 1),
+                new UncapRequirement(ItemID.SoulofMight, 10),
+                new UncapRequirement(ItemID.TurtleShell, 1),
+                new UncapRequirement(ItemID.PlatinumCoin, 1)
+            });
+
+            uncapDict.Add(uncapGroupEarth.Name, uncapGroupEarth);
+
+            // Basic Fire
+
+            UncapGroup uncapGroupFire = new UncapGroup("FireBasic");
+            uncapGroupFire.AddRequirement(1, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.HallowedBar, 15),
+                new UncapRequirement(ItemID.Hellstone, 10),
+                new UncapRequirement(ItemID.Fireblossom, 25),
+                new UncapRequirement(ItemID.GoldCoin, 50)
+            });
+            uncapGroupFire.AddRequirement(2, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.HallowedBar, 15),
+                new UncapRequirement(ItemID.AvengerEmblem, 1),
+                new UncapRequirement(ItemID.SoulofSight, 10),
+                new UncapRequirement(ItemID.GuideVoodooDoll, 10),
+                new UncapRequirement(ItemID.PlatinumCoin, 1)
+            });
+
+            uncapDict.Add(uncapGroupFire.Name, uncapGroupFire);
+
+            // Basic Light
+
+            UncapGroup uncapGroupLight = new UncapGroup("LightBasic");
+            uncapGroupLight.AddRequirement(1, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.HallowedBar, 15),
+                new UncapRequirement(ItemID.CrystalShard, 10),
+                new UncapRequirement(ItemID.PixieDust, 25),
+                new UncapRequirement(ItemID.GoldCoin, 50)
+            });
+            uncapGroupLight.AddRequirement(2, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.HallowedBar, 15),
+                new UncapRequirement(ItemID.AvengerEmblem, 1),
+                new UncapRequirement(ItemID.SoulofFright, 10),
+                new UncapRequirement(ItemID.UnicornHorn, 10),
+                new UncapRequirement(ItemID.PlatinumCoin, 1)
+            });
+
+            uncapDict.Add(uncapGroupLight.Name, uncapGroupLight);
+
+            // Pirate
+
+            UncapGroup uncapGroupPirate = new UncapGroup("Pirate");
+            uncapGroupPirate.AddRequirement(1, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.GoldRing, 1),
+                new UncapRequirement(ItemID.LuckyCoin, 1),
+                new UncapRequirement(ItemID.GoldCoin, 50)
+            });
+            uncapGroupPirate.AddRequirement(2, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.ChlorophyteBar, 10),
+                new UncapRequirement(ItemID.FlyingDutchmanTrophy, 1),
+                new UncapRequirement(ItemID.PlatinumCoin, 1)
+            });
+
+            uncapDict.Add(uncapGroupPirate.Name, uncapGroupPirate);
+
         }
     
     }

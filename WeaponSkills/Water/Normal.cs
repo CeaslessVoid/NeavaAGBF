@@ -81,5 +81,56 @@ namespace NeavaAGBF.WeaponSkills.Water
 
     }
 
+    public class WaterMight2 : WeaponSkill
+    {
+        public WaterMight2() : base("Tsunami", "Might II", Element.Water)
+        {
+            ATK = 3;
+            ATKPerLevel = 0.7f;
+        }
 
+    }
+
+    public class WaterAegis2 : WeaponSkill
+    {
+        public WaterAegis2() : base("Tsunami", "Aegis II", Element.Water)
+        {
+            HP = 6;
+            HPPerLevel = 1.5f;
+        }
+
+    }
+
+    public class WaterVerity2 : WeaponSkill
+    {
+        public WaterVerity2() : base("Tsunami", "Verity II", Element.Water)
+        {
+            CritRate = 3.2f;
+            CritRatePerLevel = 0.3f;
+        }
+
+    }
+    public class WaterDemolishment : WeaponSkill
+    {
+        public WaterDemolishment() : base("Tsunami", "Demolishment", Element.Water)
+        {
+            DMGAmp = 3f;
+
+            UncapLevel = 3;
+        }
+
+    }
+
+    public class WaterFandango : WeaponSkill
+    {
+        public WaterFandango() : base("Tsunami", "Fandango", Element.Water)
+        {
+            ATK = 3;
+            ATKPerLevel = 0.7f;
+
+            AttackSpeed = 1.5f;
+            AttackSpeedPerLevel = 0.8f;
+        }
+
+    }
 }

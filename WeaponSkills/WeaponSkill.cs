@@ -14,7 +14,7 @@ namespace NeavaAGBF.WeaponSkills
         public string SkillName { get; }
         public Element SkillElement { get; }
 
-        public int UncapLevel { get; private set; }
+        public int UncapLevel = 0;
 
         // Stats and bonuses
         public float ATK { get; protected set; }
@@ -59,6 +59,9 @@ namespace NeavaAGBF.WeaponSkills
         public float FlatAtk { get; protected set; }
         public float FlatAtkPerLevel { get; protected set; }
 
+        // Bullshit
+
+        public string SpecialKey = null;
 
         public Color TooltipColor { get; protected set; } = Color.Green;
 

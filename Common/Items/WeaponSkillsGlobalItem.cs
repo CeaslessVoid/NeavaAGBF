@@ -139,7 +139,7 @@ namespace NeavaAGBF.Common.Items
 
             foreach (var skill in weaponSkills)
             {
-                AddSkillTooltips(tooltips, skill, currentLevel);
+                AddSkillTooltips(tooltips, skill, currentLevel, currentUncap);
             }
 
             if (maxLevel > 0)
@@ -216,7 +216,7 @@ namespace NeavaAGBF.Common.Items
                 ChatManager.DrawColorCodedStringWithShadow(
                     Main.spriteBatch,
                     font,
-                    WeaponType.Name,
+                    WeaponType.RealName,
                     typeNamePosition,
                     weaponElement.TooltipColor,
                     0f,
@@ -227,17 +227,20 @@ namespace NeavaAGBF.Common.Items
 
             else if(line.Name == "SkillName" && line.Mod == Mod.Name)
             {
-                string[] splitText = line.Text.Split(new[] { ' ' }, 3);
-                if (splitText.Length < 2)
+                string[] splitText = line.Text.Split(new[] { ' ' }, 6);
+                if (splitText.Length < 5)
                     return;
 
                 string ownerName = splitText[0];
                 string elementName = splitText[1];
-                string skillName = splitText[2];
+                string elementPath = splitText[2];
+                int uncapLevel = Int32.Parse(splitText[3]); // Should not throw errors
+                int currentUncap = Int32.Parse(splitText[4]);
+                string skillName = splitText[5];
 
                 string formattedSkillName = skillName.Replace(" ", "_");
 
-                string imagePath = $"NeavaAGBF/WeaponSkills/{elementName}/{formattedSkillName}";
+                string imagePath = $"NeavaAGBF/WeaponSkills/{elementPath}/{formattedSkillName}";
 
                 Asset<Texture2D> textureAsset = null;
 
@@ -266,10 +269,12 @@ namespace NeavaAGBF.Common.Items
 
                 string skillOwnerDisplay = ownerName == "null's" ? "" : $"{ownerName}";
 
+                string uncapDisplay = (uncapLevel == 0 || uncapLevel <= currentUncap) ? "" : $" (Unlocked at Uncap {uncapLevel})";
+
                 ChatManager.DrawColorCodedStringWithShadow(
                     Main.spriteBatch,
                     FontAssets.MouseText.Value,
-                    $"{skillOwnerDisplay} {skillName}", // Reconstruct the line
+                    $"{skillOwnerDisplay} {skillName}{uncapDisplay}", // Reconstruct the line
                     textPosition,
                     Color.White,
                     0f,
@@ -302,7 +307,7 @@ namespace NeavaAGBF.Common.Items
         }
 
 
-        private void AddSkillTooltips(List<TooltipLine> tooltips, WeaponSkill skill, int level)
+        private void AddSkillTooltips(List<TooltipLine> tooltips, WeaponSkill skill, int level, int currentUncap)
         {
 
             Player player = Main.LocalPlayer;
@@ -340,7 +345,7 @@ namespace NeavaAGBF.Common.Items
             float flatAtk = (skill.FlatAtk + (skill.FlatAtkPerLevel * level)) * modifier;
 
             string skillOwnerDisplay = string.IsNullOrEmpty(skill.SkillOwner) ? "null" : $"{skill.SkillOwner}'s";
-            TooltipLine skillNameLine = new TooltipLine(Mod, "SkillName", $"{skillOwnerDisplay} {skill.SkillElement} {skill.SkillName}")
+            TooltipLine skillNameLine = new TooltipLine(Mod, "SkillName", $"{skillOwnerDisplay} {skill.SkillElement} {skill.SkillElement.RealName} {skill.UncapLevel} {currentUncap} {skill.SkillName}")
             {
                 //OverrideColor = skill.TooltipColor
                 OverrideColor = Color.Transparent,

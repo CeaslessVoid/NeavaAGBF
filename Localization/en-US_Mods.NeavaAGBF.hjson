@@ -104,7 +104,9 @@ Element: {
 	Earth: Earth
 	Light: Light
 	Dark: Dark
+	Special: Special
 }
 
+CustomText.StarCannonMain: 90% Hit to charge bar gain. 200% Boost to charge attack damage.
 "Keybinds.Charge Attack.DisplayName": Charge  Attack
 Projectiles.ProjectilNoCharge.DisplayName: Projectile No Charge

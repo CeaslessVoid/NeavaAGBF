@@ -81,5 +81,33 @@ namespace NeavaAGBF.WeaponSkills.Earth
 
     }
 
+    public class EarthMight2 : WeaponSkill
+    {
+        public EarthMight2() : base("Mountain", "Might II", Element.Earth)
+        {
+            ATK = 3;
+            ATKPerLevel = 0.7f;
+        }
 
+    }
+
+    public class EarthVerity2 : WeaponSkill
+    {
+        public EarthVerity2() : base("Mountain", "Verity II", Element.Earth)
+        {
+            CritRate = 3.2f;
+            CritRatePerLevel = 0.3f;
+        }
+
+    }
+
+    public class EarthAegis2 : WeaponSkill
+    {
+        public EarthAegis2() : base("Mountain", "Aegis II", Element.Earth)
+        {
+            HP = 6;
+            HPPerLevel = 1.5f;
+        }
+
+    }
 }

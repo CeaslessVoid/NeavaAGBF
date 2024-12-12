@@ -92,4 +92,34 @@ namespace NeavaAGBF.WeaponSkills.Dark
         }
 
     }
+
+    public class DarkAegis2 : WeaponSkill
+    {
+        public DarkAegis2() : base("Hatred", "Aegis II", Element.Dark)
+        {
+            HP = 6;
+            HPPerLevel = 1.5f;
+        }
+
+    }
+
+    public class DarkMight2 : WeaponSkill
+    {
+        public DarkMight2() : base("Hatred", "Might II", Element.Dark)
+        {
+            ATK = 3;
+            ATKPerLevel = 0.7f;
+        }
+
+    }
+
+    public class DarkVerity2 : WeaponSkill
+    {
+        public DarkVerity2() : base("Hatred", "Verity II", Element.Dark)
+        {
+            CritRate = 3.2f;
+            CritRatePerLevel = 0.3f;
+        }
+
+    }
 }

@@ -45,16 +45,18 @@ namespace NeavaAGBF.Common.Players
 
         public float echo = 0.0f;
 
+        public Dictionary<string, int> GridCounts = new Dictionary<string, int>();
+
         // Stat Multpliers
 
-        public float StatMultiplierWindOmega = 1f;
-        public float StatMultiplierFireOmega = 1f;
-        public float StatMultiplierWaterOmega = 1f;
-        public float StatMultiplierEarthOmega = 1f;
-        public float StatMultiplierLightOmega = 1f;
-        public float StatMultiplierDarkOmega = 1f;
+        //public float StatMultiplierWindOmega = 1f;
+        //public float StatMultiplierFireOmega = 1f;
+        //public float StatMultiplierWaterOmega = 1f;
+        //public float StatMultiplierEarthOmega = 1f;
+        //public float StatMultiplierLightOmega = 1f;
+        //public float StatMultiplierDarkOmega = 1f;
 
-        
+
 
         public float StatMultiplierWindNormal = 1f;
         public float StatMultiplierFireNormal = 1f;
@@ -69,20 +71,20 @@ namespace NeavaAGBF.Common.Players
         public float GetStatMultiplier(String owner)
         {
 
-            if (owner == "Stormwyrm")
-                return StatMultiplierWindOmega;
-            else if (owner == "Ironflame")
-                return StatMultiplierFireOmega;
-            else if (owner == "Oceansoul")
-                return StatMultiplierWaterOmega;
-            else if (owner == "Lifetree")
-                return StatMultiplierEarthOmega;
-            else if (owner == "Knightcode")
-                return StatMultiplierLightOmega;
-            else if (owner == "Mistfall")
-                return StatMultiplierDarkOmega;
+            //if (owner == "Stormwyrm")
+            //    return StatMultiplierWindOmega;
+            //else if (owner == "Ironflame")
+            //    return StatMultiplierFireOmega;
+            //else if (owner == "Oceansoul")
+            //    return StatMultiplierWaterOmega;
+            //else if (owner == "Lifetree")
+            //    return StatMultiplierEarthOmega;
+            //else if (owner == "Knightcode")
+            //    return StatMultiplierLightOmega;
+            //else if (owner == "Mistfall")
+            //    return StatMultiplierDarkOmega;
 
-            else if (owner == "Wind" | owner == "Whirlwind" | owner == "Ventosus")
+            if (owner == "Wind" | owner == "Whirlwind" | owner == "Ventosus")
                 return StatMultiplierWindNormal;
             else if (owner == "Fire" | owner == "Hellfire" | owner == "Inferno")
                 return StatMultiplierFireNormal;
@@ -110,12 +112,12 @@ namespace NeavaAGBF.Common.Players
             chargeGainMultiplier = 1f;
             //chargeAttackDamageMultiplier = 1f;
 
-            StatMultiplierWindOmega = 1f;
-            StatMultiplierFireOmega = 1f;
-            StatMultiplierWaterOmega = 1f;
-            StatMultiplierEarthOmega = 1f;
-            StatMultiplierLightOmega = 1f;
-            StatMultiplierDarkOmega = 1f;
+            //StatMultiplierWindOmega = 1f;
+            //StatMultiplierFireOmega = 1f;
+            //StatMultiplierWaterOmega = 1f;
+            //StatMultiplierEarthOmega = 1f;
+            //StatMultiplierLightOmega = 1f;
+            //StatMultiplierDarkOmega = 1f;
 
             StatMultiplierWindNormal = 1f;
             StatMultiplierFireNormal = 1f;
@@ -124,7 +126,10 @@ namespace NeavaAGBF.Common.Players
             StatMultiplierLightNormal = 1f;
             StatMultiplierDarkNormal = 1f;
 
+            GridCounts.Clear();
+
         }
+
         public float CalculateEnmityAtkPercent()
         {
 
@@ -158,11 +163,15 @@ namespace NeavaAGBF.Common.Players
         }
 
 
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)
         {
             modifiers.FinalDamage *= damageAmp;
+        }
 
-            base.ModifyHitNPC(target, ref modifiers);
+        // Split for ougi
+        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.FinalDamage *= damageAmp;
         }
 
         public override bool CanConsumeAmmo(Item weapon, Item ammo)
@@ -224,9 +233,10 @@ namespace NeavaAGBF.Common.Players
             if (echo > 0)
             {
                 hit.DamageType = DamageClass.Generic;
-                hit.Crit = false;
                 hit.Knockback = 0f;
                 hit.Damage = (int)(hit.Damage * echo);
+
+                hit.Crit = false;
 
                 target.StrikeNPC(hit);
             }

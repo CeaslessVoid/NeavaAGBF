@@ -528,11 +528,11 @@ namespace NeavaAGBF.Common.UI
         private int clickCooldownTimer = 0;
 
     }
-    internal class ExampleUIHoverImageButton : UIImageButton
+    internal class UIHoverImageButton : UIImageButton
     {
         internal string hoverText;
 
-        public ExampleUIHoverImageButton(Asset<Texture2D> texture, string hoverText) : base(texture)
+        public UIHoverImageButton(Asset<Texture2D> texture, string hoverText) : base(texture)
         {
             this.hoverText = hoverText;
         }
@@ -563,7 +563,7 @@ namespace NeavaAGBF.Common.UI
 
 
             Asset<Texture2D> buttonDeleteTexture = ModContent.Request<Texture2D>("Terraria/Images/UI/ButtonDelete");
-            ExampleUIHoverImageButton closeButton = new ExampleUIHoverImageButton(buttonDeleteTexture, Language.GetTextValue("LegacyInterface.52"));
+            UIHoverImageButton closeButton = new UIHoverImageButton(buttonDeleteTexture, Language.GetTextValue("LegacyInterface.52"));
             SetRectangle(closeButton, left: 170f, top: 10f, width: 22f, height: 22f);
             closeButton.OnLeftClick += new MouseEvent(CloseButtonClicked);
             uncapMenu.Append(closeButton);

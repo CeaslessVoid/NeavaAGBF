@@ -82,4 +82,46 @@ namespace NeavaAGBF.WeaponSkills.Wind
 
     }
 
+    public class LightMight2 : WeaponSkill
+    {
+        public LightMight2() : base("Thunder", "Might II", Element.Light)
+        {
+            ATK = 3;
+            ATKPerLevel = 0.7f;
+        }
+
+    }
+
+    public class LightVerity2 : WeaponSkill
+    {
+        public LightVerity2() : base("Thunder", "Verity II", Element.Light)
+        {
+            CritRate = 3.2f;
+            CritRatePerLevel = 0.3f;
+        }
+
+    }
+
+    public class LightAegis2 : WeaponSkill
+    {
+        public LightAegis2() : base("Light", "Aegis II", Element.Light)
+        {
+            HP = 6;
+            HPPerLevel = 1.5f;
+        }
+
+    }
+
+    public class LightMajesy2 : WeaponSkill
+    {
+        public LightMajesy2() : base("Thunder", "Majesy II", Element.Light)
+        {
+            ATK = 3;
+            ATKPerLevel = 0.7f;
+
+            HP = 6;
+            HPPerLevel = 1.5f;
+        }
+
+    }
 }

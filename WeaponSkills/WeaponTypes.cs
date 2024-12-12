@@ -13,13 +13,13 @@ namespace NeavaAGBF.WeaponSkills
 {
     public class WeaponType
     {
-        public string Name { get; }
+        public string RealName { get; }
         public string SpritePath { get; }
         public Color TooltipColor { get; }
 
         public WeaponType(string name, string spritePath, Color tooltipColor)
         {
-            Name = name;
+            RealName = name;
             SpritePath = spritePath;
             TooltipColor = tooltipColor;
         }

@@ -9,12 +9,20 @@ using Terraria;
 using NeavaAGBF.Content.Items;
 using NeavaAGBF.Common.Items;
 using log4net.Core;
+using NeavaAGBF.WeaponSkills.None;
 
 namespace NeavaAGBF.Common.Players
 {
     public class WeaponGridHandler
     {
         //private Item[] WeaponGrid = new Item[9];
+        private readonly Dictionary<string, Action<StatHandler, StatTotals, int>> specialKeyEffects = new();
+
+        public WeaponGridHandler()
+        {
+            // Register the test function
+            specialKeyEffects["HpPerLight"] = NoneHpPerLight;
+        }
 
         public void ApplyWeaponGridEffects(Player player)
         {
@@ -22,6 +30,7 @@ namespace NeavaAGBF.Common.Players
             var modPlayer = player.GetModPlayer<StatHandler>();
 
             var totals = new StatTotals();
+            var specialKeys = new List<string>();
 
             Item heldItem = player.HeldItem;
             Element heldElement = heldItem.TryGetGlobalItem(out WeaponSkillsGlobalItem heldWeapon)
@@ -33,8 +42,26 @@ namespace NeavaAGBF.Common.Players
                 if (weaponItem == null || !weaponItem.active || !weaponItem.TryGetGlobalItem(out WeaponSkillsGlobalItem weaponData))
                     continue;
 
+                string elementName = weaponData.weaponElement.RealName;
+
+                if (!modPlayer.GridCounts.ContainsKey(weaponData.weaponElement.RealName))
+                {
+                    modPlayer.GridCounts[weaponData.weaponElement.RealName] = 0;
+                }
+                modPlayer.GridCounts[weaponData.weaponElement.RealName]++;
+
+                if (!modPlayer.GridCounts.ContainsKey(weaponData.WeaponType.RealName))
+                {
+                    modPlayer.GridCounts[weaponData.WeaponType.RealName] = 0;
+                }
+                modPlayer.GridCounts[weaponData.WeaponType.RealName]++;
+
+
                 foreach (var skill in weaponData.weaponSkills)
                 {
+                    if (weaponData.currentUncap < skill.UncapLevel)
+                        continue;
+
                     float multiplier = modPlayer.GetStatMultiplier(skill.SkillOwner);
                     float currentLevel = weaponData.currentLevel;
 
@@ -44,7 +71,7 @@ namespace NeavaAGBF.Common.Players
                     totals.DamageReduction += (skill.DMGReduc + (skill.DMGReducPerLevel * currentLevel)) / 100f;
 
                     // Element-matching stats
-                    if (heldElement != null && weaponData.weaponElement == heldElement)
+                    if (heldElement != null &&( weaponData.weaponElement == heldElement || heldElement == Element.Special ))
                     {
                         AddMatchingElementStats(skill, multiplier, currentLevel, totals, modPlayer);
                     }
@@ -54,11 +81,34 @@ namespace NeavaAGBF.Common.Players
                     totals.AtkPercent += ((skill.ATKALLELE + (skill.ATKALLELEPerLevel * currentLevel)) / 100f);
                     totals.AmmoEfficiency += skill.SaveAmmo / 100f;
                     totals.DamageAmp += skill.DMGAmpU / 100f;
+
+                    if (!string.IsNullOrEmpty(skill.SpecialKey))
+                    {
+                        specialKeys.Add(skill.SpecialKey);
+                    }
                 }
             }
 
+            ProcessSpecialKeys(modPlayer, totals, specialKeys);
+
             ApplyBonusesToPlayer(player, totals, modPlayer);    
 
+        }
+
+        private void ProcessSpecialKeys(StatHandler modPlayer, StatTotals totals, List<string> specialKeys)
+        {
+            var groupedKeys = specialKeys.GroupBy(key => key);
+
+            foreach (var group in groupedKeys)
+            {
+                string key = group.Key;
+                int stackSize = group.Count();
+
+                if (specialKeyEffects.TryGetValue(key, out var effectFunction))
+                {
+                    effectFunction(modPlayer, totals, stackSize);
+                }
+            }
         }
 
 

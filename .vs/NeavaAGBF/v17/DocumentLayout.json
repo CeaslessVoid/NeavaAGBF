@@ -3,32 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|c:\\users\\neava\\documents\\my games\\terraria\\tmodloader\\modsources\\neavaagbf\\common\\ui\\uncapmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|solutionrelative:common\\ui\\uncapmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|c:\\users\\neava\\documents\\my games\\terraria\\tmodloader\\modsources\\neavaagbf\\common\\players\\weapongridhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|solutionrelative:common\\players\\weapongridhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|c:\\users\\neava\\documents\\my games\\terraria\\tmodloader\\modsources\\neavaagbf\\content\\items\\chargeattacks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|solutionrelative:content\\items\\chargeattacks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|c:\\users\\neava\\documents\\my games\\terraria\\tmodloader\\modsources\\neavaagbf\\weaponskills\\special\\normal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|solutionrelative:weaponskills\\special\\normal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|c:\\users\\neava\\documents\\my games\\terraria\\tmodloader\\modsources\\neavaagbf\\weaponskills\\dark\\normal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|solutionrelative:weaponskills\\dark\\normal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|c:\\users\\neava\\documents\\my games\\terraria\\tmodloader\\modsources\\neavaagbf\\content\\items\\basicsword.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|solutionrelative:content\\items\\basicsword.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|c:\\users\\neava\\documents\\my games\\terraria\\tmodloader\\modsources\\neavaagbf\\weaponskills\\weaponskill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|solutionrelative:weaponskills\\weaponskill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|c:\\users\\neava\\documents\\my games\\terraria\\tmodloader\\modsources\\neavaagbf\\common\\players\\stathandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|solutionrelative:common\\players\\stathandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|c:\\users\\neava\\documents\\my games\\terraria\\tmodloader\\modsources\\neavaagbf\\weaponskills\\wind\\normal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|solutionrelative:weaponskills\\wind\\normal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|c:\\users\\neava\\documents\\my games\\terraria\\tmodloader\\modsources\\neavaagbf\\content\\items\\chargeattacks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|solutionrelative:content\\items\\chargeattacks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|c:\\users\\neava\\documents\\my games\\terraria\\tmodloader\\modsources\\neavaagbf\\common\\players\\neavaplayers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|solutionrelative:common\\players\\neavaplayers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|c:\\users\\neava\\documents\\my games\\terraria\\tmodloader\\modsources\\neavaagbf\\common\\items\\weaponpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{93F9F71C-878C-4397-8C4F-E9229F4885E7}|NeavaAGBF.csproj|solutionrelative:common\\items\\weaponpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,98 +34,83 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UncapMenu.cs",
-              "DocumentMoniker": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\Common\\UI\\UncapMenu.cs",
-              "RelativeDocumentMoniker": "Common\\UI\\UncapMenu.cs",
-              "ToolTip": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\Common\\UI\\UncapMenu.cs",
-              "RelativeToolTip": "Common\\UI\\UncapMenu.cs",
-              "ViewState": "AQIAAG8BAAAAAAAAAADwvxkBAABaAAAA",
+              "DocumentIndex": 2,
+              "Title": "WeaponSkill.cs",
+              "DocumentMoniker": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\WeaponSkills\\WeaponSkill.cs",
+              "RelativeDocumentMoniker": "WeaponSkills\\WeaponSkill.cs",
+              "ToolTip": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\WeaponSkills\\WeaponSkill.cs",
+              "RelativeToolTip": "WeaponSkills\\WeaponSkill.cs",
+              "ViewState": "AQIAACYAAAAAAAAAAAAowD8AAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-10T10:49:33.265Z",
+              "WhenOpened": "2024-12-11T09:38:22.202Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "Normal.cs",
-              "DocumentMoniker": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\WeaponSkills\\Wind\\Normal.cs",
-              "RelativeDocumentMoniker": "WeaponSkills\\Wind\\Normal.cs",
-              "ToolTip": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\WeaponSkills\\Wind\\Normal.cs",
-              "RelativeToolTip": "WeaponSkills\\Wind\\Normal.cs",
-              "ViewState": "AQIAAGIAAAAAAAAAAAAAAEIAAAAAAAAA",
+              "DocumentMoniker": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\WeaponSkills\\Special\\Normal.cs",
+              "RelativeDocumentMoniker": "WeaponSkills\\Special\\Normal.cs",
+              "ToolTip": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\WeaponSkills\\Special\\Normal.cs",
+              "RelativeToolTip": "WeaponSkills\\Special\\Normal.cs",
+              "ViewState": "AQIAAEQAAAAAAAAAAAAUwI4AAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-10T10:45:49.688Z",
+              "WhenOpened": "2024-12-11T09:44:18.067Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
+              "Title": "WeaponGridHandler.cs",
+              "DocumentMoniker": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\Common\\Players\\WeaponGridHandler.cs",
+              "RelativeDocumentMoniker": "Common\\Players\\WeaponGridHandler.cs",
+              "ToolTip": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\Common\\Players\\WeaponGridHandler.cs",
+              "RelativeToolTip": "Common\\Players\\WeaponGridHandler.cs",
+              "ViewState": "AQIAAFMAAAAAAAAAAAAkwG8AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-11T13:26:02.159Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "StatHandler.cs",
               "DocumentMoniker": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\Common\\Players\\StatHandler.cs",
               "RelativeDocumentMoniker": "Common\\Players\\StatHandler.cs",
               "ToolTip": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\Common\\Players\\StatHandler.cs",
               "RelativeToolTip": "Common\\Players\\StatHandler.cs",
-              "ViewState": "AQIAAHoAAAAAAAAAAAAwwH8AAAAAAAAA",
+              "ViewState": "AQIAAGUAAAAAAAAAAAAAwIAAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-10T10:41:48.376Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "BasicSword.cs",
-              "DocumentMoniker": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\Content\\Items\\BasicSword.cs",
-              "RelativeDocumentMoniker": "Content\\Items\\BasicSword.cs",
-              "ToolTip": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\Content\\Items\\BasicSword.cs",
-              "RelativeToolTip": "Content\\Items\\BasicSword.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAAC4AAAAtAAAA",
+              "DocumentIndex": 5,
+              "Title": "WeaponPatch.cs",
+              "DocumentMoniker": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\Common\\Items\\WeaponPatch.cs",
+              "RelativeDocumentMoniker": "Common\\Items\\WeaponPatch.cs",
+              "ToolTip": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\Common\\Items\\WeaponPatch.cs",
+              "RelativeToolTip": "Common\\Items\\WeaponPatch.cs",
+              "ViewState": "AQIAABIBAAAAAAAAAAArwCgBAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-10T09:25:55.996Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-11T01:10:50.736Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Normal.cs",
-              "DocumentMoniker": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\WeaponSkills\\Dark\\Normal.cs",
-              "RelativeDocumentMoniker": "WeaponSkills\\Dark\\Normal.cs",
-              "ToolTip": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\WeaponSkills\\Dark\\Normal.cs",
-              "RelativeToolTip": "WeaponSkills\\Dark\\Normal.cs",
-              "ViewState": "AQIAAEAAAAAAAAAAAAAYwFoAAAAjAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-10T09:12:25.21Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "NeavaPlayers.cs",
-              "DocumentMoniker": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\Common\\Players\\NeavaPlayers.cs",
-              "RelativeDocumentMoniker": "Common\\Players\\NeavaPlayers.cs",
-              "ToolTip": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\Common\\Players\\NeavaPlayers.cs",
-              "RelativeToolTip": "Common\\Players\\NeavaPlayers.cs",
-              "ViewState": "AQIAAJMAAAAAAAAAAAAYwDkBAAAaAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-09T05:28:34.038Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "ChargeAttacks.cs",
               "DocumentMoniker": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\Content\\Items\\ChargeAttacks.cs",
               "RelativeDocumentMoniker": "Content\\Items\\ChargeAttacks.cs",
               "ToolTip": "C:\\Users\\Neava\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\NeavaAGBF\\Content\\Items\\ChargeAttacks.cs",
               "RelativeToolTip": "Content\\Items\\ChargeAttacks.cs",
-              "ViewState": "AQIAABwAAAAAAAAAAAAcwEgAAAAJAAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAA8AAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-09T10:13:01.333Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-11T13:32:00.542Z"
             }
           ]
         }

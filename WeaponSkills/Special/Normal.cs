@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria.Localization;
 
 namespace NeavaAGBF.WeaponSkills.None
 {
     public class NoneArts : WeaponSkill
     {
-        public NoneArts() : base("null", "Arts", Element.Speical)
+        public NoneArts() : base("null", "Arts", Element.Special)
         {
             ATKALLELE = 1.5f;
         }
@@ -17,16 +18,27 @@ namespace NeavaAGBF.WeaponSkills.None
 
     public class NoneBalance : WeaponSkill
     {
-        public NoneBalance() : base("null", "Balance", Element.Speical)
+        public NoneBalance() : base("null", "Balance", Element.Special)
         {
             ATKALLELE = 2f;
         }
 
     }
 
+    public class NoneBalance2 : WeaponSkill
+    {
+        public NoneBalance2() : base("null", "Balance II", Element.Special)
+        {
+            ATKALLELE = 3f;
+
+            DMGAmpU = 4;
+        }
+
+    }
+
     public class NoneEnchantment : WeaponSkill
     {
-        public NoneEnchantment() : base("null", "Enchantment", Element.Speical)
+        public NoneEnchantment() : base("null", "Enchantment", Element.Special)
         {
             ATKALLELE = 3;
         }
@@ -35,7 +47,7 @@ namespace NeavaAGBF.WeaponSkills.None
 
     public class NoneBane : WeaponSkill
     {
-        public NoneBane() : base("null", "Bane", Element.Speical)
+        public NoneBane() : base("null", "Bane", Element.Special)
         {
             DMGAmpU = 5;
         }
@@ -44,7 +56,7 @@ namespace NeavaAGBF.WeaponSkills.None
 
     public class NoneStarTouch : WeaponSkill
     {
-        public NoneStarTouch() : base("null", "Star Touch", Element.Speical)
+        public NoneStarTouch() : base("null", "Star Touch", Element.Special)
         {
             ATKALLELE = 3;
         }
@@ -89,18 +101,48 @@ namespace NeavaAGBF.WeaponSkills.None
 
     public class StarCannonMain : WeaponSkill
     {
-        public StarCannonMain() : base("null", "(When Main Weapon)", Element.Speical)
+        public StarCannonMain() : base("null", "(When Main Weapon)", Element.Special)
         {
-            CustomText = "90% Hit to charge bar gain. 200% Boost to charge attack damage.";
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.StarCannonMain").Value;
+        }
+
+    }
+
+
+    public class BreakerGuard : WeaponSkill
+    {
+        public BreakerGuard() : base("null", "Guard", Element.Special)
+        {
+            HP = 10;
+
+            UncapLevel = 3;
+        }
+
+    }
+
+    public class SpecialElementWeapon : WeaponSkill
+    {
+        public SpecialElementWeapon() : base("null", "(When Main Weapon)", Element.Special)
+        {
+            CustomText = "Affected by all all element weapon skills.";
         }
 
     }
 
     public class NoneSummonCharge : WeaponSkill
     {
-        public NoneSummonCharge() : base("null", "Essence", Element.Speical)
+        public NoneSummonCharge() : base("null", "Essence", Element.Special)
         {
             ChargeBarGain = 5;
+        }
+
+    }
+
+    public class NoneHpPerLight : WeaponSkill
+    {
+        public NoneHpPerLight() : base("null", "Stalwart's Protection", Element.Special)
+        {
+            UncapLevel = 3;
         }
 
     }
