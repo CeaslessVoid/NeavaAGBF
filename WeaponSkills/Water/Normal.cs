@@ -112,9 +112,9 @@ namespace NeavaAGBF.WeaponSkills.Water
     }
     public class WaterDemolishment : WeaponSkill
     {
-        public WaterDemolishment() : base("Tsunami", "Demolishment", Element.Water)
+        public WaterDemolishment() : base("Glacial", "Demolishment", Element.Water)
         {
-            DMGAmp = 3f;
+            DMGAmp = 5f;
 
             UncapLevel = 3;
         }

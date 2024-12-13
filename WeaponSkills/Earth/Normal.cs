@@ -127,9 +127,11 @@ namespace NeavaAGBF.WeaponSkills.Earth
 
     public class EarthCrux : WeaponSkill
     {
-        public EarthCrux() : base("Mountain", "Crux", Element.Earth)
+        public EarthCrux() : base("Gaia", "Crux", Element.Earth)
         {
-            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.CASuppliemt").Value;
+            UncapLevel = 3;
+
+            CASuppliment = 1;
         }
 
     }

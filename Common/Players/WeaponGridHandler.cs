@@ -17,7 +17,7 @@ namespace NeavaAGBF.Common.Players
     public class WeaponGridHandler
     {
         //private Item[] WeaponGrid = new Item[9];
-        private readonly Dictionary<string, Action<StatHandler, StatTotals, int>> specialKeyEffects = new();
+        private readonly Dictionary<string, Action<StatHandler, StatTotals, int, WeaponSkillsGlobalItem>> specialKeyEffects = new();
 
         public WeaponGridHandler()
         {
@@ -82,7 +82,10 @@ namespace NeavaAGBF.Common.Players
                     totals.ChargeBarGain += ((skill.ChargeBarGain + (skill.ChargeBarGainPerLevel * currentLevel)) * multiplier) / 100f;
                     totals.AtkPercent += ((skill.ATKALLELE + (skill.ATKALLELEPerLevel * currentLevel)) / 100f);
                     totals.AmmoEfficiency += skill.SaveAmmo / 100f;
-                    totals.DamageAmp += skill.DMGAmpU / 100f;
+                    totals.DamageAmp = Math.Max(skill.DMGAmpU / 100f, totals.DamageAmp);
+
+                    totals.CASuppliment += skill.CASupplimentU;
+                    totals.Suppliment += skill.SupplimentU;
 
                     if (!string.IsNullOrEmpty(skill.SpecialKey))
                     {
@@ -91,13 +94,13 @@ namespace NeavaAGBF.Common.Players
                 }
             }
 
-            ProcessSpecialKeys(modPlayer, totals, specialKeys);
+            ProcessSpecialKeys(modPlayer, totals, specialKeys, heldWeapon);
 
             ApplyBonusesToPlayer(player, totals, modPlayer);    
 
         }
 
-        private void ProcessSpecialKeys(StatHandler modPlayer, StatTotals totals, List<string> specialKeys)
+        private void ProcessSpecialKeys(StatHandler modPlayer, StatTotals totals, List<string> specialKeys, WeaponSkillsGlobalItem heldWeapon)
         {
             var groupedKeys = specialKeys.GroupBy(key => key);
 
@@ -108,7 +111,7 @@ namespace NeavaAGBF.Common.Players
 
                 if (specialKeyEffects.TryGetValue(key, out var effectFunction))
                 {
-                    effectFunction(modPlayer, totals, stackSize);
+                    effectFunction(modPlayer, totals, stackSize, heldWeapon);
                 }
             }
         }
@@ -116,14 +119,20 @@ namespace NeavaAGBF.Common.Players
 
         private static void AddMatchingElementStats(WeaponSkill skill, float multiplier, float currentLevel, StatTotals totals, StatHandler modPlayer)
         {
+
             totals.AtkPercent += ((skill.ATK + (skill.ATKPerLevel * currentLevel)) * multiplier) / 100f;
             totals.CritRatePercent += (skill.CritRate + (skill.CritRatePerLevel * currentLevel)) * multiplier;
             totals.CritDamagePercent += ((skill.CritDamage + (skill.CritDamagePerLevel * currentLevel)) * multiplier) / 100f;
             totals.AttackSpeedPercent += ((skill.AttackSpeed + (skill.AttackSpeedPerLevel * currentLevel)) * multiplier) / 100f;
             totals.ChargeDamageGain += ((skill.ChargAttack + (skill.ChargAttackPerLevel * currentLevel)) * multiplier) / 100f;
             totals.FlatAtk += (skill.FlatAtk + (skill.FlatAtkPerLevel * currentLevel)) * multiplier;
-            totals.DamageAmp += skill.DMGAmp / 100f;
+            totals.DamageAmp = Math.Max(skill.DMGAmp / 100f, totals.DamageAmp);
             totals.Echo += ((skill.Echo + (skill.EchoPerLevel * currentLevel)) * multiplier) / 100f;
+
+            // Suppliment
+            totals.Suppliment += skill.Suppliment;
+            totals.CASuppliment += skill.CASuppliment;
+
 
             // Special stats
             modPlayer.enmityMod += ((skill.Enmity + (skill.Enmity * currentLevel)) * multiplier) / 100f;
@@ -151,6 +160,9 @@ namespace NeavaAGBF.Common.Players
             modPlayer.damageAmp = totals.DamageAmp + 1f;
             modPlayer.ammoFree = totals.AmmoEfficiency;
             modPlayer.echo = totals.Echo;
+
+            modPlayer.chargeAttackSuppliment = totals.CASuppliment;
+            modPlayer.attackSuppliment = totals.Suppliment;
         }
 
         private class StatTotals
@@ -168,13 +180,17 @@ namespace NeavaAGBF.Common.Players
             public float AmmoEfficiency = 0f;
             public float Echo = 0f;
             public float FlatAtk = 0f;
+
+            // Suppliemnt
+            public int CASuppliment;
+            public int Suppliment;
         }
 
 
 
         // Special Weapon Skills
 
-        private static void NoneHpPerLight(StatHandler modPlayer, StatTotals totals, int stack)
+        private static void NoneHpPerLight(StatHandler modPlayer, StatTotals totals, int stack, WeaponSkillsGlobalItem heldWeapon)
         {
             if (modPlayer.GridCounts.TryGetValue("Light", out int lightCount))
             {
@@ -182,7 +198,7 @@ namespace NeavaAGBF.Common.Players
             }
         }
 
-        private static void HamBatPassive(StatHandler modPlayer, StatTotals totals, int stack)
+        private static void HamBatPassive(StatHandler modPlayer, StatTotals totals, int stack, WeaponSkillsGlobalItem heldWeapon)
         {
             if (modPlayer.Player.HasBuff(207))
             {
@@ -201,13 +217,14 @@ namespace NeavaAGBF.Common.Players
             }
         }
 
-        private static void ChosenBlade(StatHandler modPlayer, StatTotals totals, int stack)
+        private static void ChosenBlade(StatHandler modPlayer, StatTotals totals, int stack, WeaponSkillsGlobalItem heldWeapon)
         {
             if (modPlayer.GridCounts.TryGetValue("Sword", out int swordCount))
             {
                 totals.AtkPercent += (Math.Min(2 * swordCount * stack, 20)) / 100f;
             }
         }
+
     }
 
 }

@@ -90,11 +90,15 @@ WeaponSkill: {
 	StaminaDesc: Current Health%
 	DR: Damage Reduction
 	AllEleAtk: All Element Attack
-	Damage: Damage
+	Damage: Final Damage (Does not stack, highest applies)
 	DamageAmp: Damage Amp
 	AmmoE: Ammo Efficiency
 	Echo: Bonus Damage
 	flatAtk: Flat Attack
+	Suppliemt: Supplement DMG
+	SuppliemtDesc: Suppliment DMG based on 1% of foe's HP (Max 300, Stacks to 1000)
+	CASuppliemt: Supplement C.A. DMG
+	CASuppliemtDesc: Supplement C.A. DMG based on 5% of foe's HP (Max 10000, Stacks to 100000)
 }
 
 Element: {

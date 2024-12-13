@@ -124,4 +124,28 @@ namespace NeavaAGBF.WeaponSkills.Wind
         }
 
     }
+
+    public class LightGrace2 : WeaponSkill
+    {
+        public LightGrace2() : base("Thunder", "Grace II", Element.Light)
+        {
+            HP = 6f;
+            HPPerLevel = 1.5f;
+
+            DMGReduc = 1.0f;
+            DMGReducPerLevel = 0.2f;
+        }
+
+    }
+
+    public class LightDemolishment : WeaponSkill
+    {
+        public LightDemolishment() : base("Thunder", "Demolishment", Element.Light)
+        {
+            DMGAmp = 5f;
+
+            UncapLevel = 3;
+        }
+
+    }
 }

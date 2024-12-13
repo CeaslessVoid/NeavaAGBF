@@ -59,6 +59,15 @@ namespace NeavaAGBF.WeaponSkills
         public float FlatAtk { get; protected set; }
         public float FlatAtkPerLevel { get; protected set; }
 
+        // Supplimental
+        public int Suppliment { get; protected set; }
+
+        public int SupplimentU { get; protected set; }
+
+        public int CASuppliment { get; protected set; }
+
+        public int CASupplimentU { get; protected set; }
+
         // Bullshit
 
         public string SpecialKey = null;

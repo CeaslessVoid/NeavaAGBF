@@ -125,7 +125,7 @@ namespace NeavaAGBF.WeaponSkills.Dark
 
     public class DarkEnmity2 : WeaponSkill
     {
-        public DarkEnmity2() : base("Dark", "Enmity II", Element.Dark)
+        public DarkEnmity2() : base("Hatred", "Enmity II", Element.Dark)
         {
             Enmity = 9f;
             EnmityPerLevel = 1.4f;
@@ -135,13 +135,59 @@ namespace NeavaAGBF.WeaponSkills.Dark
 
     public class DarkMajesty2 : WeaponSkill
     {
-        public DarkMajesty2() : base("Dark", "Majesty", Element.Dark)
+        public DarkMajesty2() : base("Hatred", "Majesty", Element.Dark)
         {
             HP = 6;
             HPPerLevel = 1.5f;
 
             ATK = 3;
             ATKPerLevel = 0.7f;
+        }
+
+    }
+
+    public class DarkSpearhead : WeaponSkill
+    {
+        public DarkSpearhead() : base("Hatred", "Spearhead", Element.Dark)
+        {
+            CritRate = 1;
+            CritRatePerLevel = 0.2f;
+
+            AttackSpeed = 1;
+            AttackSpeedPerLevel = 0.4f;
+        }
+
+    }
+
+    public class DarkDemolishment: WeaponSkill
+    {
+        public DarkDemolishment() : base("Nightmare", "Demolishment", Element.Dark)
+        {
+            DMGAmp = 2f;
+
+            UncapLevel = 3;
+        }
+
+    }
+
+    public class DarkEnrage2 : WeaponSkill
+    {
+        public DarkEnrage2() : base("Hatred", "Enrage II", Element.Dark)
+        {
+            CritDamage = 2.0f;
+            CritDamagePerLevel = 1.0f;
+        }
+
+    }
+
+    public class DarkTyranny : WeaponSkill
+    {
+        public DarkTyranny() : base("Hatred", "Tyranny", Element.Dark)
+        {
+            ATK = 9;
+            ATKPerLevel = 2f;
+
+            HP = -10f;
         }
 
     }

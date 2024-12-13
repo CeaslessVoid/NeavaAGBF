@@ -129,11 +129,46 @@ namespace NeavaAGBF.WeaponSkills.Fire
 
     public class FireDemolishment : WeaponSkill
     {
-        public FireDemolishment() : base("Hellfire", "Demolishment", Element.Fire)
+        public FireDemolishment() : base("Inferno", "Demolishment", Element.Fire)
         {
-            DMGAmp = 3f;
+            DMGAmp = 5f;
 
             UncapLevel = 3;
+        }
+
+    }
+
+    public class FireCelere2 : WeaponSkill
+    {
+        public FireCelere2() : base("Fire", "Celere II", Element.Fire)
+        {
+
+            CritRate = 3.2f;
+            CritRatePerLevel = 0.3f;
+
+            ATK = 3;
+            ATKPerLevel = 0.7f;
+        }
+
+    }
+
+    public class FireAegis2 : WeaponSkill
+    {
+        public FireAegis2() : base("Fire", "Aegis II", Element.Fire)
+        {
+            HP = 6;
+            HPPerLevel = 1.5f;
+        }
+
+    }
+
+    public class FireEnrage2 : WeaponSkill
+    {
+        public FireEnrage2() : base("Fire", "Enrage II", Element.Fire)
+        {
+
+            CritDamage = 2f;
+            CritDamagePerLevel = 1f;
         }
 
     }

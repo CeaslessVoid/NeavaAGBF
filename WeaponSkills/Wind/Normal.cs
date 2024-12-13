@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Terraria.Localization;
 
 namespace NeavaAGBF.WeaponSkills.Wind
 {
@@ -142,6 +143,28 @@ namespace NeavaAGBF.WeaponSkills.Wind
         {
             Stamina = 3.2f;
             StaminaPerLevel = 1.1f;
+        }
+
+    }
+
+    public class WindDemolishment : WeaponSkill
+    {
+        public WindDemolishment() : base("Whirlwind", "Demolishment", Element.Wind)
+        {
+            DMGAmp = 5f;
+
+            UncapLevel = 3;
+        }
+
+    }
+
+    public class WindCrux : WeaponSkill
+    {
+        public WindCrux() : base("Galeforce", "Crux", Element.Wind)
+        {
+            UncapLevel = 3;
+
+            CASuppliment = 1;
         }
 
     }

@@ -46,6 +46,7 @@ namespace NeavaAGBF.Common.Players
         public float echo = 0.0f;
 
         public int chargeAttackSuppliment = 0;
+        public int attackSuppliment = 0;
 
         public Dictionary<string, int> GridCounts = new Dictionary<string, int>();
 
@@ -113,6 +114,7 @@ namespace NeavaAGBF.Common.Players
 
             chargeGainMultiplier = 1f;
             //chargeAttackDamageMultiplier = 1f;
+            //chargeAttackSuppliment = 0;
 
             //StatMultiplierWindOmega = 1f;
             //StatMultiplierFireOmega = 1f;
@@ -183,17 +185,23 @@ namespace NeavaAGBF.Common.Players
         {
             modifiers.FinalDamage *= damageAmp;
 
+            //Suppli
+            if (attackSuppliment <= 0)
+            {
+                float targetLifeFactor = Math.Min(target.lifeMax * 0.01f, 300);
+                float bonusDamage = Math.Min(targetLifeFactor * attackSuppliment, 1000);
+
+                modifiers.FinalDamage += bonusDamage / 100f;
+            }
 
             // CA Suppli
             if (chargeAttackSuppliment <= 0 || !proj.TryGetGlobalProjectile(out ChargeControlGlobalProjectile globalProj) || !globalProj.IsChargeAttack)
                 return;
 
-            float targetLifeFactor = Math.Min(target.lifeMax * 0.01f, 1000);
-            float bonusDamage = Math.Min(targetLifeFactor * chargeAttackSuppliment, 10000);
+            float targetLifeFactor2 = Math.Min(target.lifeMax * 0.05f, 10000);
+            float bonusDamage2 = Math.Min(targetLifeFactor2 * chargeAttackSuppliment, 100000);
 
-            Main.NewText(bonusDamage);
-
-            modifiers.FinalDamage += bonusDamage/100f;
+            modifiers.FinalDamage += bonusDamage2/100f;
         }
 
         public override bool CanConsumeAmmo(Item weapon, Item ammo)
@@ -263,5 +271,7 @@ namespace NeavaAGBF.Common.Players
                 target.StrikeNPC(hit);
             }
         }
+
+
     }
 }

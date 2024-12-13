@@ -227,16 +227,16 @@ namespace NeavaAGBF.Common.Items
 
             else if(line.Name == "SkillName" && line.Mod == Mod.Name)
             {
-                string[] splitText = line.Text.Split(new[] { ' ' }, 6);
-                if (splitText.Length < 5)
+                string[] splitText = line.Text.Split(new[] { ' ' }, 7);
+                if (splitText.Length < 6)
                     return;
 
-                string ownerName = splitText[0];
-                string elementName = splitText[1];
-                string elementPath = splitText[2];
-                int uncapLevel = Int32.Parse(splitText[3]); // Should not throw errors
-                int currentUncap = Int32.Parse(splitText[4]);
-                string skillName = splitText[5];
+                string ownerName = splitText[1];
+                string elementName = splitText[2];
+                string elementPath = splitText[3];
+                int uncapLevel = Int32.Parse(splitText[4]); // Should not throw errors
+                int currentUncap = Int32.Parse(splitText[5]);
+                string skillName = splitText[6];
 
                 string formattedSkillName = skillName.Replace(" ", "_");
 
@@ -345,7 +345,7 @@ namespace NeavaAGBF.Common.Items
             float flatAtk = (skill.FlatAtk + (skill.FlatAtkPerLevel * level)) * modifier;
 
             string skillOwnerDisplay = string.IsNullOrEmpty(skill.SkillOwner) ? "null" : $"{skill.SkillOwner}'s";
-            TooltipLine skillNameLine = new TooltipLine(Mod, "SkillName", $"{skillOwnerDisplay} {skill.SkillElement} {skill.SkillElement.RealName} {skill.UncapLevel} {currentUncap} {skill.SkillName}")
+            TooltipLine skillNameLine = new TooltipLine(Mod, "SkillName", $"-------- {skillOwnerDisplay} {skill.SkillElement} {skill.SkillElement.RealName} {skill.UncapLevel} {currentUncap} {skill.SkillName}")
             {
                 //OverrideColor = skill.TooltipColor
                 OverrideColor = Color.Transparent,
@@ -389,6 +389,12 @@ namespace NeavaAGBF.Common.Items
                 if (echo != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Echo").Value}", (float)Math.Round(echo, 1), true, element.TooltipColor);
 
                 if (flatAtk != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.flatAtk").Value}", (float)Math.Round(flatAtk, 1), true, element.TooltipColor);
+
+                if (skill.Suppliment != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.Suppliemt").Value}", (float)skill.Suppliment, true, element.TooltipColor);
+                if (skill.SupplimentU != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.Suppliemt").Value}", (float)skill.SupplimentU, true, element.TooltipColor);
+
+                if (skill.CASuppliment != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CASuppliemt").Value}", (float)skill.CASuppliment, true, element.TooltipColor);
+                if (skill.CASupplimentU != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.CASuppliemt").Value}", (float)skill.CASupplimentU, true, element.TooltipColor);
             }
             else
             {
@@ -479,6 +485,22 @@ namespace NeavaAGBF.Common.Items
                     ? $"{Math.Abs(skill.FlatAtk)} * {modifier}"
                     : $"({Math.Abs(skill.FlatAtk)} + {Math.Abs(skill.FlatAtkPerLevel)} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.PL").Value}) * {modifier}",
                     element.TooltipColor, flatAtk > 0);
+
+                if (skill.Suppliment != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.SuppliemtDesc").Value}",
+                    $"{Math.Abs(skill.Suppliment)}",
+                    element.TooltipColor, skill.SupplimentU > 0);
+
+                if (skill.SupplimentU != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.SuppliemtDesc").Value}",
+                    $"{Math.Abs(skill.SupplimentU)}",
+                    element.TooltipColor, skill.SupplimentU > 0);
+
+                if (skill.CASuppliment != 0) AddStatString(bonuses, $"{element.Name} {Language.GetText("Mods.NeavaAGBF.WeaponSkill.CASuppliemtDesc").Value}",
+                    $"{Math.Abs(skill.CASuppliment)}",
+                    element.TooltipColor, skill.CASuppliment > 0);
+
+                if (skill.CASupplimentU != 0) AddStatString(bonuses, $"{Language.GetText("Mods.NeavaAGBF.WeaponSkill.CASuppliemtDesc").Value}",
+                    $"{Math.Abs(skill.CASupplimentU)}",
+                    element.TooltipColor, skill.CASupplimentU > 0);
 
             }
 

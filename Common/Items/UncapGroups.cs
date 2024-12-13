@@ -76,7 +76,7 @@ namespace NeavaAGBF.Common.Items
 
             uncapGroups.Add(uncapGroupTest.Name, uncapGroupTest);
 
-            UncapGroups.AddUncapGruops(uncapGroups);
+            UncapGroups.AddUncapGroups(uncapGroups);
         }
 
 
@@ -108,7 +108,7 @@ namespace NeavaAGBF.Common.Items
     public class UncapGroups
     { 
     
-        public static void AddUncapGruops(Dictionary<string, UncapGroup> uncapDict) 
+        public static void AddUncapGroups(Dictionary<string, UncapGroup> uncapDict) 
         {
             // Add uncap groups here
 

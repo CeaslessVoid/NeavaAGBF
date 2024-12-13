@@ -164,7 +164,7 @@ namespace NeavaAGBF.WeaponSkills.None
     {
         public ChosenBlade() : base("null", "Smite", Element.Special)
         {
-            DMGAmpU = 3;
+            DMGAmpU = 4;
         }
 
     }
@@ -176,6 +176,29 @@ namespace NeavaAGBF.WeaponSkills.None
             UncapLevel = 4;
             SpecialKey = "ChosenBlade2";
             CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.ChosenBlade2").Value;
+        }
+
+    }
+
+    public class NoneEnchantment2 : WeaponSkill
+    {
+        public NoneEnchantment2() : base("null", "True Enchantment", Element.Special)
+        {
+            UncapLevel = 4;
+            SpecialKey = "ChosenBlade2";
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.ChosenBlade2").Value;
+        }
+
+    }
+
+    public class TerraMight : WeaponSkill
+    {
+        public TerraMight() : base("null", "Smite", Element.Special)
+        {
+            //UncapLevel = 5;
+
+            ATKALLELE = 10;
+            SupplimentU = 1000;
         }
 
     }

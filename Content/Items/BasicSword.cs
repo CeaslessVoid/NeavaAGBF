@@ -38,7 +38,7 @@ namespace NeavaAGBF.Content.Items
                 };
 
                 globalItem.maxLevel = 3;
-                globalItem.weaponElement = Element.Fire;
+                globalItem.weaponElement = Element.Wind;
 
 				globalItem.chargeGain = 100;
 
