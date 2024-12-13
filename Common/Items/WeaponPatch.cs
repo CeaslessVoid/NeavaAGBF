@@ -218,8 +218,8 @@ namespace NeavaAGBF.Common.Items
         { ItemID.VampireFrogStaff, (Element.Dark, WeaponType.Arcane, new List<WeaponSkill> { new NoneSummonCharge(), new DarkMajesty() }, (3,3,1,0), null, null) },
         { ItemID.ImpStaff, (Element.Fire, WeaponType.Arcane, new List<WeaponSkill> { new NoneSummonCharge(), new FireFortified() }, (3,3,1,0), null, null) },
         { ItemID.BlandWhip, (Element.Earth, WeaponType.Whip, new List<WeaponSkill> { new EarthAegis() }, (2,3,1,0), null, (1,1,null)) },
-        { ItemID.ThornWhip, (Element.Earth, WeaponType.Whip, new List<WeaponSkill> { new WindEssence() }, (3,3,1,0), null, null) },
-        { ItemID.BoneWhip, (Element.Earth, WeaponType.Whip, new List<WeaponSkill> { new DarkEssence(), new DarkMajesty() }, (3,3,1,0), null, null) },
+        { ItemID.ThornWhip, (Element.Earth, WeaponType.Whip, new List<WeaponSkill> { new WindEssence() }, (3,3,1,0), null, (1,1,null)) },
+        { ItemID.BoneWhip, (Element.Earth, WeaponType.Whip, new List<WeaponSkill> { new DarkEssence(), new DarkMajesty() }, (3,3,1,0), null, (1,1,null)) },
 
         // Hardmode Items
 
@@ -248,7 +248,15 @@ namespace NeavaAGBF.Common.Items
 
         { ItemID.AdamantiteSword, (Element.Light, WeaponType.Sword, new List<WeaponSkill> { new LightMight2(), new LightAegis2() }, (5,5,2,0), "LightBasic", null) },
         { ItemID.TitaniumSword, (Element.Light, WeaponType.Sword, new List<WeaponSkill> { new LightMight2(), new LightAegis2() }, (5,5,2,0), "LightBasic", null) },
-        { ItemID.BeamSword, (Element.Light, WeaponType.Sword, new List<WeaponSkill> { new LightMight2(), new LightMajesy2() }, (5,5,2,0), "LightBasic", null) },
+        { ItemID.BeamSword, (Element.Light, WeaponType.Sword, new List<WeaponSkill> { new NoneHpPerLight(), new LightMajesy2() }, (5,5,2,0), "LightBasic", null) },
+        { ItemID.FetidBaghnakhs, (Element.Dark, WeaponType.Hand, new List<WeaponSkill> { new DarkMight2(), new DarkEnmity2() }, (5,5,2,0), "DarkBasic", null) },
+        { ItemID.Bladetongue, (Element.Dark, WeaponType.Sword, new List<WeaponSkill> { new DarkMight2(), new DarkEnmity2() }, (5,5,2,0), "DarkBasic", null) },
+        { ItemID.HamBat, (Element.Dark, WeaponType.Sword, new List<WeaponSkill> { new NoneHamBat(), new DarkMight2() }, (5,5,2,0), "DarkBasic", null) },
+
+        { ItemID.Excalibur, (Element.Light, WeaponType.Sword, new List<WeaponSkill> { new ChosenBlade(), new LightMajesy2() }, (5,4,2,0), "Hero", null) },
+        { ItemID.TrueExcalibur, (Element.Light, WeaponType.Sword, new List<WeaponSkill> { new ChosenBlade2(), new ChosenBlade(), new LightMajesy2() }, (5,5,2,3), "Hero", null) },
+        { ItemID.ChlorophyteSaber, (Element.Earth, WeaponType.Sword, new List<WeaponSkill> { new EarthMight2(), new EarthMajesty2() }, (5,5,2,0), "EarthBasic", null) },
+        { ItemID.ChlorophyteClaymore, (Element.Earth, WeaponType.Sword, new List<WeaponSkill> { new ChosenBlade2(), new EarthMajesty2() }, (5,5,2,0), "EarthBasic", null) },
 
         };
 

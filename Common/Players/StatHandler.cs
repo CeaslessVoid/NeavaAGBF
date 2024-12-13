@@ -45,6 +45,8 @@ namespace NeavaAGBF.Common.Players
 
         public float echo = 0.0f;
 
+        public int chargeAttackSuppliment = 0;
+
         public Dictionary<string, int> GridCounts = new Dictionary<string, int>();
 
         // Stat Multpliers
@@ -130,9 +132,8 @@ namespace NeavaAGBF.Common.Players
 
         }
 
-        public float CalculateEnmityAtkPercent()
+        public float EnmityBonus() // Split for others
         {
-
             float healthPercentage = (float)Player.statLife / Player.statLifeMax2;
 
             if (healthPercentage > 0.51f)
@@ -140,15 +141,11 @@ namespace NeavaAGBF.Common.Players
                 return 0f;
             }
 
-            float scaledHealth = Utils.Clamp((0.51f - healthPercentage) / (0.51f - 0.10f), 0f, 1f);
-            float atkBonus = scaledHealth * enmityMod;
-
-            return atkBonus;
+            return Utils.Clamp((0.51f - healthPercentage) / (0.51f - 0.10f), 0f, 1f);
         }
 
-        public float CalculateStaminaAtkPercent()
+        public float StaminaBonus() // Split for others
         {
-
             float healthPercentage = (float)Player.statLife / Player.statLifeMax2;
 
             if (healthPercentage < 0.49f)
@@ -156,8 +153,21 @@ namespace NeavaAGBF.Common.Players
                 return 0f;
             }
 
-            float scaledHealth = Utils.Clamp((healthPercentage - 0.49f) / (0.9f - 0.49f), 0f, 1f);
-            float atkBonus = scaledHealth * staminaMod;
+            return Utils.Clamp((healthPercentage - 0.49f) / (0.9f - 0.49f), 0f, 1f);
+        }
+
+        public float CalculateEnmityAtkPercent()
+        {
+
+            float atkBonus = EnmityBonus() * enmityMod;
+
+            return atkBonus;
+        }
+
+        public float CalculateStaminaAtkPercent()
+        {
+
+            float atkBonus = StaminaBonus() * staminaMod;
 
             return atkBonus;
         }
@@ -172,6 +182,18 @@ namespace NeavaAGBF.Common.Players
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)
         {
             modifiers.FinalDamage *= damageAmp;
+
+
+            // CA Suppli
+            if (chargeAttackSuppliment <= 0 || !proj.TryGetGlobalProjectile(out ChargeControlGlobalProjectile globalProj) || !globalProj.IsChargeAttack)
+                return;
+
+            float targetLifeFactor = Math.Min(target.lifeMax * 0.01f, 1000);
+            float bonusDamage = Math.Min(targetLifeFactor * chargeAttackSuppliment, 10000);
+
+            Main.NewText(bonusDamage);
+
+            modifiers.FinalDamage += bonusDamage/100f;
         }
 
         public override bool CanConsumeAmmo(Item weapon, Item ammo)

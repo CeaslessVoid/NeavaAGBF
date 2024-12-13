@@ -31,7 +31,7 @@ namespace NeavaAGBF.WeaponSkills.None
         {
             ATKALLELE = 3f;
 
-            DMGAmpU = 4;
+            DMGAmpU = 1;
         }
 
     }
@@ -49,7 +49,7 @@ namespace NeavaAGBF.WeaponSkills.None
     {
         public NoneBane() : base("null", "Bane", Element.Special)
         {
-            DMGAmpU = 5;
+            DMGAmpU = 3;
         }
 
     }
@@ -124,7 +124,7 @@ namespace NeavaAGBF.WeaponSkills.None
     {
         public SpecialElementWeapon() : base("null", "(When Main Weapon)", Element.Special)
         {
-            CustomText = "Affected by all all element weapon skills.";
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.AllElement").Value;
         }
 
     }
@@ -143,6 +143,39 @@ namespace NeavaAGBF.WeaponSkills.None
         public NoneHpPerLight() : base("null", "Stalwart's Protection", Element.Special)
         {
             UncapLevel = 3;
+            SpecialKey = "HpPerLight";
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.NoneHpPerLight").Value;
+        }
+
+    }
+
+    public class NoneHamBat : WeaponSkill
+    {
+        public NoneHamBat() : base("null", "Hearty Meal", Element.Special)
+        {
+            UncapLevel = 3;
+            SpecialKey = "HamBatPassive";
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.HamBatPassive").Value;
+        }
+
+    }
+
+    public class ChosenBlade : WeaponSkill
+    {
+        public ChosenBlade() : base("null", "Smite", Element.Special)
+        {
+            DMGAmpU = 3;
+        }
+
+    }
+
+    public class ChosenBlade2 : WeaponSkill
+    {
+        public ChosenBlade2() : base("null", "Chosen Blade", Element.Special)
+        {
+            UncapLevel = 4;
+            SpecialKey = "ChosenBlade2";
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.ChosenBlade2").Value;
         }
 
     }

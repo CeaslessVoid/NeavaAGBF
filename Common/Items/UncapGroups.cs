@@ -278,6 +278,27 @@ namespace NeavaAGBF.Common.Items
 
             uncapDict.Add(uncapGroupPirate.Name, uncapGroupPirate);
 
+            // Food Related (SORA NEXT UPDATE???)
+
+            UncapGroup uncapGroupSORA = new UncapGroup("SORA");
+            uncapGroupSORA.AddRequirement(1, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.Bacon, 5),
+                new UncapRequirement(ItemID.JojaCola, 10),
+                new UncapRequirement(ItemID.FroggleBunwich, 2),
+                new UncapRequirement(ItemID.GoldCoin, 50)
+            });
+            uncapGroupSORA.AddRequirement(2, new List<UncapRequirement>
+            {
+                new UncapRequirement(ItemID.MonsterLasagna, 3),
+                new UncapRequirement(ItemID.PumpkinPie, 3),
+                new UncapRequirement(ItemID.SeafoodDinner, 3),
+                new UncapRequirement(ItemID.GoldenDelight, 3),
+                new UncapRequirement(ItemID.PlatinumCoin, 1)
+            });
+
+            uncapDict.Add(uncapGroupSORA.Name, uncapGroupSORA);
+
         }
     
     }

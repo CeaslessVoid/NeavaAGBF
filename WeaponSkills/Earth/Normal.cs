@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria.Localization;
 
 namespace NeavaAGBF.WeaponSkills.Earth
 {
@@ -107,6 +108,28 @@ namespace NeavaAGBF.WeaponSkills.Earth
         {
             HP = 6;
             HPPerLevel = 1.5f;
+        }
+
+    }
+
+    public class EarthMajesty2 : WeaponSkill
+    {
+        public EarthMajesty2() : base("Mountain", "Majesty II", Element.Earth)
+        {
+            HP = 6;
+            HPPerLevel = 1.5f;
+
+            ATK = 3;
+            ATKPerLevel = 0.7f;
+        }
+
+    }
+
+    public class EarthCrux : WeaponSkill
+    {
+        public EarthCrux() : base("Mountain", "Crux", Element.Earth)
+        {
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.CASuppliemt").Value;
         }
 
     }

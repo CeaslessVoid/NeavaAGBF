@@ -10,6 +10,7 @@ using NeavaAGBF.Content.Items;
 using NeavaAGBF.Common.Items;
 using log4net.Core;
 using NeavaAGBF.WeaponSkills.None;
+using Terraria.GameContent;
 
 namespace NeavaAGBF.Common.Players
 {
@@ -20,8 +21,9 @@ namespace NeavaAGBF.Common.Players
 
         public WeaponGridHandler()
         {
-            // Register the test function
             specialKeyEffects["HpPerLight"] = NoneHpPerLight;
+            specialKeyEffects["HamBatPassive"] = HamBatPassive;
+            specialKeyEffects["ChosenBlade2"] = ChosenBlade;
         }
 
         public void ApplyWeaponGridEffects(Player player)
@@ -167,7 +169,45 @@ namespace NeavaAGBF.Common.Players
             public float Echo = 0f;
             public float FlatAtk = 0f;
         }
-    }
 
+
+
+        // Special Weapon Skills
+
+        private static void NoneHpPerLight(StatHandler modPlayer, StatTotals totals, int stack)
+        {
+            if (modPlayer.GridCounts.TryGetValue("Light", out int lightCount))
+            {
+                totals.HpBonusPercent += Math.Min(5 * lightCount * stack, 50);
+            }
+        }
+
+        private static void HamBatPassive(StatHandler modPlayer, StatTotals totals, int stack)
+        {
+            if (modPlayer.Player.HasBuff(207))
+            {
+                totals.AtkPercent += 0.15f;
+                totals.DefBonus += 5;
+            }
+            else if (modPlayer.Player.HasBuff(206))
+            {
+                totals.AtkPercent += 0.10f;
+                totals.DefBonus += 3;
+            }
+            else if(modPlayer.Player.HasBuff(26))
+            {
+                totals.AtkPercent += 0.05f;
+                totals.DefBonus += 1;
+            }
+        }
+
+        private static void ChosenBlade(StatHandler modPlayer, StatTotals totals, int stack)
+        {
+            if (modPlayer.GridCounts.TryGetValue("Sword", out int swordCount))
+            {
+                totals.AtkPercent += (Math.Min(2 * swordCount * stack, 20)) / 100f;
+            }
+        }
+    }
 
 }

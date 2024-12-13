@@ -127,7 +127,7 @@ namespace NeavaAGBF.WeaponSkills.Wind
 
     public class WindAegis2 : WeaponSkill
     {
-        public WindAegis2() : base("Wind", "Aegis II", Element.Wind)
+        public WindAegis2() : base("Whirlwind", "Aegis II", Element.Wind)
         {
 
             HP = 6;
@@ -138,7 +138,7 @@ namespace NeavaAGBF.WeaponSkills.Wind
 
     public class WindStamina2 : WeaponSkill
     {
-        public WindStamina2() : base("Wind", "Stamina II", Element.Wind)
+        public WindStamina2() : base("Whirlwind", "Stamina II", Element.Wind)
         {
             Stamina = 3.2f;
             StaminaPerLevel = 1.1f;

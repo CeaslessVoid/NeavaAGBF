@@ -122,4 +122,27 @@ namespace NeavaAGBF.WeaponSkills.Dark
         }
 
     }
+
+    public class DarkEnmity2 : WeaponSkill
+    {
+        public DarkEnmity2() : base("Dark", "Enmity II", Element.Dark)
+        {
+            Enmity = 9f;
+            EnmityPerLevel = 1.4f;
+        }
+
+    }
+
+    public class DarkMajesty2 : WeaponSkill
+    {
+        public DarkMajesty2() : base("Dark", "Majesty", Element.Dark)
+        {
+            HP = 6;
+            HPPerLevel = 1.5f;
+
+            ATK = 3;
+            ATKPerLevel = 0.7f;
+        }
+
+    }
 }
