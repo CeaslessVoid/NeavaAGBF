@@ -240,7 +240,7 @@ namespace NeavaAGBF.Common.UI
                     }
                     else
                     {
-                        List<UncapRequirement> requirements = globalItem.UncapGroup.GetRequirements(globalItem.currentUncap - 2);
+                        IReadOnlyList<UncapRequirement> requirements = globalItem.UncapGroup.GetRequirements(globalItem.currentUncap - 2);
                         foreach (var requirement in requirements)
                         {
                             Item reqItem = new Item();

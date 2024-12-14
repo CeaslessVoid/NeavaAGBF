@@ -186,7 +186,7 @@ namespace NeavaAGBF.Common.Players
             modifiers.FinalDamage *= damageAmp;
 
             //Suppli
-            if (attackSuppliment <= 0)
+            if (attackSuppliment >= 0)
             {
                 float targetLifeFactor = Math.Min(target.lifeMax * 0.01f, 300);
                 float bonusDamage = Math.Min(targetLifeFactor * attackSuppliment, 1000);

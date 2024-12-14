@@ -267,7 +267,9 @@ namespace NeavaAGBF.Common.Items
         { ItemID.Seedler, (Element.Wind, WeaponType.Sword, new List<WeaponSkill> { new WindStamina2(), new WindMajesty() }, (5,5,2,0), "FireBasic", null) },
         { 3827, (Element.Fire, WeaponType.Sword, new List<WeaponSkill> { new FireEnrage2(), new FireDemolishment() }, (5,5,2,0), "WindBasic", null) },
         { ItemID.PiercingStarlight, (Element.Light, WeaponType.Sword, new List<WeaponSkill> { new LightGrace2(), new LightDemolishment() }, (5,5,2,0), "LightBasic", null) },
-        { ItemID.TerraBlade, (Element.Wind, WeaponType.Sword, new List<WeaponSkill> { new TerraMight(), new ChosenBlade2() }, (11,5,2,3), "LightBasic", null) },
+        { ItemID.TerraBlade, (Element.Wind, WeaponType.Sword, new List<WeaponSkill> { new TerraMight(), new ChosenBlade2(), new NoneBane() }, (0,5,0,3), "Hero", null) },
+        { ItemID.InfluxWaver, (Element.Wind, WeaponType.Sword, new List<WeaponSkill> { new TerraMight(), new ChosenBlade2(), new NoneBane() }, (5,5,2,0), "LightBasic", null) },
+
         };
 
         public override bool InstancePerEntity => true;

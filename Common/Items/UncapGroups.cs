@@ -12,7 +12,7 @@ namespace NeavaAGBF.Common.Items
 {
     public class UncapGroup
     {
-        private Dictionary<int, List<UncapRequirement>> requirements = new();
+        private readonly Dictionary<int, List<UncapRequirement>> _requirements = new();
 
         public string Name { get; }
 
@@ -21,286 +21,123 @@ namespace NeavaAGBF.Common.Items
             Name = name;
         }
 
-        public void AddRequirement(int level, List<UncapRequirement> requirements)
+        public void AddRequirement(int level, IEnumerable<UncapRequirement> requirements)
         {
-            this.requirements[level] = requirements;
+            _requirements[level] = requirements.ToList();
         }
 
-        public List<UncapRequirement> GetRequirements(int level)
+        public IReadOnlyList<UncapRequirement> GetRequirements(int level)
         {
-            if (requirements.ContainsKey(level))
-                return requirements[level];
+            if (_requirements.TryGetValue(level, out var reqs))
+            {
+                return reqs;
+            }
 
-            return requirements[requirements.Keys.Max()];
-        }
-    }
-
-    public class UncapRequirement
-    {
-        public int ItemID { get; set; }
-        public int Quantity { get; set; }
-
-        public UncapRequirement(int itemID, int quantity)
-        {
-            ItemID = itemID;
-            Quantity = quantity;
+            return _requirements[_requirements.Keys.Max()];
         }
     }
 
-    public class LoadUncapGroups
-    {
-        private static readonly Dictionary<string, UncapGroup> uncapGroups = new();
+    public record UncapRequirement(int ItemID, int Quantity);
 
-        public UncapGroup uncapGroupTest = new UncapGroup("uncapGroupTest");
+    public static class LoadUncapGroups
+    {
+        private static readonly Dictionary<string, UncapGroup> UncapGroups = new();
+
         public static void Initialize()
         {
-            if (uncapGroups.Count > 0)
+            if (UncapGroups.Any())
             {
                 throw new InvalidOperationException("Uncap groups have already been initialized.");
             }
 
-            // Example: Adding a test uncap group
-            UncapGroup uncapGroupTest = new UncapGroup("uncapGroupTest");
-            uncapGroupTest.AddRequirement(1, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.Wood, 5),
-                new UncapRequirement(ItemID.StoneBlock, 10)
-            });
-                uncapGroupTest.AddRequirement(2, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.Wood, 5),
-                new UncapRequirement(ItemID.StoneBlock, 10),
-                new UncapRequirement(ItemID.Torch, 5)
-            });
-
-
-            uncapGroups.Add(uncapGroupTest.Name, uncapGroupTest);
-
-            UncapGroups.AddUncapGroups(uncapGroups);
+            AddDefaultGroups();
         }
-
 
         public static UncapGroup GetUncapGroup(string name)
         {
-            if (uncapGroups.Count == 0)
+            if (!UncapGroups.Any())
             {
-                ModContent.GetInstance<NeavaAGBF>().Logger.Warn("Uncap groups have not been initialized. Returning null.");
                 return null;
             }
 
-            if (!uncapGroups.TryGetValue(name, out var group))
+            if (!UncapGroups.TryGetValue(name, out var group))
             {
-                ModContent.GetInstance<NeavaAGBF>().Logger.Warn($"Uncap group '{name}' does not exist. Returning null.");
                 return null;
             }
 
-            return group; // Return the valid group
+            return group;
         }
 
+        public static void Clear() => UncapGroups.Clear();
 
-        public static void Clear()
+        private static void AddDefaultGroups()
         {
-            uncapGroups.Clear();
+            AddUncapGroup("Hero", new()
+            {
+                { 1, new() { new(ItemID.HallowedBar, 15), new(ItemID.AvengerEmblem, 1), new(ItemID.HellstoneBar, 10), new(ItemID.SoulofMight, 10), new(ItemID.PlatinumCoin, 2) } },
+                { 2, new() { new(ItemID.HallowedBar, 30), new(ItemID.BrokenHeroSword, 1), new(ItemID.PlanteraTrophy, 1), new(ItemID.Seedler, 1), new(ItemID.PlatinumCoin, 3) } }
+            });
+
+            AddUncapGroup("DarkBasic", new()
+            {
+                { 1, new() { new(ItemID.HallowedBar, 5), new(ItemID.Obsidian, 10), new(ItemID.Deathweed, 25), new(ItemID.GoldCoin, 50) } },
+                { 2, new() { new(ItemID.HallowedBar, 15), new(ItemID.AvengerEmblem, 1), new(ItemID.SoulofMight, 10), new(ItemID.MoonStone, 1), new(ItemID.PlatinumCoin, 1) } }
+            });
+
+            AddUncapGroup("WaterBasic", new()
+            {
+                { 1, new() { new(ItemID.HallowedBar, 15), new(ItemID.IceSlimeBanner, 1), new(ItemID.Shiverthorn, 25), new(ItemID.GoldCoin, 50) } },
+                { 2, new() { new(ItemID.HallowedBar, 15), new(ItemID.AvengerEmblem, 1), new(ItemID.SoulofSight, 10), new(ItemID.FrozenTurtleShell, 1), new(ItemID.PlatinumCoin, 1) } }
+            });
+
+            AddUncapGroup("WindBasic", new()
+            {
+                { 1, new() { new(ItemID.HallowedBar, 15), new(ItemID.HarpyBanner, 1), new(ItemID.Feather, 25), new(ItemID.GoldCoin, 50) } },
+                { 2, new() { new(ItemID.HallowedBar, 15), new(ItemID.AvengerEmblem, 1), new(ItemID.SoulofFright, 10), new(ItemID.SoulofFlight, 100), new(ItemID.PlatinumCoin, 1) } }
+            });
+
+            AddUncapGroup("EarthBasic", new()
+            {
+                { 1, new() { new(ItemID.HallowedBar, 15), new(ItemID.Stinger, 10), new(ItemID.JungleRose, 10), new(ItemID.GoldCoin, 50) } },
+                { 2, new() { new(ItemID.HallowedBar, 15), new(ItemID.AvengerEmblem, 1), new(ItemID.SoulofMight, 10), new(ItemID.TurtleShell, 1), new(ItemID.PlatinumCoin, 1) } }
+            });
+
+            AddUncapGroup("FireBasic", new()
+            {
+                { 1, new() { new(ItemID.HallowedBar, 15), new(ItemID.Hellstone, 10), new(ItemID.Fireblossom, 25), new(ItemID.GoldCoin, 50) } },
+                { 2, new() { new(ItemID.HallowedBar, 15), new(ItemID.AvengerEmblem, 1), new(ItemID.SoulofSight, 10), new(ItemID.GuideVoodooDoll, 10), new(ItemID.PlatinumCoin, 1) } }
+            });
+
+            AddUncapGroup("LightBasic", new()
+            {
+                { 1, new() { new(ItemID.HallowedBar, 15), new(ItemID.CrystalShard, 10), new(ItemID.PixieDust, 25), new(ItemID.GoldCoin, 50) } },
+                { 2, new() { new(ItemID.HallowedBar, 15), new(ItemID.AvengerEmblem, 1), new(ItemID.SoulofFright, 10), new(ItemID.UnicornHorn, 10), new(ItemID.PlatinumCoin, 1) } }
+            });
+
+            AddUncapGroup("Pirate", new()
+            {
+                { 1, new() { new(ItemID.GoldRing, 1), new(ItemID.LuckyCoin, 1), new(ItemID.GoldCoin, 50) } },
+                { 2, new() { new(ItemID.ChlorophyteBar, 10), new(ItemID.FlyingDutchmanTrophy, 1), new(ItemID.PlatinumCoin, 1) } }
+            });
+
+            // SORA NEXT UPD???
+            AddUncapGroup("SORA", new()
+            {
+                { 1, new() { new(ItemID.Bacon, 5), new(ItemID.JojaCola, 10), new(ItemID.FroggleBunwich, 2), new(ItemID.GoldCoin, 50) } },
+                { 2, new() { new(ItemID.MonsterLasagna, 3), new(ItemID.PumpkinPie, 3), new(ItemID.SeafoodDinner, 3), new(ItemID.GoldenDelight, 3), new(ItemID.PlatinumCoin, 1) } }
+            });
         }
 
-    }
-
-    public class UncapGroups
-    { 
-    
-        public static void AddUncapGroups(Dictionary<string, UncapGroup> uncapDict) 
+        private static void AddUncapGroup(string name, Dictionary<int, List<UncapRequirement>> requirements)
         {
-            // Add uncap groups here
-
-
-            // Hero Weapons; Knights edge and Excalibur + Booth True Variants. Also has Terrablade
-            UncapGroup uncapGroupHero = new UncapGroup("Hero");
-            uncapGroupHero.AddRequirement(1, new List<UncapRequirement>
+            var group = new UncapGroup(name);
+            foreach (var (level, reqs) in requirements)
             {
-                new UncapRequirement(ItemID.HallowedBar, 15),
-                new UncapRequirement(ItemID.AvengerEmblem, 1),
-                new UncapRequirement(ItemID.HellstoneBar, 10),
-                new UncapRequirement(ItemID.SoulofMight, 10),
-                new UncapRequirement(ItemID.PlatinumCoin, 2)
-            });
-            uncapGroupHero.AddRequirement(2, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.HallowedBar, 30),
-                new UncapRequirement(ItemID.BrokenHeroSword, 1),
-                new UncapRequirement(ItemID.PlanteraTrophy, 1),
-                new UncapRequirement(ItemID.Seedler, 1),
-                new UncapRequirement(ItemID.PlatinumCoin, 3)
-            });
+                group.AddRequirement(level, reqs);
+            }
 
-            uncapDict.Add(uncapGroupHero.Name, uncapGroupHero);
-
-            // Basic Dark
-
-            UncapGroup uncapGroupDark = new UncapGroup("DarkBasic");
-            uncapGroupDark.AddRequirement(1, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.HallowedBar, 5),
-                new UncapRequirement(ItemID.Obsidian, 10),
-                new UncapRequirement(ItemID.Deathweed, 25),
-                new UncapRequirement(ItemID.GoldCoin, 50)
-            });
-            uncapGroupDark.AddRequirement(2, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.HallowedBar, 15),
-                new UncapRequirement(ItemID.AvengerEmblem, 1),
-                new UncapRequirement(ItemID.SoulofMight, 10),
-                new UncapRequirement(ItemID.MoonStone, 1),
-                new UncapRequirement(ItemID.PlatinumCoin, 1)
-            });
-
-            uncapDict.Add(uncapGroupDark.Name, uncapGroupDark);
-
-            // Basic Water
-
-            UncapGroup uncapGroupWater = new UncapGroup("WaterBasic");
-            uncapGroupWater.AddRequirement(1, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.HallowedBar, 15),
-                new UncapRequirement(ItemID.IceSlimeBanner, 1),
-                new UncapRequirement(ItemID.Shiverthorn, 25),
-                new UncapRequirement(ItemID.GoldCoin, 50)
-            });
-            uncapGroupWater.AddRequirement(2, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.HallowedBar, 15),
-                new UncapRequirement(ItemID.AvengerEmblem, 1),
-                new UncapRequirement(ItemID.SoulofSight, 10),
-                new UncapRequirement(ItemID.FrozenTurtleShell, 1),
-                new UncapRequirement(ItemID.PlatinumCoin, 1)
-            });
-
-            uncapDict.Add(uncapGroupWater.Name, uncapGroupWater);
-
-            // Basic Wind
-
-            UncapGroup uncapGroupWind = new UncapGroup("WindBasic");
-            uncapGroupWind.AddRequirement(1, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.HallowedBar, 15),
-                new UncapRequirement(ItemID.HarpyBanner, 1),
-                new UncapRequirement(ItemID.Feather, 25),
-                new UncapRequirement(ItemID.GoldCoin, 50)
-            });
-            uncapGroupWind.AddRequirement(2, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.HallowedBar, 15),
-                new UncapRequirement(ItemID.AvengerEmblem, 1),
-                new UncapRequirement(ItemID.SoulofFright, 10),
-                new UncapRequirement(ItemID.SoulofFlight, 100),
-                new UncapRequirement(ItemID.PlatinumCoin, 1)
-            });
-
-            uncapDict.Add(uncapGroupWind.Name, uncapGroupWind);
-
-            // Basic Earth
-
-            UncapGroup uncapGroupEarth = new UncapGroup("EarthBasic");
-            uncapGroupEarth.AddRequirement(1, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.HallowedBar, 15),
-                new UncapRequirement(ItemID.Stinger, 10),
-                new UncapRequirement(ItemID.JungleRose, 10),
-                new UncapRequirement(ItemID.GoldCoin, 50)
-            });
-            uncapGroupEarth.AddRequirement(2, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.HallowedBar, 15),
-                new UncapRequirement(ItemID.AvengerEmblem, 1),
-                new UncapRequirement(ItemID.SoulofMight, 10),
-                new UncapRequirement(ItemID.TurtleShell, 1),
-                new UncapRequirement(ItemID.PlatinumCoin, 1)
-            });
-
-            uncapDict.Add(uncapGroupEarth.Name, uncapGroupEarth);
-
-            // Basic Fire
-
-            UncapGroup uncapGroupFire = new UncapGroup("FireBasic");
-            uncapGroupFire.AddRequirement(1, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.HallowedBar, 15),
-                new UncapRequirement(ItemID.Hellstone, 10),
-                new UncapRequirement(ItemID.Fireblossom, 25),
-                new UncapRequirement(ItemID.GoldCoin, 50)
-            });
-            uncapGroupFire.AddRequirement(2, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.HallowedBar, 15),
-                new UncapRequirement(ItemID.AvengerEmblem, 1),
-                new UncapRequirement(ItemID.SoulofSight, 10),
-                new UncapRequirement(ItemID.GuideVoodooDoll, 10),
-                new UncapRequirement(ItemID.PlatinumCoin, 1)
-            });
-
-            uncapDict.Add(uncapGroupFire.Name, uncapGroupFire);
-
-            // Basic Light
-
-            UncapGroup uncapGroupLight = new UncapGroup("LightBasic");
-            uncapGroupLight.AddRequirement(1, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.HallowedBar, 15),
-                new UncapRequirement(ItemID.CrystalShard, 10),
-                new UncapRequirement(ItemID.PixieDust, 25),
-                new UncapRequirement(ItemID.GoldCoin, 50)
-            });
-            uncapGroupLight.AddRequirement(2, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.HallowedBar, 15),
-                new UncapRequirement(ItemID.AvengerEmblem, 1),
-                new UncapRequirement(ItemID.SoulofFright, 10),
-                new UncapRequirement(ItemID.UnicornHorn, 10),
-                new UncapRequirement(ItemID.PlatinumCoin, 1)
-            });
-
-            uncapDict.Add(uncapGroupLight.Name, uncapGroupLight);
-
-            // Pirate
-
-            UncapGroup uncapGroupPirate = new UncapGroup("Pirate");
-            uncapGroupPirate.AddRequirement(1, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.GoldRing, 1),
-                new UncapRequirement(ItemID.LuckyCoin, 1),
-                new UncapRequirement(ItemID.GoldCoin, 50)
-            });
-            uncapGroupPirate.AddRequirement(2, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.ChlorophyteBar, 10),
-                new UncapRequirement(ItemID.FlyingDutchmanTrophy, 1),
-                new UncapRequirement(ItemID.PlatinumCoin, 1)
-            });
-
-            uncapDict.Add(uncapGroupPirate.Name, uncapGroupPirate);
-
-            // Food Related (SORA NEXT UPDATE???)
-
-            UncapGroup uncapGroupSORA = new UncapGroup("SORA");
-            uncapGroupSORA.AddRequirement(1, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.Bacon, 5),
-                new UncapRequirement(ItemID.JojaCola, 10),
-                new UncapRequirement(ItemID.FroggleBunwich, 2),
-                new UncapRequirement(ItemID.GoldCoin, 50)
-            });
-            uncapGroupSORA.AddRequirement(2, new List<UncapRequirement>
-            {
-                new UncapRequirement(ItemID.MonsterLasagna, 3),
-                new UncapRequirement(ItemID.PumpkinPie, 3),
-                new UncapRequirement(ItemID.SeafoodDinner, 3),
-                new UncapRequirement(ItemID.GoldenDelight, 3),
-                new UncapRequirement(ItemID.PlatinumCoin, 1)
-            });
-
-            uncapDict.Add(uncapGroupSORA.Name, uncapGroupSORA);
-
+            UncapGroups[name] = group;
         }
-    
     }
 
 }

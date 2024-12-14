@@ -193,12 +193,12 @@ namespace NeavaAGBF.WeaponSkills.None
 
     public class TerraMight : WeaponSkill
     {
-        public TerraMight() : base("null", "Smite", Element.Special)
+        public TerraMight() : base("null", "Terra's Might", Element.Special)
         {
-            //UncapLevel = 5;
+            UncapLevel = 5;
 
             ATKALLELE = 10;
-            SupplimentU = 1000;
+            SupplimentU = 1;
         }
 
     }
