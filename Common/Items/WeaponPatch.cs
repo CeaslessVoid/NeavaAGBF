@@ -249,7 +249,7 @@ namespace NeavaAGBF.Common.Items
         { ItemID.AdamantiteSword, (Element.Light, WeaponType.Sword, new List<WeaponSkill> { new LightMight2(), new LightAegis2() }, (5,5,2,0), "LightBasic", null) },
         { ItemID.TitaniumSword, (Element.Light, WeaponType.Sword, new List<WeaponSkill> { new LightMight2(), new LightAegis2() }, (5,5,2,0), "LightBasic", null) },
         { ItemID.BeamSword, (Element.Light, WeaponType.Sword, new List<WeaponSkill> { new LightDemolishment(), new LightMajesy2() }, (5,5,2,0), "LightBasic", null) },
-        { ItemID.FetidBaghnakhs, (Element.Dark, WeaponType.Hand, new List<WeaponSkill> { new DarkMight2(), new DarkEnmity2() }, (5,5,2,0), "DarkBasic", null) },
+        { ItemID.FetidBaghnakhs, (Element.Dark, WeaponType.Hand, new List<WeaponSkill> { new DarkTrium2(), new DarkEnmity2() }, (5,5,2,0), "DarkBasic", null) },
         { ItemID.Bladetongue, (Element.Dark, WeaponType.Sword, new List<WeaponSkill> { new DarkMight2(), new DarkEnmity2() }, (5,5,2,0), "DarkBasic", null) },
         { ItemID.HamBat, (Element.Dark, WeaponType.Sword, new List<WeaponSkill> { new NoneHamBat(), new DarkMight2() }, (5,5,2,0), "DarkBasic", null) },
 
@@ -298,6 +298,11 @@ namespace NeavaAGBF.Common.Items
 
         { 3836, (Element.Fire, WeaponType.Spear, new List<WeaponSkill> { new NoneHpPerFire(), new FireMajesty2() }, (5,5,2,0), "FireBasic", null) }, // Ghastly Glaive
         { ItemID.ChlorophytePartisan, (Element.Wind, WeaponType.Spear, new List<WeaponSkill> { new NoneToxicosis(), new WindStamina2() }, (5,5,2,0), "WindBasic", null) },
+        { ItemID.MushroomSpear, (Element.Water, WeaponType.Spear, new List<WeaponSkill> { new NoneExploit1(), new WaterTrium2() }, (5,5,2,0), "WaterBasic", null) },
+        { ItemID.ObsidianSwordfish, (Element.Dark, WeaponType.Spear, new List<WeaponSkill> { new DarkTrium2(), new DarkPrimacy() }, (5,5,2,0), "DarkBasic", null) },
+        { ItemID.NorthPole, (Element.Water, WeaponType.Spear, new List<WeaponSkill> { new NoneWaterAtk(), new WaterPrimacy() }, (5,5,2,0), "WaterBasic", null) },
+
+        { ItemID.FlyingKnife, (Element.Light, WeaponType.Hand, new List<WeaponSkill> { new NoneWaterAtk(), new WaterPrimacy() }, (5,5,2,0), "LightBasic", null) },
         };
 
         public override bool InstancePerEntity => true;

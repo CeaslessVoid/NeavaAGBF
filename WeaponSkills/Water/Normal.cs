@@ -169,4 +169,27 @@ namespace NeavaAGBF.WeaponSkills.Water
         }
 
     }
+
+    public class WaterPrimacy : WeaponSkill
+    {
+        public WaterPrimacy() : base("Tsunami", "Primacy", Element.Water)
+        {
+            ATK = 3;
+            ATKPerLevel = 0.7f;
+
+            AttackSpeed = 2;
+            AttackSpeedPerLevel = 0.6f;
+        }
+
+    }
+
+    public class WaterTrium2 : WeaponSkill
+    {
+        public WaterTrium2() : base("Tsunami", "Trium II", Element.Water)
+        {
+            AttackSpeed = 2;
+            AttackSpeedPerLevel = 0.6f;
+        }
+
+    }
 }

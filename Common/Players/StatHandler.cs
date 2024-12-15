@@ -128,6 +128,7 @@ namespace NeavaAGBF.Common.Players
         public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)
         {
             modifiers.FinalDamage *= damageAmp;
+
         }
 
         // Split for ougi

@@ -307,9 +307,20 @@ namespace NeavaAGBF.WeaponSkills.None
     {
         public NoneToxicosis() : base("null", "Toxicosis", Element.Special)
         {
-            //UncapLevel = 3;
+            UncapLevel = 3;
             SpecialKey = "Toxicosis";
             CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.Toxicosis").Value;
+        }
+
+    }
+
+    public class NoneWaterAtk : WeaponSkill
+    {
+        public NoneWaterAtk() : base("null", "Sub Zero", Element.Water)
+        {
+            UncapLevel = 3;
+            SpecialKey = "NoneWaterAtk";
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.NoneWaterAtk").Value;
         }
 
     }

@@ -191,4 +191,27 @@ namespace NeavaAGBF.WeaponSkills.Dark
         }
 
     }
+
+    public class DarkTrium2 : WeaponSkill
+    {
+        public DarkTrium2() : base("Hatred", "Trium", Element.Dark)
+        {
+            AttackSpeed = 2;
+            AttackSpeedPerLevel = 0.6f;
+        }
+
+    }
+
+    public class DarkPrimacy : WeaponSkill
+    {
+        public DarkPrimacy() : base("Hatred", "Primacy", Element.Dark)
+        {
+            ATK = 3;
+            ATKPerLevel = 0.7f;
+
+            AttackSpeed = 2;
+            AttackSpeedPerLevel = 0.6f;
+        }
+
+    }
 }

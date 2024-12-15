@@ -30,6 +30,7 @@ namespace NeavaAGBF.Common.Players
             specialKeyEffects["ExploitAPen1"] = ExploitAPen1;
             specialKeyEffects["GungnirPassive"] = GungnirPassive;
             specialKeyEffects["Toxicosis"] = Toxicosis;
+            specialKeyEffects["NoneWaterAtk"] = NoneWaterAtk;
         }
 
         public void ApplyWeaponGridEffects(Player player)
@@ -290,6 +291,13 @@ namespace NeavaAGBF.Common.Players
             modPlayer.hasToxicosis = true;
         }
 
+        private static void NoneWaterAtk(StatHandler modPlayer, StatTotals totals, int stack, WeaponSkillsGlobalItem heldWeapon)
+        {
+            if (modPlayer.GridCounts.TryGetValue("Water", out int waterCount))
+            {
+                totals.AtkPercent += Math.Min(2 * waterCount * stack, 20) / 100f;
+            }
+        }
     }
 
 }
