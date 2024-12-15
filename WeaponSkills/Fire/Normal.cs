@@ -41,6 +41,19 @@ namespace NeavaAGBF.WeaponSkills.Fire
 
     }
 
+    public class FireSpearhead : WeaponSkill
+    {
+        public FireSpearhead() : base("Fire", "Spearhead", Element.Fire)
+        {
+            CritRate = 1;
+            CritRatePerLevel = 0.2f;
+
+            AttackSpeed = 1;
+            AttackSpeedPerLevel = 0.4f;
+        }
+
+    }
+
     public class FireFortified : WeaponSkill
     {
         public FireFortified() : base("Fire", "Fortified", Element.Fire)
@@ -140,7 +153,7 @@ namespace NeavaAGBF.WeaponSkills.Fire
 
     public class FireCelere2 : WeaponSkill
     {
-        public FireCelere2() : base("Fire", "Celere II", Element.Fire)
+        public FireCelere2() : base("Hellfire", "Celere II", Element.Fire)
         {
 
             CritRate = 3.2f;
@@ -154,7 +167,7 @@ namespace NeavaAGBF.WeaponSkills.Fire
 
     public class FireAegis2 : WeaponSkill
     {
-        public FireAegis2() : base("Fire", "Aegis II", Element.Fire)
+        public FireAegis2() : base("Hellfire", "Aegis II", Element.Fire)
         {
             HP = 6;
             HPPerLevel = 1.5f;
@@ -164,11 +177,25 @@ namespace NeavaAGBF.WeaponSkills.Fire
 
     public class FireEnrage2 : WeaponSkill
     {
-        public FireEnrage2() : base("Fire", "Enrage II", Element.Fire)
+        public FireEnrage2() : base("Hellfire", "Enrage II", Element.Fire)
         {
 
             CritDamage = 2f;
             CritDamagePerLevel = 1f;
+        }
+
+    }
+
+    public class FireMajesty2 : WeaponSkill
+    {
+        public FireMajesty2() : base("Hellfire", "Majesty", Element.Fire)
+        {
+
+            ATK = 3;
+            ATKPerLevel = 0.7f;
+
+            HP = 6;
+            HPPerLevel = 1.5f;
         }
 
     }

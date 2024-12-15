@@ -56,6 +56,19 @@ namespace NeavaAGBF.WeaponSkills.Wind
 
     }
 
+    public class WindSpearhead : WeaponSkill
+    {
+        public WindSpearhead() : base("Wind", "Spearhead", Element.Wind)
+        {
+            CritRate = 1;
+            CritRatePerLevel = 0.2f;
+
+            AttackSpeed = 1;
+            AttackSpeedPerLevel = 0.4f;
+        }
+
+    }
+
     public class WindVerity : WeaponSkill
     {
         public WindVerity() : base("Wind", "Verity", Element.Wind)
@@ -165,6 +178,16 @@ namespace NeavaAGBF.WeaponSkills.Wind
             UncapLevel = 3;
 
             CASuppliment = 1;
+        }
+
+    }
+
+    public class WindEnrage2 : WeaponSkill
+    {
+        public WindEnrage2() : base("Whirlwind", "Enrage II", Element.Wind)
+        {
+            CritDamage = 2.0f;
+            CritDamagePerLevel = 1.0f;
         }
 
     }

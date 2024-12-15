@@ -114,9 +114,15 @@ Element: {
 CustomText: {
 	StarCannonMain: 90% Hit to charge bar gain. 200% Boost to charge attack damage.
 	AllElement: Affected by all all element weapon skills.
-	NoneHpPerLight: 5% Boost to Health based on how many Light Element equiped (max 50%)
+	NoneHpPerLight: 5% Boost to Health based on how many Fire Element equiped (max 50%)
 	HamBatPassive: Boost to Attack and Defence the better fed the player is (Does not stack)
 	ChosenBlade2: 2% Boost to Attack based on how many Swords equiped (max 20%)
+	FluxPassive: 2% Boost to Attack speed based on how many Swords equiped (max 20%)
+	HelFirePassive: 1% Boost to Crit Chance based on how many Hands equiped (max 15%)
+	TerrarianPassive: 2% Boost to Crit Chance and Attack based on how many Hands equiped (max 20%)
+	ExploitAPen1: Increases Armour Penetration by 6
+	GungnirPassive: When at least 4 spears are equiped: Dealing damage reduces defence by 1 (No lower than 30)
+	Toxicosis: Bonus Poison on hit. 10% bonus damage to poisoned foes (Does not stack)
 }
 
 "Keybinds.Charge Attack.DisplayName": Charge  Attack

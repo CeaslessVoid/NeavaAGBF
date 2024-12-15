@@ -41,6 +41,20 @@ namespace NeavaAGBF.WeaponSkills.Earth
 
     }
 
+    public class EarthSpearhead : WeaponSkill
+    {
+        public EarthSpearhead() : base("Earth", "Spearhead", Element.Earth)
+        {
+
+            CritRate = 1;
+            CritRatePerLevel = 0.2f;
+
+            AttackSpeed = 1;
+            AttackSpeedPerLevel = 0.4f;
+        }
+
+    }
+
     public class EarthFortified : WeaponSkill
     {
         public EarthFortified() : base("Earth", "Fortified", Element.Earth)
@@ -132,6 +146,19 @@ namespace NeavaAGBF.WeaponSkills.Earth
             UncapLevel = 3;
 
             CASuppliment = 1;
+        }
+
+    }
+
+    public class EarthBladeshield : WeaponSkill
+    {
+        public EarthBladeshield() : base("Mountain", "Bladeshield", Element.Earth)
+        {
+            HP = 6;
+            HPPerLevel = 1.5f;
+
+            CritRate = 3.2f;
+            CritRatePerLevel = 0.3f;
         }
 
     }

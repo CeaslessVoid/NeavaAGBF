@@ -25,6 +25,18 @@ namespace NeavaAGBF.WeaponSkills.Wind
         }
 
     }
+    public class LightSpearhead : WeaponSkill
+    {
+        public LightSpearhead() : base("Light", "Spearhead", Element.Light)
+        {
+            CritRate = 1;
+            CritRatePerLevel = 0.2f;
+
+            AttackSpeed = 1;
+            AttackSpeedPerLevel = 0.4f;
+        }
+
+    }
 
     public class LightMajesty : WeaponSkill
     {
@@ -104,7 +116,7 @@ namespace NeavaAGBF.WeaponSkills.Wind
 
     public class LightAegis2 : WeaponSkill
     {
-        public LightAegis2() : base("Light", "Aegis II", Element.Light)
+        public LightAegis2() : base("Thunder", "Aegis II", Element.Light)
         {
             HP = 6;
             HPPerLevel = 1.5f;

@@ -133,4 +133,40 @@ namespace NeavaAGBF.WeaponSkills.Water
         }
 
     }
+
+    public class WaterCelere2 : WeaponSkill
+    {
+        public WaterCelere2() : base("Tsunami", "Celere II", Element.Water)
+        {
+            CritRate = 3.2f;
+            CritRatePerLevel = 0.3f;
+
+            ATK = 3;
+            ATKPerLevel = 0.7f;
+        }
+
+    }
+
+    public class WaterEnrage2 : WeaponSkill
+    {
+        public WaterEnrage2() : base("Tsunami", "Enrage II", Element.Water)
+        {
+            CritDamage = 2f;
+            CritDamagePerLevel = 1f;
+        }
+
+    }
+
+    public class WaterMajesty2 : WeaponSkill
+    {
+        public WaterMajesty2() : base("Tsunami", "Majesty II", Element.Water)
+        {
+            HP = 6;
+            HPPerLevel = 1.5f;
+
+            ATK = 3;
+            ATKPerLevel = 0.7f;
+        }
+
+    }
 }

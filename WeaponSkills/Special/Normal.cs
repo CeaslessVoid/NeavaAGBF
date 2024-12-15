@@ -149,6 +149,17 @@ namespace NeavaAGBF.WeaponSkills.None
 
     }
 
+    public class NoneHpPerFire : WeaponSkill
+    {
+        public NoneHpPerFire() : base("null", "Ghastly Heart", Element.Special)
+        {
+            UncapLevel = 3;
+            SpecialKey = "HpPerFire";
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.NoneHpPerFire").Value;
+        }
+
+    }
+
     public class NoneHamBat : WeaponSkill
     {
         public NoneHamBat() : base("null", "Hearty Meal", Element.Special)
@@ -199,6 +210,106 @@ namespace NeavaAGBF.WeaponSkills.None
 
             ATKALLELE = 10;
             SupplimentU = 1;
+        }
+
+    }
+
+    public class NoneFlux : WeaponSkill
+    {
+        public NoneFlux() : base("null", "Flux", Element.Special)
+        {
+            UncapLevel = 4;
+            SpecialKey = "FluxPassive";
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.FluxPassive").Value;
+        }
+
+    }
+
+    public class MeowMur : WeaponSkill
+    {
+        public MeowMur() : base("null", "Meowmur", Element.Special)
+        {
+            UncapLevel = 4;
+            ATKALLELE = 10;
+            SupplimentU = 1;
+        }
+
+    }
+
+    public class NoneHelFire : WeaponSkill
+    {
+        public NoneHelFire() : base("null", "Hel Fire", Element.Special)
+        {
+            UncapLevel = 3;
+            SpecialKey = "HelFirePassive";
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.HelFirePassive").Value;
+        }
+
+    }
+
+    public class NoneAmarok : WeaponSkill
+    {
+        public NoneAmarok() : base("null", "Amarok", Element.Special)
+        {
+            UncapLevel = 3;
+            SpecialKey = "HelFirePassive";
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.HelFirePassive").Value;
+        }
+
+    }
+
+    public class NoneYelets : WeaponSkill
+    {
+        public NoneYelets() : base("null", "Yelets", Element.Special)
+        {
+            UncapLevel = 3;
+            SpecialKey = "HelFirePassive";
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.HelFirePassive").Value;
+        }
+
+    }
+
+    public class NoneTerrarian : WeaponSkill
+    {
+        public NoneTerrarian() : base("null", "Terrarian", Element.Special)
+        {
+            UncapLevel = 3;
+            SpecialKey = "TerrarianPassive";
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.TerrarianPassive").Value;
+        }
+
+    }
+
+    // Cant be fucked making more general stats
+    public class NoneExploit1 : WeaponSkill
+    {
+        public NoneExploit1() : base("null", "Exploit", Element.Special)
+        {
+            UncapLevel = 3;
+            SpecialKey = "ExploitAPen1";
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.ExploitAPen1").Value;
+        }
+
+    }
+
+    public class GungnirPassive : WeaponSkill
+    {
+        public GungnirPassive() : base("null", "Piercing Heaven", Element.Special)
+        {
+            UncapLevel = 3;
+            SpecialKey = "GungnirPassive";
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.GungnirPassive").Value;
+        }
+
+    }
+
+    public class NoneToxicosis : WeaponSkill
+    {
+        public NoneToxicosis() : base("null", "Toxicosis", Element.Special)
+        {
+            //UncapLevel = 3;
+            SpecialKey = "Toxicosis";
+            CustomText = Language.GetText("Mods.NeavaAGBF.CustomText.Toxicosis").Value;
         }
 
     }

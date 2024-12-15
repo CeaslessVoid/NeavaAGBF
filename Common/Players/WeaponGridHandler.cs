@@ -22,8 +22,14 @@ namespace NeavaAGBF.Common.Players
         public WeaponGridHandler()
         {
             specialKeyEffects["HpPerLight"] = NoneHpPerLight;
+            specialKeyEffects["HpPerFire"] = NoneHpPerFire;
             specialKeyEffects["HamBatPassive"] = HamBatPassive;
             specialKeyEffects["ChosenBlade2"] = ChosenBlade;
+            specialKeyEffects["FluxPassive"] = FluxPassive;
+            specialKeyEffects["HelFirePassive"] = HelFirePassive;
+            specialKeyEffects["ExploitAPen1"] = ExploitAPen1;
+            specialKeyEffects["GungnirPassive"] = GungnirPassive;
+            specialKeyEffects["Toxicosis"] = Toxicosis;
         }
 
         public void ApplyWeaponGridEffects(Player player)
@@ -200,6 +206,7 @@ namespace NeavaAGBF.Common.Players
 
         private static void HamBatPassive(StatHandler modPlayer, StatTotals totals, int stack, WeaponSkillsGlobalItem heldWeapon)
         {
+
             if (modPlayer.Player.HasBuff(207))
             {
                 totals.AtkPercent += 0.15f;
@@ -223,6 +230,64 @@ namespace NeavaAGBF.Common.Players
             {
                 totals.AtkPercent += (Math.Min(2 * swordCount * stack, 20)) / 100f;
             }
+        }
+
+        private static void FluxPassive(StatHandler modPlayer, StatTotals totals, int stack, WeaponSkillsGlobalItem heldWeapon)
+        {
+            Main.NewText("Hi");
+
+            if (modPlayer.GridCounts.TryGetValue("Sword", out int swordCount))
+            {
+                totals.AttackSpeedPercent += (Math.Min(2 * swordCount * stack, 20)) / 100f;
+            }
+        }
+
+        private static void HelFirePassive(StatHandler modPlayer, StatTotals totals, int stack, WeaponSkillsGlobalItem heldWeapon)
+        {
+            if (modPlayer.GridCounts.TryGetValue("Hand", out int handCount))
+            {
+                totals.CritRatePercent += (Math.Min(1 * handCount * stack, 15));
+            }
+        }
+
+        private static void TerrarianPassive(StatHandler modPlayer, StatTotals totals, int stack, WeaponSkillsGlobalItem heldWeapon)
+        {
+            Main.NewText("Hi");
+
+            if (modPlayer.GridCounts.TryGetValue("Hand", out int handCount))
+            {
+                float value = (Math.Min(2 * handCount * stack, 20));
+                totals.CritRatePercent += value;
+                totals.AtkPercent += value / 100f;
+            }
+        }
+
+        private static void ExploitAPen1(StatHandler modPlayer, StatTotals totals, int stack, WeaponSkillsGlobalItem heldWeapon)
+        {
+
+            modPlayer.Player.GetArmorPenetration(DamageClass.Generic) += 6;
+        }
+
+        private static void GungnirPassive(StatHandler modPlayer, StatTotals totals, int stack, WeaponSkillsGlobalItem heldWeapon)
+        {
+
+            if (modPlayer.GridCounts.TryGetValue("Spear", out int spearCount) && spearCount > 3)
+            {
+                modPlayer.hasGungnir = true;
+            }
+        }
+
+        private static void NoneHpPerFire(StatHandler modPlayer, StatTotals totals, int stack, WeaponSkillsGlobalItem heldWeapon)
+        {
+            if (modPlayer.GridCounts.TryGetValue("Fire", out int fireCount))
+            {
+                totals.HpBonusPercent += Math.Min(5 * fireCount * stack, 50);
+            }
+        }
+
+        private static void Toxicosis(StatHandler modPlayer, StatTotals totals, int stack, WeaponSkillsGlobalItem heldWeapon)
+        {
+            modPlayer.hasToxicosis = true;
         }
 
     }
