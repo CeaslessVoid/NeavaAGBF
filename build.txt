@@ -1,3 +1,3 @@
-displayName = Neava&#39;s A GranBlue Fantasy
+displayName = Neava&#39;s A Granblue Fantasy
 author = Neava
 version = 0.1
